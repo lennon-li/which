@@ -1,0 +1,43 @@
+schema_version: "1.0.0"
+confidence_floor: 0.75
+
+questions:
+  complexity:
+    type: score
+    instructions: >
+      Rate raw intellectual difficulty. Do not include the consequence of being wrong.
+    criteria:
+      - "Easy: mechanical and bounded; one obvious approach."
+      - "Medium: needs domain knowledge or several coordinated steps, but the finish line is clear."
+      - "Hard: cross-cutting, subtle correctness concerns, or real tradeoffs."
+      - "Frontier: the problem definition or goal itself is still open."
+
+  task_shape:
+    type: choice
+    instructions: "What kind of work is primarily being requested?"
+    criteria:
+      implementation: "Create or change implementation."
+      plan_design: "Design architecture, sequencing, or tradeoffs before implementation."
+      debug_diagnosis: "Find why existing behavior is wrong."
+      independent_review: "Judge a finished artifact produced by someone else."
+      audit: "Systematically sweep work against a standard."
+      read_only_survey: "Gather or synthesize information without changing artifacts."
+      mechanical_bounded_edit: "Apply a narrow, well-specified edit."
+      orchestration_decision: "Choose how work should be coordinated or delegated."
+      operational_action: "Execute a known operational procedure."
+
+  implementation_intensity:
+    type: score
+    instructions: "How much hands-on implementation or execution is required?"
+    criteria:
+      - "Low: little or no implementation."
+      - "Medium: bounded implementation or execution."
+      - "High: substantial implementation, integration, or execution."
+
+  objective_verifiability:
+    type: score
+    instructions: "How objectively can correctness be checked after the work?"
+    criteria:
+      - "Low: mostly judgment-based."
+      - "Medium: some objective checks plus judgment."
+      - "High: strong tests, invariants, or observable acceptance criteria."
