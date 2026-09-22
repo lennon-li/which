@@ -2,7 +2,7 @@
 ## Calibrated Statistical and Semantic Gates for Privacy-Preserving AI Access to Research Data
 
 **Target program:** University of Toronto Data Sciences Institute — Claude API Credit Award, Claude Research tier  
-**Status:** Draft full proposal  
+**Status:** Faculty-review draft  
 **Date:** 2026-09-22  
 **Requested support:** CAD $75,000 in Claude API credits over 12 months  
 **Project type:** Claude Research  
@@ -71,7 +71,7 @@ For privacy-sensitive applications, a semantically capable model should therefor
 
 A central hypothesis of this project is that small typed-decision models can occupy a useful middle layer between hard privacy rules and powerful external AI systems.
 
-Compact open models such as **Laya** can be deployed locally, calibrated or fine-tuned for a narrow task, versioned as a model artifact, and run without continuous access to expensive GPU infrastructure. This makes them attractive for research settings where the privacy control itself should not require sending sensitive material to a remote service.
+The recent release of compact open decision models such as **Laya** fills an important technical gap in this architecture. A semantic privacy gate can now plausibly run inside the trusted environment, return typed probabilistic decisions, and be calibrated for a narrow task without first sending sensitive context to a remote service.
 
 The proposed architecture treats such a model as a **local AI privacy firewall**: a semantic gate that interprets bounded metadata, data dictionaries, column summaries, and requested agent actions before deciding whether information should be exposed, transformed, or escalated for human review.
 
@@ -677,7 +677,7 @@ Anthropic's Canadian research initiative emphasizes beneficial and responsible a
   https://github.com/microsoft/presidio
 
 - Laya.  
-  https://github.com/NandhaKishorM/laya
+  https://huggingface.co/convaiinnovations/laya
 
 - RouteLLM.  
   https://github.com/lm-sys/RouteLLM
