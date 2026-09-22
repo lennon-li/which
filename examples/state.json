@@ -1,0 +1,10 @@
+{
+  "task": "Review the completed implementation independently and report correctness issues.",
+  "project": "example",
+  "material_breadth": 6,
+  "parent_understands_task": true,
+  "is_released": false,
+  "touches_sensitive_data": false,
+  "reaches_main_or_deploy": false,
+  "previous_provider": "example-provider-a"
+}
