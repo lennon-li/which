@@ -230,16 +230,16 @@ Initial models will prioritize interpretability:
 
 A representative formulation is:
 
-[
-operatorname{logit} P(Y ge k)
-=
-alpha_k +
-f_1(	ext{uniqueness}) +
-f_2(	ext{record count}) +
-eta_1 I(	ext{free text}) +
-eta_2 I(	ext{sensitive}) +
-eta_3 I(	ext{external agent}) + cdots
-]
+~~~text
+logit P(Y >= k)
+  = alpha_k
+  + f1(uniqueness)
+  + f2(record_count)
+  + beta1 * I(free_text)
+  + beta2 * I(sensitive)
+  + beta3 * I(external_agent)
+  + ...
+~~~
 
 This model asks how far carefully engineered structural evidence can take us without semantic AI.
 
