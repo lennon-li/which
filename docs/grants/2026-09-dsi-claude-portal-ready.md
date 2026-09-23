@@ -68,7 +68,7 @@ All experiments will record model, rubric, package, orchestration-policy, datase
 
 CAD $75,000
 
-## Budget Justification — 382/500 words
+## Budget Justification — 351/500 words
 
 We request CAD $75,000 in Claude API credits over 12 months. The request is based on a bottom-up work plan rather than a single large inference estimate. Using the current planning assumptions, expected use is approximately US$52,375, or about CAD $73,650 at the exchange rate used for budgeting, leaving a small margin for workload and exchange-rate variation.
 
