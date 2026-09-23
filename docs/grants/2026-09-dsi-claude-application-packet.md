@@ -42,7 +42,7 @@ No separate long-form proposal upload is listed in the call; the application is 
 
 ### Abstract — maximum 200 words
 
-Researchers increasingly use cloud-based AI assistants and agents to prototype analyses, write code, and build research applications. In medical and public-health research, those workflows may involve data containing **personal information (PI), personal health information (PHI), sensitive attributes, or identifying combinations of variables**. This creates a practical privacy question before the first prompt is sent: **is the representation we are about to share—original, de-identified, synthetic, or summarized—appropriate for this AI service and this task?**
+Researchers increasingly use cloud AI to prototype analyses, write code, and build research applications. In medical and public-health research, those workflows may involve data containing **personal information (PI), personal health information (PHI), sensitive attributes, or identifying combinations of variables**. This creates a privacy question before the first prompt: **is the representation we are about to share—original, de-identified, synthetic, or summarized—appropriate for this AI service and this task?**
 
 Synthetic data can reduce unnecessary exposure, but it is not automatically safe. Privacy depends on what information is preserved, how the data were generated, what the agent is asked to do, and where the computation occurs.
 
