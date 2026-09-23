@@ -1,0 +1,98 @@
+name: Render DSI grant proposal PDF
+
+on:
+  push:
+    branches:
+      - bootstrap-framework
+    paths:
+      - "docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.md"
+      - ".github/workflows/render-dsi-grant-pdf.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: bootstrap-framework
+          fetch-depth: 0
+
+      - name: Install PDF toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex texlive-latex-extra texlive-fonts-recommended lmodern
+          PUPPETEER_SKIP_DOWNLOAD=true npm install -g @mermaid-js/mermaid-cli
+
+      - name: Render Mermaid diagrams
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
+        run: |
+          mkdir -p /tmp/dsi-mermaid
+          python - <<'PY'
+          from pathlib import Path
+          import re, subprocess
+
+          src_path = Path("docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.md")
+          out_path = Path("/tmp/dsi-grant-render.md")
+          asset_dir = Path("/tmp/dsi-mermaid")
+          text = src_path.read_text(encoding="utf-8")
+          pattern = re.compile(r"~~~mermaid\n(.*?)\n~~~", re.S)
+
+          parts = []
+          pos = 0
+          for idx, match in enumerate(pattern.finditer(text), start=1):
+              parts.append(text[pos:match.start()])
+              mmd = asset_dir / f"diagram-{idx}.mmd"
+              png = asset_dir / f"diagram-{idx}.png"
+              mmd.write_text(match.group(1).strip() + "\n", encoding="utf-8")
+              subprocess.run([
+                  "mmdc", "-i", str(mmd), "-o", str(png),
+                  "-b", "white", "-s", "1.5"
+              ], check=True)
+              parts.append(f"\n![]({png}){{ width=92% }}\n")
+              pos = match.end()
+          parts.append(text[pos:])
+          out_path.write_text("".join(parts), encoding="utf-8")
+          print(f"Rendered {len(list(asset_dir.glob('*.png')))} Mermaid diagrams")
+          PY
+
+      - name: Render PDF
+        run: |
+          OUTPUT="docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.pdf"
+          pandoc /tmp/dsi-grant-render.md \
+            --from=markdown \
+            --pdf-engine=xelatex \
+            --toc \
+            --toc-depth=3 \
+            -V geometry:margin=0.72in \
+            -V fontsize=10pt \
+            -V colorlinks=true \
+            -V linkcolor=blue \
+            -V urlcolor=blue \
+            -V toc-title="Contents" \
+            -o "$OUTPUT"
+          test -s "$OUTPUT"
+
+      - name: Upload rendered PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsi-grant-proposal-pdf
+          path: docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.pdf
+          if-no-files-found: error
+
+      - name: Commit rendered PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.pdf
+          if git diff --cached --quiet; then
+            echo "PDF unchanged"
+            exit 0
+          fi
+          git commit -m "docs: render DSI grant proposal PDF"
+          git push origin HEAD:bootstrap-framework

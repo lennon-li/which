@@ -1,0 +1,37 @@
+schema_version: "1.0.0"
+large_context_threshold: 15
+large_context_shapes: [audit, read_only_survey]
+large_context_profile: large_context
+default_profile: economy
+
+shape_profiles:
+  plan_design: strong_reasoning
+  debug_diagnosis: strong_reasoning
+  independent_review: independent_review
+  audit: independent_review
+  read_only_survey: economy
+  mechanical_bounded_edit: economy
+  implementation: economy
+  operational_action: standard
+
+complexity_profiles:
+  easy: economy
+  medium: economy
+  hard: standard
+
+profiles:
+  economy:
+    capability: economy
+    purpose: "Cheap bounded work with objective checks."
+  standard:
+    capability: standard
+    purpose: "General implementation or execution requiring stronger capability."
+  strong_reasoning:
+    capability: strong_reasoning
+    purpose: "Planning or diagnosis where plausible-but-wrong output is costly."
+  independent_review:
+    capability: independent_review
+    purpose: "Provider/model-family independent verification."
+  large_context:
+    capability: large_context
+    purpose: "Broad read-only survey or audit."
