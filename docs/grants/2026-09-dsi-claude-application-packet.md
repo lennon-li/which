@@ -1,6 +1,6 @@
 # DSI Claude API Credit Award — Application Packet
 
-**Project:** Who Should See the Data? Calibrated Statistical and Semantic Gates for Privacy-Preserving AI Access to Research Data  
+**Project:** Measure Before You Share: Calibration, Uncertainty, and Dual-Gate Safety for AI Access to Research Data  
 **Program:** University of Toronto Data Sciences Institute — Claude API Credit Award  
 **Tier:** Claude Research  
 **Deadline:** September 25, 2026, 23:59 ET  
@@ -34,7 +34,7 @@ No separate long-form proposal upload is listed in the call; the application is 
 
 ### Project Title
 
-**Who Should See the Data? Calibrated Statistical and Semantic Gates for Privacy-Preserving AI Access to Research Data**
+**Measure Before You Share: Calibration, Uncertainty, and Dual-Gate Safety for AI Access to Research Data**
 
 ---
 
