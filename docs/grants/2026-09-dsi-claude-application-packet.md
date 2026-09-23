@@ -8,6 +8,8 @@ The packet follows the form’s sections, provides draft application answers, id
 
 **Open the Good Grants application:** [Start or continue the application](https://apply.datasciences.utoronto.ca/).
 
+**For a quick orientation, start with Laura’s [one-page Quick Start (PDF)](2026-09-dsi-laura-quick-start.pdf) or [read it here](2026-09-dsi-laura-quick-start.md).** The full packet below is the form-by-form reference; it does not need to be read cover to cover.
+
 ### How Laura should use this document
 
 1. **Read the bold questions and action items first.** They identify decisions, confirmations, and materials needed from you as PI.
