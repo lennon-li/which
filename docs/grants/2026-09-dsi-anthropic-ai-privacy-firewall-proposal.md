@@ -1,5 +1,5 @@
-# Who Should See the Data?
-## Calibrated Statistical and Semantic Gates for Privacy-Preserving AI Access to Research Data
+# Measure Before You Share
+## Calibration, Uncertainty, and Dual-Gate Safety for AI Access to Research Data
 
 **Target program:** University of Toronto Data Sciences Institute — Claude API Credit Award, Claude Research tier  
 **Status:** Faculty-review draft  
