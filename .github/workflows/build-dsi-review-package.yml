@@ -1,0 +1,64 @@
+name: Build DSI review package
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/grants/2026-09-dsi-lennon-ai-cv.md"
+      - "docs/grants/2026-09-dsi-claude-portal-ready.md"
+      - "docs/grants/2026-09-dsi-claude-application-packet.md"
+      - "docs/grants/2026-09-dsi-laura-review-package.md"
+      - "docs/grants/2026-09-dsi-laura-review-memo.md"
+      - "docs/grants/2026-09-dsi-laura-email-draft.md"
+      - "docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.md"
+      - ".github/workflows/build-dsi-review-package.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install document tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex texlive-latex-extra texlive-fonts-recommended zip
+
+      - name: Build Lennon CV
+        run: |
+          SRC="docs/grants/2026-09-dsi-lennon-ai-cv.md"
+          pandoc "$SRC"             --from=markdown             --pdf-engine=xelatex             -V geometry:margin=0.65in             -V fontsize=9pt             -V colorlinks=true             -o "docs/grants/Lennon_Li_DSI_AI_CV_2026.pdf"
+          pandoc "$SRC"             --from=markdown             -o "docs/grants/Lennon_Li_DSI_AI_CV_2026.docx"
+
+      - name: Assemble review ZIP
+        run: |
+          rm -rf /tmp/dsi-review
+          mkdir -p /tmp/dsi-review
+          cp docs/grants/2026-09-dsi-laura-review-package.md /tmp/dsi-review/00_Review_Package_Index.md
+          cp docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.pdf /tmp/dsi-review/01_Full_Technical_Proposal.pdf
+          cp docs/grants/2026-09-dsi-claude-portal-ready.md /tmp/dsi-review/02_Portal_Ready_Application.md
+          cp docs/grants/Lennon_Li_DSI_AI_CV_2026.pdf /tmp/dsi-review/03_Lennon_Li_DSI_AI_CV_2026.pdf
+          cp docs/grants/Lennon_Li_DSI_AI_CV_2026.docx /tmp/dsi-review/03_Lennon_Li_DSI_AI_CV_2026.docx
+          cp docs/grants/2026-09-dsi-laura-review-memo.md /tmp/dsi-review/04_Laura_Review_Memo.md
+          cp docs/grants/2026-09-dsi-laura-email-draft.md /tmp/dsi-review/05_Laura_Email_Draft.md
+          cp docs/grants/2026-09-dsi-claude-application-packet.md /tmp/dsi-review/06_Application_Packet.md
+          (cd /tmp/dsi-review && zip -r "$GITHUB_WORKSPACE/docs/grants/DSI_Claude_Application_Review_Package_2026.zip" .)
+
+      - name: Commit generated package files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             docs/grants/Lennon_Li_DSI_AI_CV_2026.pdf             docs/grants/Lennon_Li_DSI_AI_CV_2026.docx             docs/grants/DSI_Claude_Application_Review_Package_2026.zip
+          if git diff --cached --quiet; then
+            echo "Generated files unchanged"
+            exit 0
+          fi
+          git commit -m "docs: add complete DSI grant review package"
+          git push origin HEAD:main
