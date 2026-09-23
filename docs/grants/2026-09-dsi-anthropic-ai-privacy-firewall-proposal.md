@@ -219,11 +219,33 @@ The primary unit will be a **data-access scenario** containing:
 
 This design permits extensive use of public and synthetic information while directly studying the decision boundary relevant to AI access.
 
-## 5.2 Candidate sources
+## 5.2 Candidate sources and data partnerships
 
-Cases may be derived from public research-data repository descriptions, public data dictionaries, controlled-access dataset documentation, public data-management and data-sharing plans, funding-agency data governance examples, institutional privacy guidance, public health and clinical dataset descriptions, public/synthetic PII corpora, synthetic counterfactual cases, and deliberately designed hard negatives and adversarial examples.
+The benchmark is designed so that the primary study **does not depend on access to confidential institutional records**.
 
-No confidential research records are required for the initial benchmark.
+### Tier 1 — public and immediately available sources
+
+Candidate scenarios will be constructed from:
+
+- Tri-Agency research-data-management policies, data-management-plan requirements, and publicly posted institutional RDM strategies;
+- public research-data repository descriptions and data dictionaries;
+- the public ICES Data Dictionary and other health-data documentation;
+- Public Health Ontario public data products, data-access documentation, and published request criteria;
+- public clinical/public-health dataset documentation;
+- public/synthetic PII corpora;
+- synthetic counterfactual and adversarial scenarios created from these materials.
+
+These sources provide realistic variation in sensitivity, identifiability, access purpose, and governance without requiring restricted participant records.
+
+### Tier 2 — partner-derived decision cases, if approved
+
+We will seek collaboration with research funders and organizations that routinely make privacy/data-access decisions—potentially including DSI, Tri-Agency programs, ICES, DLSPH units, PHO, or comparable partners. The useful research object is **not their confidential source data**, but the decision process: de-identified or abstracted historical scenarios, decision criteria, privacy-review questions, data-management-plan examples, or prospective expert adjudication.
+
+No organization is assumed to participate, and no confidential grant, privacy, or project-review material will be used without explicit authorization. Partner-derived cases will supplement rather than enable the primary benchmark.
+
+### Tier 3 — implementation/pilot cases
+
+If approvals permit, a partner pilot will test the released framework on approved/public/synthetic or otherwise authorized representations. This phase evaluates workflow fit and external validity rather than supplying the primary training set.
 
 ## 5.3 Proposed target size
 
@@ -246,7 +268,7 @@ For safety-oriented evaluation, we will also pre-specify derived binary endpoint
 
 ## 5.5 Annotation
 
-Each case will include case identifier, source/provenance, natural-language scenario, structured feature representation, expert action label, annotator certainty, brief rationale, difficulty/adversarial flag, and split assignment. Adjudicators will also record an **exposure-impact profile** covering identifiability/linkability, sensitivity, scale, vulnerability, exploitability, and persistence/irreversibility.
+Each case will include case identifier, **source tier/provenance**, natural-language scenario, structured feature representation, expert action label, annotator certainty, brief rationale, difficulty/adversarial flag, and split assignment. Adjudicators will also record an **exposure-impact profile** covering identifiability/linkability, sensitivity, scale, vulnerability, exploitability, and persistence/irreversibility.
 
 For a subset, two independent reviewers will label the case before reconciliation. Human disagreement will be reported rather than hidden. Train, calibration, and test assignment will occur at the **scenario-family/source level** so that paraphrases, counterfactuals, or variants derived from the same source case cannot leak across partitions.
 
@@ -555,7 +577,7 @@ Complete Which, migrate the working Jev decision path, add Laya parity, and esta
 
 ## WP2 — Privacy benchmark
 
-Formalize the agent-access outcome and exposure-impact profile, construct public/synthetic scenarios, establish annotation guidance, double-annotate a high-value subset, and freeze development/calibration/test splits.
+Formalize the agent-access outcome and exposure-impact profile; construct scenarios from public RDM/privacy guidance, health-data dictionaries, public repositories, and synthetic counterfactuals; add approved partner-derived abstracted cases if available; establish annotation guidance; double-annotate a high-value subset; and freeze development/calibration/test splits.
 
 ## WP3 — Statistical comparator
 
@@ -577,24 +599,56 @@ The project will not stop at a manuscript. We will release the software, benchma
 
 ---
 
-# 16. Gated roadmap
+# 16. Phased, gated research plan
+
+The project is structured so that **later complexity is earned by evidence**. It does not require every model or partnership to succeed in order to produce useful outputs.
+
+### Phase 1 — benchmark and evaluation infrastructure
+
+Build the public/synthetic benchmark, annotation protocol, Which evaluation framework, and deterministic/statistical baselines.
+
+**Gate 1:** proceed only after acceptable annotation agreement, split integrity, and reproducible baseline evaluation are demonstrated.
+
+**Minimum deliverable if stopped here:** open benchmark protocol, classifier-evaluation software, deterministic/statistical baseline paper or report, and trainee training materials.
+
+### Phase 2 — semantic-model evaluation
+
+Evaluate Claude, Jev, and local Laya on the frozen benchmark; calibrate probabilities; quantify uncertainty, robustness, and incremental value.
+
+**Gate 2:** local semantic adaptation proceeds only if semantic evidence adds pre-specified held-out value beyond simpler baselines.
+
+**If the gate fails:** publish the negative result and retain the simpler rule/statistical system.
+
+### Phase 3 — dual-gate integration
+
+Evaluate structured + semantic dual gating, joint-error dependence, severity-weighted errors, abstention, and human-review burden.
+
+**Gate 3:** retain the dual gate only if it improves safety-relevant held-out metrics enough to justify added complexity and review burden.
+
+**If the gate fails:** deploy the best simpler calibrated architecture.
+
+### Phase 4 — partner external validation and implementation
+
+Seek approved partner-derived decision cases and, if feasible, a small public-health pilot.
+
+**Gate 4:** pilot only after the software, calibration, privacy safeguards, and organizational approvals are in place.
+
+Partner participation is therefore an **external-validation accelerator, not a dependency**. Failure to secure a partner does not prevent completion of the primary scientific aims.
 
 ~~~mermaid
-flowchart TB
-    G1["Gate 1<br/>Which + Hermes/Jev<br/>prospective testing"] --> G2["Gate 2<br/>Jev/Laya parity<br/>same gold cases"]
-    G2 --> G3["Gate 3<br/>DataGangeR semantic benchmark"]
-    G3 --> Q1{"Does calibrated Laya add<br/>value beyond deterministic rules?"}
-    Q1 -->|No| S1["Stop semantic adaptation<br/>retain simpler system"]
-    Q1 -->|Yes| G4["Gate 4<br/>Optional Laya fine-tuning"]
-    G3 --> G5["Gate 5<br/>Define and fit interpretable<br/>statistical access-decision model"]
-    G4 --> Q2{"Do both semantic and statistical<br/>models independently add value?"}
-    G5 --> Q2
-    Q2 -->|No| S2["Use best simpler model"]
-    Q2 -->|Yes| G6["Gate 6<br/>Transparent ensemble"]
-    G6 --> G7["Gate 7<br/>Prospective DataGangeR validation"]
+flowchart LR
+    P1["Phase 1<br/>Public/synthetic benchmark<br/>+ evaluation framework"] --> G1{"Gate 1<br/>reproducible + adjudicable?"}
+    G1 -->|No| O1["Release benchmark methods<br/>and simpler baselines"]
+    G1 -->|Yes| P2["Phase 2<br/>Claude / Jev / Laya"]
+    P2 --> G2{"Gate 2<br/>incremental semantic value?"}
+    G2 -->|No| O2["Retain rules/statistics<br/>publish negative result"]
+    G2 -->|Yes| P3["Phase 3<br/>dual-gate safety"]
+    P3 --> G3{"Gate 3<br/>safety gain justifies burden?"}
+    G3 -->|No| O3["Use best simpler<br/>calibrated architecture"]
+    G3 -->|Yes| P4["Phase 4<br/>partner validation / pilot"]
 ~~~
 
-**Figure 4. Gated research roadmap.** More complex modelling is permitted only after simpler components demonstrate independent value.
+**Figure 4. Gated research roadmap.** Every phase produces a useful artifact; failure at a gate narrows the system rather than causing project failure.
 
 ---
 
@@ -632,7 +686,7 @@ gantt
     Replication, manuscript, release            :d3, 2027-08-15, 60d
 ~~~
 
-The primary scientific aims and open-source release are scheduled to complete within 12 months. Work packages intentionally overlap. A public-health implementation pilot, if feasible, will run within existing work packages and will not delay the primary deliverables.
+The primary scientific aims and open-source release are scheduled to complete within 12 months. Work packages intentionally overlap. The gated design protects feasibility: Phase 1 can be completed entirely from public/synthetic sources; semantic adaptation, dual-gate integration, and the partner pilot proceed only after pre-specified gates are met. A public-health implementation pilot, if feasible, will not delay the primary deliverables.
 
 ---
 
@@ -814,7 +868,9 @@ A public-health pilot is important because the project is intended for use, not 
 | Candidate benchmark is too large for expert review | Maintain a large candidate pool but rigorously adjudicate a smaller core benchmark |
 | Counterfactual variants leak across data splits | Split by source/scenario family, not individual generated case |
 | Laya/Jev capabilities differ from assumptions | Treat Laya tuning and Jev calibration/evaluation separately; retain engine-neutral interfaces |
+| Partner-derived cases are unavailable | Complete the primary benchmark from public/synthetic sources; partner cases are external validation, not a dependency |
 | Pilot approvals/timing are unavailable | Pilot remains optional and does not affect completion of primary aims |
+| A later modelling phase does not meet its gate | Stop escalation, release the simpler validated architecture, and publish the negative/neutral result |
 | Dual gates make correlated mistakes | Measure joint error and dependence explicitly; diversify evidence/model families; do not assume independence |
 | Raw model confidence is overconfident | Recalibrate on held-out data; use abstention, risk-coverage analysis, and human review |
 | Error counts hide consequence | Annotate exposure impact and report harm-weighted false authorization and high-severity miss rates |
@@ -860,6 +916,15 @@ Anthropic's Canadian research initiative emphasizes beneficial and responsible a
 
 - Which source repository.  
   https://github.com/lennon-li/which
+
+- Tri-Agency. **Research Data Management Policy.**  
+  https://science.gc.ca/site/science/en/interagency-research-funding/policies-and-guidelines/research-data-management/tri-agency-research-data-management-policy
+
+- ICES. **Data Dictionary.**  
+  https://www.ices.on.ca/use-ices-data/data-dictionary/
+
+- Public Health Ontario. **Data Requests.**  
+  https://www.publichealthontario.ca/en/Data-and-Analysis/Using-Data/Data-Requests
 
 - NIST. **Guidelines for Evaluating Differential Privacy Guarantees (SP 800-226).** 2025.  
   https://csrc.nist.gov/pubs/sp/800/226/final
