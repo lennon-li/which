@@ -136,6 +136,10 @@ flowchart TB
 
 **RQ5.** How robust are semantic decisions to paraphrase, irrelevant wording, altered variable names, and controlled changes in the stated access environment?
 
+**RQ6.** Can calibrated abstention and a dual-gate authorization strategy reduce inappropriate authorization relative to either classifier alone while keeping human-review burden acceptable?
+
+**Hypothesis 3.** Gates with intentionally diversified evidence and error mechanisms will have lower joint inappropriate-authorization rates than either gate alone, although at the cost of reduced automatic coverage.
+
 ---
 
 # 4. Research design
@@ -342,6 +346,38 @@ A particularly relevant operational quantity is:
 
 Risk-coverage curves will therefore be central to evaluation. A privacy gate should be allowed to say "uncertain."
 
+## 11.1 Uncertainty, calibration, and dual-gate safety
+
+Jev and Laya can return class probabilities or confidence-like outputs, but these values will be treated as **uncalibrated model scores until empirically validated**. Modern neural-network confidence is often miscalibrated, motivating held-out probability calibration rather than direct use of raw confidence (Guo et al., 2017).
+
+For each semantic classifier we will evaluate:
+
+- reliability/calibration curves;
+- Brier score and log loss;
+- expected calibration error;
+- entropy and top-two probability margin;
+- class-specific sensitivity/specificity;
+- selective risk as uncertain cases are abstained;
+- coverage at pre-specified risk targets;
+- performance under distribution shift and controlled perturbations.
+
+Calibration methods may include temperature scaling, logistic/Platt-style calibration, or isotonic regression, selected using calibration data rather than the final test set.
+
+We will also evaluate a **dual-gate authorization strategy**. Gate A will emphasize structured/statistical evidence and Gate B semantic/contextual evidence. Bounded access is eligible only when both gates authorize it and no deterministic hard blocker applies. Disagreement or uncertainty triggers human review or a more restrictive representation.
+
+The key safety quantity is not just each classifier's error rate but the **joint inappropriate-authorization probability**:
+
+~~~text
+P(E_A ∩ E_B | Y = unsafe)
+~~~
+
+together with the dependence of the two error indicators. We will estimate whether intentionally diversified gates reduce family-wise unsafe authorization relative to either gate alone, and quantify the corresponding increase in abstention and human-review burden. Independence will be encouraged through distinct feature representations, model classes, and development samples; it will **not** be assumed merely because two bootstrap samples were used.
+
+This follows the selective-classification literature, which explicitly trades coverage for lower prediction risk (Geifman & El-Yaniv, 2017; 2019). Where sample size and exchangeability assumptions are adequate, we will also explore conformal or other distribution-free risk-control methods for statistically principled abstention/coverage targets (Angelopoulos & Bates, 2021). Ensemble-style disagreement will be examined as an additional uncertainty signal, motivated by work showing that diversified predictive models can improve uncertainty estimation and sensitivity to distribution shift (Lakshminarayanan et al., 2017).
+
+The statistical objective is therefore broader than building a classifier: **we will estimate, calibrate, compare, and stress-test the full decision system, including uncertainty, error dependence, abstention, and human-review cost.**
+
+
 ---
 
 # 12. Robustness experiments
@@ -449,15 +485,15 @@ Formalize the agent-access outcome, construct public/synthetic scenarios, establ
 
 ## WP3 — Statistical comparator
 
-Engineer interpretable privacy features, fit conventional statistical models, evaluate calibration and selective risk, and establish the structured-information baseline.
+Engineer interpretable privacy features, fit conventional statistical models, evaluate calibration and selective risk, estimate uncertainty, and establish the structured-information baseline.
 
 ## WP4 — Semantic models
 
-Evaluate Claude under a fixed rubric, evaluate stock/calibrated Laya, fine-tune Laya only if justified, and conduct robustness experiments.
+Evaluate Claude under a fixed rubric, evaluate stock/calibrated Laya and hosted Jev, fine-tune Laya only if justified, quantify calibration and uncertainty, and conduct robustness experiments.
 
 ## WP5 — Orchestration, model improvement, and open-source package
 
-Test incremental semantic value, evaluate transparent fusion, and build a policy-controlled orchestration layer governing when deterministic rules, statistical models, Laya, hosted comparators such as Jev/Claude, and human reviewers are invoked. Add a human-governed framework for prospective labelled-data collection, adjudication, Laya tuning when justified, hosted-model calibration/evaluation, model/version manifests, and regression-gated releases.
+Test incremental semantic value, evaluate transparent fusion and dual-gate authorization, estimate joint error dependence and risk-coverage trade-offs, and build a policy-controlled orchestration layer governing when deterministic rules, statistical models, Laya, hosted comparators such as Jev/Claude, and human reviewers are invoked. Add a human-governed framework for prospective labelled-data collection, adjudication, Laya tuning when justified, hosted-model calibration/evaluation, model/version manifests, and regression-gated releases.
 
 ## WP6 — Trainee replication and optional implementation pilot
 
@@ -605,7 +641,7 @@ We will develop and evaluate calibrated decision methods for AI data access. We 
 
 A key question is whether compact local models such as Laya can provide useful semantic evidence inside the trusted environment, without transmitting raw records to an external service. Claude will serve as a frontier semantic comparator and support labelled-data development, robustness testing, and independent evaluation.
 
-We will build a provenance-tracked benchmark from public documentation, data dictionaries, and synthetic scenarios, with scenario-family-level train/calibration/test separation, human adjudication, and held-out evaluation of calibration, privacy-relevant false negatives, abstention, and incremental predictive value. The project builds on DataGangeR and the engine-neutral Which decision framework.
+We will build a provenance-tracked benchmark from public documentation, data dictionaries, and synthetic scenarios, with scenario-family-level train/calibration/test separation, human adjudication, and held-out statistical evaluation of calibration, privacy-relevant false negatives, selective risk, abstention, joint-error dependence, and incremental predictive value. The project builds on DataGangeR and the engine-neutral Which decision framework.
 
 # 22. Keywords
 
@@ -621,7 +657,9 @@ We will build a provenance-tracked benchmark from public documentation, data dic
 - comparison of structural/statistical versus semantic evidence;
 - calibration and selective-prediction methodology for AI access gates;
 - incremental-value analysis for semantic decision models;
-- transparent ensemble methodology if justified.
+- transparent ensemble/dual-gate methodology if justified;
+- calibration and uncertainty analysis for typed semantic decision models;
+- statistical analysis of joint unsafe-error probability, error dependence, abstention, and human-review burden.
 
 ## Data
 
@@ -679,6 +717,8 @@ Additional outputs may include conference/poster presentations, trainee projects
 | Counterfactual variants leak across data splits | Split by source/scenario family, not individual generated case |
 | Laya/Jev capabilities differ from assumptions | Treat Laya tuning and Jev calibration/evaluation separately; retain engine-neutral interfaces |
 | Pilot approvals/timing are unavailable | Pilot remains optional and does not affect completion of primary aims |
+| Dual gates make correlated mistakes | Measure joint error and dependence explicitly; diversify evidence/model families; do not assume independence |
+| Raw model confidence is overconfident | Recalibrate on held-out data; use abstention, risk-coverage analysis, and human review |
 
 ---
 
@@ -730,6 +770,22 @@ Anthropic's Canadian research initiative emphasizes beneficial and responsible a
 
 - RouteLLM.  
   https://github.com/lm-sys/RouteLLM
+
+- Guo, C., Pleiss, G., Sun, Y., & Weinberger, K. Q. (2017). **On Calibration of Modern Neural Networks.** ICML, PMLR 70:1321–1330.  
+  https://proceedings.mlr.press/v70/guo17a.html
+
+- Geifman, Y., & El-Yaniv, R. (2017). **Selective Classification for Deep Neural Networks.** NeurIPS 30.  
+  https://papers.neurips.cc/paper_files/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-Abstract.html
+
+- Geifman, Y., & El-Yaniv, R. (2019). **SelectiveNet: A Deep Neural Network with an Integrated Reject Option.** ICML, PMLR 97:2151–2159.  
+  https://proceedings.mlr.press/v97/geifman19a.html
+
+- Angelopoulos, A. N., & Bates, S. (2021). **A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification.** arXiv:2107.07511.  
+  https://arxiv.org/abs/2107.07511
+
+- Lakshminarayanan, B., Pritzel, A., & Blundell, C. (2017). **Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.** NeurIPS 30.  
+  https://papers.neurips.cc/paper_files/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html
+
 
 ---
 
