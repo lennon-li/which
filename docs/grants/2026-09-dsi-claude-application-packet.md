@@ -22,6 +22,8 @@ The scientific/application text is prepared below. The remaining PI-specific ite
 4. **Complete the mandatory DSI demographic survey** if a current response is not already on file.
 5. **Confirm team roles in the Good Grants portal** and submit/approve the application.
 
+The project team will prepare the scientific text, quantitative API-usage model, open-source deliverables, trainee workflow, and pilot plan. Laura's expected commitment is PI oversight, scientific review, eligibility documentation, and final approval/submission rather than preparing the application from scratch.
+
 No separate long-form proposal upload is listed in the call; the application is entered into portal fields. CV PDFs are required for each PI.
 
 ---
@@ -119,9 +121,15 @@ Models will be evaluated using privacy-relevant false-negative rates, proper pro
 
 The project builds directly on DataGangeR, an open-source R framework for privacy-aware synthetic data and human-gated agent workflows, and Which, an engine-neutral framework for typed decisions, calibration, abstention, and model comparison.
 
+A major deliverable will be an **open-source, human-gated AI privacy-firewall framework** that can orchestrate deterministic privacy checks, statistical risk models, compact local models such as Laya/Jev, frontier-model comparison, and human review under an explicit policy. The orchestration layer will control which component is invoked, what information it can see, when disagreement triggers escalation, and how the complete decision trail is logged.
+
+The project will also create an open benchmark and regression-validation suite so that new model versions and software releases can be re-evaluated as AI technology changes. Students and trainees will participate in benchmark construction, blinded review, robustness testing, replication, and software validation.
+
+Subject to organizational approval, we will seek a **real-world public-health pilot**, potentially with Public Health Ontario (PHO), to test the framework on realistic research workflows without requiring confidential records to be sent to Claude.
+
 ### C. Purpose of Claude Credits — maximum 500 words
 
-Claude API credits will support three complementary research functions.
+Claude API credits will support five complementary research functions.
 
 **First, Claude will serve as a frontier semantic-model comparator.** Each benchmark case will contain a versioned description of a dataset, intended use, proposed AI-agent operation, and access conditions. Claude will return structured decisions under a fixed rubric. Its predictions and uncertainty behavior will be compared with an interpretable statistical model and with compact local models such as Laya operating on the same cases. Claude will not define ground truth.
 
@@ -129,9 +137,13 @@ Claude API credits will support three complementary research functions.
 
 **Third, Claude will support systematic robustness experiments.** We will vary access purpose, identifiability, sensitivity, wording, agent location, requested operation, and transformations while holding other factors fixed. These repeated experiments will quantify whether semantic decisions respond to relevant privacy evidence or superficial phrasing.
 
-The scientific design deliberately contrasts frontier cloud models with compact local decision models. Claude provides a high-capability semantic reference point while we test whether smaller models can recover sufficient contextual information to operate locally as a privacy firewall. This distinction is central to the intended impact: a privacy gate should not necessarily require sending detailed metadata or records to the same external model whose access it is supposed to govern.
+**Fourth, Claude will support development and validation of the open-source orchestration layer.** We will test end-to-end agent-team workflows in which deterministic checks, statistical models, compact local models such as Laya/Jev, Claude, and human reviewers have explicitly bounded roles. Claude will be used to exercise normal, ambiguous, adversarial, disagreement, and model-failure scenarios; to independently review selected local-model decisions; and to support regression testing after changes to models, policies, or package code.
 
-All experiments will record model, rubric, and dataset versions. Training, calibration, and final held-out evaluation will remain separate. Claude predictions will never be used automatically as gold labels for the local model or statistical comparator.
+**Fifth, Claude credits will support trainee-led replication and a potential public-health pilot.** Students and trainees will use the API within versioned research workflows for benchmark development, blinded replication, error analysis, robustness experiments, and package validation. Subject to PHO approval, a pilot will evaluate the framework on realistic public-health research workflows using approved/public/synthetic representations rather than transmitting restricted source records.
+
+The scientific design deliberately contrasts frontier cloud models with compact local decision models. Claude provides a high-capability semantic reference point while we test whether smaller models can recover sufficient contextual information to operate locally as a privacy firewall. Training or fine-tuning Laya/Jev itself will use local or separately funded compute; Claude credits will instead support benchmark generation, independent comparison, stress testing, calibration research, and validation around those models.
+
+All experiments will record model, rubric, package, orchestration-policy, and dataset versions. Training, calibration, and final held-out evaluation will remain separate. Claude predictions will never be used automatically as gold labels for the local model or statistical comparator.
 
 ### D. Amount Requested
 
@@ -141,24 +153,26 @@ All experiments will record model, rubric, and dataset versions. Training, calib
 
 ### E. Budget Justification — maximum 500 words
 
-We request **CAD $75,000 in Claude API credits over 12 months** to support a replicated experimental program rather than one-off interactive use.
+We request **CAD $75,000 in Claude API credits over 12 months** to support a replicated research, training, open-source validation, and pilot program rather than one-off interactive use.
 
-The core benchmark will contain approximately 2,000–5,000 expert-reviewed data-access scenarios. Each scenario will be evaluated under multiple experimentally controlled variants, including changes in access environment, requested operation, data sensitivity, transformation status, semantic wording, and model configuration. The resulting workload will therefore be substantially larger than the base benchmark.
+The core benchmark will contain approximately 2,000–5,000 expert-reviewed data-access scenarios. Each scenario will be evaluated under multiple controlled variants, including changes in access environment, requested operation, data sensitivity, transformation status, semantic wording, and model configuration. Selected cases will be repeated across model versions and orchestration policies, so the total number of API evaluations will be much larger than the base benchmark.
 
-Planned credit use is:
+Planned credit use is organized around five workloads:
 
-- **20% — benchmark construction and controlled augmentation:** extraction and structured transformation of public guidance and data documentation into candidate cases, followed by counterfactual generation and adversarial case construction;
-- **25% — frontier semantic-model evaluation:** repeated structured inference across benchmark cases and selected Claude model/configuration variants;
-- **25% — robustness experiments:** systematic paraphrase, context, access-boundary, and transformation perturbations with replicated inference;
-- **15% — calibration, replication, and sensitivity analyses:** repeated runs needed to estimate stochastic/model-version variability and assess calibration and selective prediction;
-- **10% — research/software workflow support:** reproducible research pipelines, structured extraction, verification, and experiment orchestration;
-- **5% — replication contingency:** re-running pre-specified analyses following model updates or detected implementation issues.
+- **25% — benchmark and frontier-model experiments:** structured Claude inference across benchmark cases, counterfactual variants, and selected model/configuration comparisons;
+- **20% — open-source package and orchestration validation:** adversarial tests, disagreement handling, agent-team workflow testing, independent review, and regression suites after package/model/policy changes;
+- **20% — robustness, calibration, and replication:** paraphrase/context perturbations, selective-prediction experiments, repeated runs, and independent frozen-set replication;
+- **15% — trainee research and training:** supervised student use for benchmark construction, blinded review, error analysis, reproducibility exercises, and validation of successive releases;
+- **10% — potential public-health pilot:** realistic workflow testing, implementation evaluation, and post-pilot regression testing, subject to organizational approval;
+- **10% — model/version and pricing contingency:** re-evaluation when Claude models, local models, context windows, or API prices change during the award period.
 
-Local open models and conventional statistical models will not consume Claude credits. Claude usage is deliberately concentrated where a frontier semantic model materially improves the scientific design.
+The project will deliver reusable open-source software, not a one-time model comparison. Because the software may mediate consequential decisions about AI access to research data, meaningful changes to models, package code, or orchestration policy will trigger human-gated validation cycles and regression testing.
 
-All usage will be logged by experiment, model, input/output token count, and purpose. We will monitor spend monthly and adjust replication density within the pre-specified design so that the allocation is used efficiently within the 12-month award period.
+Local training/fine-tuning of Laya/Jev will not consume Claude credits directly. Claude credits will support the surrounding scientific workload: benchmark construction, frontier comparison, adversarial testing, calibration research, independent review, and end-to-end validation.
 
-**Before submission:** add a quantitative usage table using current API prices and expected tokens/run. This is the main remaining weakness in the current application.
+AI capabilities and inference economics are changing rapidly. We will therefore maintain a frozen benchmark and reproducible validation protocol while allowing newly released model versions to be prospectively evaluated. API use will be logged by experiment, model, user/workstream, input/output tokens, and purpose, and spend will be reviewed monthly.
+
+**Before submission:** add a bottom-up quantitative usage table using current Claude API prices, estimated input/output tokens per evaluation, number of benchmark variants, repetitions, trainee workflows, and pilot/regression runs.
 
 ### F. AI Safety — maximum 500 words
 
@@ -172,7 +186,7 @@ Claude-generated scenarios or proposed labels will not automatically become grou
 
 DataGangeR's existing default no-network workflow will be preserved. Future semantic integration will remain optional, with local inference preferred for sensitive applications. Raw records will not be transmitted to remote decision models. Any future model-assisted production workflow will operate on bounded and versioned summaries whose disclosure properties must be evaluated separately.
 
-The proposed local-firewall architecture is designed specifically to reduce unnecessary exposure: deterministic checks, an interpretable statistical model, and a compact local semantic model operate inside the trusted boundary before a larger external agent receives a minimum-necessary representation.
+The proposed local-firewall architecture is designed specifically to reduce unnecessary exposure: deterministic checks, an interpretable statistical model, and a compact local semantic model operate inside the trusted boundary before a larger external agent receives a minimum-necessary representation. A policy-controlled orchestrator will enforce component permissions, minimum-necessary context, structured outputs, disagreement escalation, and human gating; individual agents will not be free to expand their own data access.
 
 All public software, benchmark-generation procedures, model specifications, calibration artifacts, and evaluation code will be version controlled to support reproducibility and independent audit. We will avoid claims that any model score guarantees anonymity, regulatory compliance, or universal safety.
 
@@ -204,6 +218,9 @@ Mandatory for all PI applicants.
 - [ ] Laura provides PDF CV.
 - [ ] Confirm Lennon's correct team role in Good Grants.
 - [ ] Add a quantitative token/cost model supporting the requested CAD $75,000.
+- [ ] Confirm expected trainee count and trainee roles.
+- [ ] Decide whether to name PHO as a **potential** pilot site or use generic "public-health pilot" wording until organizational approval is obtained.
+- [ ] Confirm open-source deliverables: DataGangeR/Which integration, orchestration layer, benchmark, and regression-validation suite.
 - [ ] Laura verifies Anthropic terms and conditions.
 - [ ] Laura completes demographic survey if required.
 - [ ] Enter all fields in Good Grants.
