@@ -91,6 +91,13 @@ The portal asks for role, name, email, institution, division, and unit for all P
 
 If the portal only records PIs and trainees and has no collaborator category, confirm with DSI whether Lennon should be entered in this tab or described only in the project narrative.
 
+### Planned trainee cohort
+
+We propose to involve **3–5 Biostatistics/data-science trainees** in supervised project work, potentially through existing practicum or research-project mechanisms subject to program approval. Trainees will contribute to benchmark construction, classifier evaluation, calibration/uncertainty analysis, adversarial testing, reproducibility, open-source application development, and independent replication. Claude API credits will support their research workflows; the credit award will **not** be represented as trainee salary support.
+
+- **Names/roles:** to be added if required by the portal once trainees are identified.
+- **Practicum mechanism:** to be confirmed with the Biostatistics program.
+
 ---
 
 ## Tab 4 — Proposal
@@ -103,23 +110,15 @@ If the portal only records PIs and trainees and has no collaborator category, co
 
 AI agents are increasingly capable of performing statistical analysis, programming, data cleaning, and other research tasks. Their usefulness creates a practical privacy problem: **what information does an AI agent need to see, and when should that information first be transformed, restricted, or reviewed by a human?**
 
-We will formalize this as a calibrated statistical decision problem and compare three sources of evidence:
+We will formalize this as a calibrated statistical decision problem and compare deterministic privacy safeguards, an interpretable access-decision model, and semantic models that interpret natural-language data descriptions and requested AI operations.
 
-1. **Deterministic privacy safeguards** for known facts such as direct identifiers, quasi-identifiers, free text, and exact-match concerns.
-2. **An interpretable access-decision model** based on measurable properties of the data, proposed task, access boundary, and existing transformations.
-3. **Semantic models** that interpret natural-language dataset descriptions, data dictionaries, intended uses, and requested AI operations.
+The project will explicitly evaluate uncertainty rather than treating model confidence as truth. Raw probabilities will be recalibrated on held-out data; entropy, probability margin, disagreement, abstention, and risk-coverage will be studied. We will also test a **dual-gate authorization strategy** in which independently developed structured and semantic classifiers must concur before bounded access is permitted. We will estimate individual and joint inappropriate-authorization rates, error dependence, and the resulting human-review burden.
 
-The primary research question is whether semantic information adds calibrated predictive value beyond deterministic and structured statistical evidence. A second question is whether compact local models such as Laya can provide useful semantic evidence inside the trusted environment.
+We will generate approximately **2,000–5,000 candidate scenarios**, with a smaller rigorously human-adjudicated core benchmark. Scenario families will remain within one train/calibration/test partition to prevent leakage. Evaluation will use proper scoring rules, calibration curves, Brier/log loss, privacy-relevant false negatives, selective risk, abstention/coverage, joint-error analysis, bootstrap confidence intervals, and—where assumptions support them—distribution-free/conformal risk-control methods.
 
-The project will explicitly evaluate uncertainty rather than treating model confidence as truth. Raw model probabilities will be recalibrated on held-out data; entropy, probability margin, disagreement, abstention, and risk-coverage will be studied. We will also evaluate a **dual-gate authorization strategy** in which independently developed structured and semantic classifiers must concur before bounded access is permitted. We will estimate each gate's error rate, their joint inappropriate-authorization rate, error dependence, and the resulting human-review burden.
+The project has three reusable outputs. First, an **open-source, human-gated AI privacy-firewall framework** spanning DataGangeR and Which. Second, a **general classifier-evaluation framework** in Which for calibration, uncertainty, selective prediction, dual-gate analysis, model/version drift, and regression release gates across Laya, Jev, Claude, statistical models, and future classifiers. Third, a supervised **3–5 trainee research cohort** focused on using AI as a scientific instrument: application building, statistical evaluation, reproducibility, and human-gated validation.
 
-We will generate approximately **2,000–5,000 candidate scenarios**, with a smaller rigorously human-adjudicated core benchmark. Scenario families will remain within one train/calibration/test partition to prevent leakage. Reference actions will distinguish bounded access, transform/redact/synthesize first, human review, and no direct exposure.
-
-Evaluation will use proper scoring rules, calibration curves, Brier/log loss, privacy-relevant false negatives, selective risk, abstention/coverage, joint-error analysis, and bootstrap confidence intervals. Distribution-free or conformal risk-control methods will be explored where assumptions and sample size support them.
-
-The main software deliverable will be an **open-source, human-gated AI privacy-firewall framework** spanning DataGangeR and Which, with policy-controlled orchestration, audit logging, calibration, prospective labelled-data collection, and regression testing. Local Laya models may be tuned when justified; hosted models such as Jev will be calibrated/evaluated through the same interface. Human reviewers will approve gold labels, tuning/recalibration decisions, and releases.
-
-The primary 12-month study remains privacy-focused. Broader public-health applications and a small implementation pilot are extensions, not prerequisites for completing the primary aims.
+A manuscript is not the endpoint. The project will release software, benchmark/evaluation assets, and implementation guidance. If organizational approvals and timing permit, we will also conduct a small public-health implementation pilot, potentially with PHO, to test usability and external validity in realistic workflows. The pilot is a translational objective but is not required to complete the primary scientific aims.
 
 ### C. Purpose of Claude Credits — maximum 500 words
 
@@ -133,7 +132,7 @@ Claude API credits will support five connected research functions.
 
 **Fourth, Claude will support validation of the open-source orchestration and model-improvement framework.** End-to-end workflows will be exercised under normal, ambiguous, adversarial, disagreement, and failure conditions. Claude can independently review selected local-model outputs and help diagnose failure patterns. Local Laya checkpoints may be tuned using local or separately funded compute; hosted Jev will be calibrated/evaluated rather than fine-tuned. Both will use the same versioned decision and evaluation framework.
 
-**Fifth, Claude will support trainee-led replication and, if feasible, a small public-health implementation pilot.** Students and trainees will use versioned workflows for benchmark development, blinded review, error analysis, reproducibility exercises, and release validation. Any pilot, potentially with PHO, will be contingent on organizational approval and will use approved/public/synthetic representations rather than transmitting restricted source records.
+**Fifth, Claude will support a supervised cohort of approximately 3–5 Biostatistics/data-science trainees and, if feasible, a small public-health implementation pilot.** Trainees will use versioned workflows for benchmark development, classifier evaluation, calibration/uncertainty analysis, blinded review, application building, reproducibility exercises, adversarial testing, and release validation. The training objective is to teach statistically grounded, efficient use of AI rather than uncritical model adoption. Any pilot, potentially with PHO, will be contingent on organizational approval and will use approved/public/synthetic representations rather than transmitting restricted source records.
 
 All experiments will record model, rubric, package, orchestration-policy, dataset, and split versions. Claude will provide research evidence, not policy authority. Claude-derived probabilities will be treated as predictions requiring calibration and uncertainty evaluation; they will be compared using proper scoring rules, selective prediction, disagreement/joint-error analysis, and human-review burden rather than simple accuracy alone. Sonnet will carry most high-volume experimentation; Opus 5.5 will be used selectively for complex coding, independent review, and model/version re-evaluation; Fable 5.1 (or a formally released successor such as Fable 5.2) will be reserved for selected high-stakes planning and risk-evaluation tasks where added capability justifies the higher cost.
 
@@ -157,13 +156,13 @@ Illustrative annual usage:
 | High-stakes planning/risk adjudication | 2,000 runs | Fable 5.1 / successor | $6,000 |
 | Bulk benchmark / robustness scoring | 200,000 evaluations | Sonnet 5 Batch | $7,000 |
 | Orchestration / regression validation | 10,000 agentic runs | Sonnet 5 | $9,000 |
-| Trainee research | ~9,500 supervised runs | Sonnet 5 | $7,125 |
+| 3–5 trainee research program | ~9,500 supervised runs | Sonnet 5 | $7,125 |
 | Open-source coding / validation | ~4,000 long-context runs | Opus 5.5 | $12,000 |
 | Conditional public-health pilot | ~3,000 runs | Sonnet 5 | $3,000 |
 | Model/version re-evaluation | ~4,000 runs | Opus 5.5 | $6,000 |
 | **Planned total** |  |  | **~$52,375 USD (~$73,650 CAD)** |
 
-The remaining margin accommodates exchange-rate movement and workload variation. These are planning assumptions, not quotas. API use will be logged by experiment, model, user/workstream, token count, and purpose.
+The remaining margin accommodates exchange-rate movement and workload variation. These are planning assumptions, not quotas. The trainee workload assumes a supervised cohort of approximately 3–5 students sharing versioned research workflows; credits support API use, not compensation. API use will be logged by experiment, model, user/workstream, token count, and purpose.
 
 The project is explicitly designed for classification errors. A semantic classifier cannot independently authorize sensitive-data access. Deterministic hard blockers remain authoritative; low-confidence predictions abstain; disagreement between statistical and semantic evidence escalates to human review; and consequential releases require human approval. Post-release regression tests, audit logs, and versioned rollback points allow a model or policy change to be withdrawn if error rates worsen.
 
@@ -224,11 +223,12 @@ Mandatory for all PI applicants.
 - [ ] Laura provides PDF CV.
 - [ ] Confirm Lennon's correct team role in Good Grants.
 - [ ] Add a quantitative token/cost model supporting the requested CAD $75,000.
-- [ ] Confirm expected trainee count and trainee roles.
+- [ ] Confirm planned **3–5 trainee** cohort, recruitment/practicum mechanism, and whether names are required at submission.
 - [ ] Decide whether to name PHO as a **potential** pilot site or use generic "public-health pilot" wording until organizational approval is obtained.
 - [ ] Confirm open-source deliverables: DataGangeR/Which integration, orchestration layer, prospective labelled-data/model-improvement framework, benchmark, and regression-validation suite.
 - [ ] Keep secondary public-health uses as future extensibility only; primary 12-month study remains privacy-focused.
 - [ ] If PHO is named, retain conditional wording unless organizational approval is obtained.
+- [ ] Confirm dissemination/translation plan: primary methods manuscript + open software/benchmark + implementation guidance, with software/evaluation and pilot publications pursued when mature.
 - [ ] Laura verifies Anthropic terms and conditions.
 - [ ] Laura completes demographic survey if required.
 - [ ] Enter all fields in Good Grants.
