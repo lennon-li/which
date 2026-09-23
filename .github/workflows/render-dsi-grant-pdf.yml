@@ -54,7 +54,7 @@ jobs:
                   "mmdc", "-i", str(mmd), "-o", str(png),
                   "-b", "white", "-s", "1.5"
               ], check=True)
-              parts.append(f"\n![Diagram {idx}]({png}){{ width=92% }}\n")
+              parts.append(f"\n![]({png}){{ width=92% }}\n")
               pos = match.end()
           parts.append(text[pos:])
           out_path.write_text("".join(parts), encoding="utf-8")
