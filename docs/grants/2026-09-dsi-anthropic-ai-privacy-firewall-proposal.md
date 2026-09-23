@@ -393,11 +393,11 @@ A particularly relevant operational quantity is:
 
 Risk-coverage curves will therefore be central to evaluation. A privacy gate should be allowed to say "uncertain." For a confidence threshold \(\tau\),
 
-~~~math
+$$
 R(\tau)=E\{L(Y,\hat Y)\mid C\ge\tau\},
 \qquad
 \mathrm{Coverage}(\tau)=P(C\ge\tau)
-~~~
+$$
 
 so safety can be evaluated explicitly against the fraction of cases handled automatically.
 
@@ -422,18 +422,18 @@ We will also evaluate a **dual-gate authorization strategy**. Gate A will emphas
 
 The key safety quantity is not just each classifier's error rate but the **joint inappropriate-authorization probability**:
 
-~~~math
+$$
 J=P(E_A\cap E_B\mid Y=\text{unsafe})
-~~~
+$$
 
 We will also estimate excess joint failure beyond the independence benchmark,
 
-~~~math
+$$
 \Delta
 =J-
 P(E_A\mid Y=\text{unsafe})
 P(E_B\mid Y=\text{unsafe})
-~~~
+$$
 
 so correlated failure is measured rather than assumed away. We will test whether intentionally diversified gates reduce joint unsafe authorization relative to either gate alone and quantify the corresponding increase in abstention and human-review burden. Independence will be encouraged through distinct feature representations, model classes, and development samples; it will **not** be inferred merely because two bootstrap samples were used.
 
@@ -443,18 +443,18 @@ The statistical objective is therefore broader than building a classifier: **we 
 
 We will also distinguish **error frequency from error consequence**. Human adjudicators will assign the structured exposure-impact profile defined in the benchmark. A primary severity endpoint will be
 
-~~~math
+$$
 P(\text{authorize}\mid Y=\text{unsafe},\ H=\text{high})
-~~~
+$$
 
 with a transparent, pre-specified harm-weighted analysis as a sensitivity measure,
 
-~~~math
+$$
 \mathrm{HWFA}
 =
 \frac{\sum_i h_i I(\hat A_i=\text{allow},Y_i=\text{unsafe})}
 {\sum_i h_i I(Y_i=\text{unsafe})}
-~~~
+$$
 
 Component harm ratings will remain visible rather than being hidden inside a single opaque score. For dual gates, we will examine not only how often both gates fail, but whether they prevent the most consequential failures.
 
