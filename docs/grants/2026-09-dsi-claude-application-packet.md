@@ -150,29 +150,19 @@ All experiments will record model, rubric, package, orchestration-policy, datase
 
 ### E. Budget Justification — maximum 500 words
 
-We request **CAD $75,000 in Claude API credits over 12 months**.
+We request CAD $75,000 in Claude API credits over 12 months. The request is based on a bottom-up work plan rather than a single large inference estimate. Using the current planning assumptions, expected use is approximately US$52,375, or about CAD $73,650 at the exchange rate used for budgeting, leaving a small margin for workload and exchange-rate variation.
 
-A bottom-up planning model supports this request using the current Claude lineup. As of September 22, 2026, **Claude Opus 5.5** was released at US$4/M input and US$20/M output tokens. **Claude Fable 5.1**, currently the publicly available Fable model, is US$10/M input and US$50/M output and will be reserved for selected high-stakes planning, risk review, and difficult-case adjudication. If Fable 5.2 or a successor becomes officially available during the award, it will be evaluated prospectively under the same frozen protocol rather than assumed in advance.
+Building and benchmark development. Approximately US$14,250 supports candidate-case generation, labelled-data workflows, open-source coding, and implementation of the DataGangeR/Which privacy-gating and classifier-evaluation framework. This includes constructing 2,000–5,000 candidate scenarios, generating controlled counterfactuals and hard cases, building model adapters, implementing calibration and abstention workflows, and packaging reproducible software.
 
-Illustrative annual usage:
+Testing and statistical evaluation. Approximately US$22,000 supports the largest experimental workload: bulk benchmark scoring, robustness and adversarial experiments, orchestration/regression validation, and model/version re-evaluation. This is where repeated API calls are necessary to estimate calibration, selective risk, subgroup performance, wording sensitivity, joint errors, harm-weighted failures, and stability across model versions. Repeated held-out evaluation and independent replication are essential because the project studies uncertainty and failure rates, not one-off model demonstrations.
 
-| Workload | Scale | Model | Approx. USD |
-|---|---:|---|---:|
-| Candidate-case / labelled-data workflows | 5,000 long-context runs | Sonnet 5 | $2,250 |
-| High-stakes planning/risk adjudication | 2,000 runs | Fable 5.1 / successor | $6,000 |
-| Bulk benchmark / robustness scoring | 200,000 evaluations | Sonnet 5 Batch | $7,000 |
-| Orchestration / regression validation | 10,000 agentic runs | Sonnet 5 | $9,000 |
-| 3–5 trainee research program | ~9,500 supervised runs | Sonnet 5 | $7,125 |
-| Open-source coding / validation | ~4,000 long-context runs | Opus 5.5 | $12,000 |
-| Conditional public-health pilot | ~3,000 runs | Sonnet 5 | $3,000 |
-| Model/version re-evaluation | ~4,000 runs | Opus 5.5 | $6,000 |
-| **Planned total** |  |  | **~$52,375 USD (~$73,650 CAD)** |
+Scientific planning and difficult-case adjudication. Approximately US$6,000 is reserved for selected high-capability review of ambiguous or high-consequence cases, experiment design, risk analysis, and independent methodological critique.
 
-The remaining margin accommodates exchange-rate movement and workload variation. These are planning assumptions, not quotas. The trainee workload assumes a supervised cohort of approximately 3–5 students using versioned AI workflows for both application development and statistical evaluation; credits support API use, not compensation. API use will be logged by experiment, model, user/workstream, token count, and purpose.
+Education and supervised research. Approximately US$7,125 supports 3–5 Biostatistics/data-science trainees using versioned Claude workflows for benchmark construction, statistical classifier evaluation, reproducibility exercises, robustness testing, software validation, and independent replication. Credits support research use, not trainee compensation.
 
-The project is explicitly designed for classification errors. A semantic classifier cannot independently authorize sensitive-data access. Deterministic hard blockers remain authoritative; low-confidence predictions abstain; disagreement between statistical and semantic evidence escalates to human review; and consequential releases require human approval. Post-release regression tests, audit logs, and versioned rollback points allow a model or policy change to be withdrawn if error rates worsen.
+Pilot and translation. Approximately US$3,000 is reserved for a small approval-dependent public-health implementation pilot using approved/public/synthetic representations. If a pilot is not feasible within the award period, these credits will instead support additional external validation, replication, or adjudicated benchmark cases.
 
-Local Laya tuning will use local/separately funded compute; Jev will be calibrated/evaluated as a hosted comparator. Claude credits fund labelled-data development, training supervision, frontier comparison, adversarial testing, independent evaluation, orchestration validation, and reproducible release testing.
+Sonnet will carry most high-volume work; Opus 5.5 will be used selectively for complex coding, independent review, and model/version re-evaluation; Fable 5.1 or a formally released successor will be reserved for selected high-stakes planning and difficult-case review. Batch processing and caching will be used where appropriate. API use will be logged by model, experiment, workstream, token count, and purpose. The phased stop/go design also limits waste: later modelling stages proceed only if earlier stages demonstrate sufficient value.
 
 ### F. AI Safety — maximum 500 words
 
