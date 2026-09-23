@@ -24,6 +24,8 @@ This is the handoff set for Laura's review and final submission.
 6. **Ready-to-send email draft**  
    `docs/grants/2026-09-dsi-laura-email-draft.md`
 
+The bundled Lennon Li CV is background material for the project lead; it does not replace the required PI CV. Laura must provide her own PDF CV for submission.
+
 ## Decisions requested from Laura
 
 - approve or revise the CAD $75,000 request;

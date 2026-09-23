@@ -15,7 +15,7 @@ Claude API prices are in USD.
 | Claude Fable 5.1 | US$10 / 1M | US$50 / 1M | selected high-stakes planning/risk adjudication |
 | Claude Sonnet 5 Batch | US$1 / 1M | US$5 / 1M | bulk benchmark and robustness scoring |
 
-**Freshness note.** Opus 5.5 was released on September 22, 2026. Fable 5.1 remains Anthropic's currently documented public Fable release. Fable 5.2 has been reported in pre-release testing but has no official Anthropic API identifier or pricing as of this date. If Fable 5.2 or another successor becomes officially available during the award, it will be evaluated prospectively rather than budgeted at an invented price.
+**Freshness note.** Opus 5.5 was released on September 22, 2026. Fable 5.1 remains Anthropic's documented public Fable release. The budget uses that released model and its published price. Any officially released successor would require a verified API identifier, price, and prospective protocol amendment before substitution; no future-model rate is assumed.
 
 Bank of Canada daily rate used for planning: **1 USD = 1.4064 CAD**.
 
@@ -33,7 +33,9 @@ Bank of Canada daily rate used for planning: **1 USD = 1.4064 CAD**.
 | Model/version re-evaluation | 4,000 | 250k | 25k | Opus 5.5 | $6,000 |
 | **Total** |  |  |  |  | **$52,375 USD** |
 
-At 1.4064 CAD/USD, this is approximately **CAD $73,650**, leaving a modest margin for exchange-rate and workload variation within a CAD $75,000 request.
+Here a **run** is one budgeted workload unit with the row's average input and output tokens. The 200,000 **bulk evaluations** are one Claude API call each, planned as approximately 2,500 candidate cases × 4 controlled variants × 4 repeats × 5 pre-specified model/rubric-version conditions. These factors describe usage and robustness work, **not 200,000 independent cases or statistical power**. Family-level inference uses the separately human-adjudicated benchmark. The other rows are **aggregate sessions**: their token totals represent all calls, tool turns, retries, and accumulated context within a session, not a single API request. Log actual calls and tokens within each session so the budget can be reconciled with invoices.
+
+Each row is calculated as runs × (average input tokens × listed input price + average output tokens × listed output price) / 1,000,000, rounded to the nearest USD dollar. The averages are planning totals, not per-request context-window claims. Only the bulk row assumes the listed 50% Batch price. Other rows use uncached standard rates; caching may reduce actual cost, but no cache-hit discount is counted and cache writes, retries, or non-Batch runs must be logged at their actual rates. At 1.4064 CAD/USD, US$52,375 × 1.4064 = CAD $73,660.20, reported as approximately **CAD $73,660** to the nearest $10. The CAD $75,000 request leaves approximately CAD $1,340 for exchange-rate and workload variation. Recheck published rates and exchange conversion before submission.
 
 ## Classification-error fallback and risk control
 
@@ -52,7 +54,7 @@ Operational fallback:
 
 - **Sonnet 5:** economical high-volume experimental work.
 - **Opus 5.5:** newly released frontier model for complex coding, independent review, and version-drift evaluation.
-- **Fable 5.1 / future Fable successor:** selected planning, risk-evaluation, and difficult-case adjudication where the higher cost is justified.
+- **Fable 5.1 / verified officially released successor:** selected planning, risk evaluation, and difficult-case review where the higher cost is justified.
 - **Local Laya:** privacy-preserving local decision model; tuning uses local/separately funded compute.
 - **Jev:** hosted typed-decision comparator; calibrated/evaluated rather than treated as a local trainable checkpoint.
 

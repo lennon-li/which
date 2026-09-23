@@ -2,7 +2,7 @@
 
 ## What is ready
 
-The application package is now in submission-ready form.
+The scientific narrative and workload model are prepared. Submission still requires Laura's review and CV, confirmation of the external-grant details and team roles, completion of any required PI-specific fields, and final portal entry and approval.
 
 1. **Portal-ready copy/paste application**  
    `docs/grants/2026-09-dsi-claude-portal-ready.md`  
@@ -41,7 +41,7 @@ The application package is now in submission-ready form.
 
 ### 1. Budget level
 
-We currently request **CAD $75,000**. The bottom-up plan is approximately CAD $73,650 and is divided across benchmark/software building, statistical testing, high-capability review, trainee workflows, and an optional public-health pilot.
+We currently request **CAD $75,000**. The bottom-up plan projects approximately CAD $73,660 of usage, leaving about CAD $1,340 for workload and exchange-rate variation. The estimate is based on explicit token totals and a workload decomposition in `docs/grants/2026-09-dsi-claude-budget-model.md`.
 
 **Question:** Does CAD $75,000 feel appropriate for this competition, or would you prefer a lower request? If you know whether DSI commonly offers a smaller allocation than requested, that would help us decide whether to keep the current amount or explicitly state a reduced-award contingency.
 

@@ -1,30 +1,79 @@
 # DSI Claude API Credit Award — Application Packet
 
+## Executive summary
+
+This packet guides **Laura C. Rosella, the sole PI and Good Grants submitter**, through the DSI Claude API Credit Award application. The project requests CAD $75,000 in Claude API credits over 12 months to develop and evaluate a statistically calibrated privacy firewall that helps determine what representations of medical and public-health data may be shared with cloud AI systems, for which tasks, and under what safeguards.
+
+The packet follows the form’s sections, provides draft application answers, identifies PI decisions and required materials, and ends with a submission checklist. **Ye Lennon Li is a project lead/collaborator and is not eligible to be PI; do not list him as PI.** His contact and affiliation details are listed below for Laura to enter if the portal allows a collaborator/project-lead role.
+
+**Open the Good Grants application:** [Start or continue the application](https://apply.datasciences.utoronto.ca/).
+
+### How Laura should use this document
+
+1. **Read the bold questions and action items first.** They identify decisions, confirmations, and materials needed from you as PI.
+2. Review the draft answers in portal order and revise any wording that does not reflect your plans or commitments. Use the [portal-ready application](2026-09-dsi-claude-portal-ready.md) as the canonical copy/paste text; this packet is the walkthrough and checklist.
+3. Follow the links to the proposal, budget, and review-memo PDFs when you want the detailed rationale or assumptions behind a draft answer. Keep those PDFs alongside this HTML file so its links work.
+4. Open the [Good Grants application](https://apply.datasciences.utoronto.ca/), enter the approved content and your PI information, complete required declarations, then proofread and submit the application yourself.
+
+### Questions to consider while reviewing
+
+- **Eligibility and external-grant evidence:** Are you eligible and willing to serve as PI, and what exact grant record best verifies the required lead-applicant criterion?
+- **Request and scope:** Is CAD $75,000 appropriate? Would you change the priorities if DSI awards less? Does the 12-month plan and its phased scope feel feasible?
+- **Scientific framing:** Are the research question, benchmark/adjudication plan, safeguards, and success criteria convincing? See the full proposal PDF for methodological detail.
+- **People and training:** Is the proposed 3–5 trainee cohort realistic, and what practicum or supervision route should we describe? Which collaborator role, if any, does Good Grants permit for Lennon?
+- **Partners and implementation:** Should PHO remain a conditional potential pilot partner? Are there privacy/data-governance experts or partners you would recommend for review or external validation?
+- **Portal and submission:** Does the live form offer an optional full-proposal attachment? Which CV should be uploaded, and are your terms acceptance and demographic-survey response current?
+
+Please answer or annotate the bold items as you go. Lennon can revise the narrative and provide his team details; **Laura makes the PI-level decisions and submits the form.**
+
 **Project:** Measure Before You Share: Calibration, Uncertainty, and Dual-Gate Safety for AI Access to Medical and Public-Health Data  
 **Program:** University of Toronto Data Sciences Institute — Claude API Credit Award  
 **Tier:** Claude Research  
 **Deadline:** September 25, 2026, 23:59 ET  
 **Working request:** CAD $75,000 in Claude API credits over 12 months  
-**PI:** Laura C. Rosella, PhD, MHSc  
-**Project lead / collaborator:** Lennon Li  
-**Status:** Application-ready. Canonical copy-paste text: `docs/grants/2026-09-dsi-claude-portal-ready.md`. PI-specific items remain marked **LAURA TO CONFIRM**
+**PI and submitter:** Laura C. Rosella, PhD, MHSc
+
+**Project lead / collaborator (not PI; not PI-eligible):** Ye Lennon Li, PhD, P.Stat.
+
+**Status:** Scientific narrative and workload model prepared. Laura is the PI and Good Grants submitter; Lennon’s team details are listed below. Submission still needs the PI confirmations below. Canonical copy-paste text: [portal-ready application](2026-09-dsi-claude-portal-ready.md); detailed background is in the linked PDFs.
 
 ---
 
-## What Laura needs to provide
+## Laura’s walkthrough: decisions and actions
 
-The scientific/application text is prepared below. The remaining PI-specific items are intentionally limited:
+**Laura is the PI and should complete and submit the Good Grants application.** The narrative answers are drafted below. Lennon’s proposed team/contact details are included here; he can support revisions but is not the PI or submitter.
 
-1. **Review and approve the scientific framing and final application text.**
-2. **Provide/upload a PDF CV.**
-3. **Confirm one external grant on which Laura was lead applicant within the past three years.**
-   - Publicly documented candidate: *Developing a Precision Participatory and Multi-Level Approach for Population-Based Diabetes Risk Assessment to Address Inequities in Type 2 Diabetes* — CIHR / Diabetes Canada, 2025, $2M team grant. **LAURA TO CONFIRM exact agency/program/title as submitted.**
-4. **Complete the mandatory DSI demographic survey** if a current response is not already on file.
-5. **Confirm team roles in the Good Grants portal** and submit/approve the application.
+### Laura: please confirm or provide
 
-The project team will prepare the scientific text, quantitative API-usage model, open-source deliverables, trainee workflow, and pilot plan. Laura's expected commitment is PI oversight, scientific review, eligibility documentation, and final approval/submission rather than preparing the application from scratch.
+1. **PI eligibility:** confirm you are eligible to apply as PI and are not PI on another proposal in this competition round.
+2. **External-grant evidence:** confirm the exact agency/program, project title, funding status/date, and your lead-applicant role for a qualifying grant within the past three years. A publicly documented candidate is listed below, but please verify it against your grant record.
+3. **Request and budget:** approve or revise the CAD $75,000 request and its reduced-award priority order. See the [budget model PDF](2026-09-dsi-claude-budget-model.pdf) for the token assumptions, model rates, arithmetic, and fallback plan.
+4. **Project framing:** approve or revise the scientific narrative, 3–5 trainee plan, privacy-review approach, and whether PHO should remain a conditional potential pilot partner. See the [full proposal PDF](2026-09-dsi-anthropic-ai-privacy-firewall-proposal.pdf) for detailed methods and milestones.
+5. **PI materials:** provide your PI CV as a PDF and confirm whether your required DSI demographic survey is already current.
+6. **Portal-specific items:** confirm the PI role terminology, review the available team-role options for Lennon, and check whether the live form has an optional full-proposal attachment field.
+7. **Final submission:** review and accept the Claude/Anthropic terms, enter the application in Good Grants, proofread the portal-rendered fields, and submit it.
 
-No separate long-form proposal upload is listed in the call; the application is entered into portal fields. CV PDFs are required for each PI.
+### Suggested collaborator entry for Lennon
+
+- **Name:** Ye Lennon Li, PhD, P.Stat.
+- **Proposed role/description:** Project Lead / Technical Lead — AI Privacy-Firewall Architecture and Software Methods. If the portal uses a fixed role list, Laura should select the closest permitted collaborator/project-lead option.
+- **Email:** ye.li@utoronto.ca
+- **Institution/affiliations:** Public Health Ontario; University of Toronto
+- **Division:** Dalla Lana School of Public Health, University of Toronto
+- **Unit:** Division of Biostatistics, Dalla Lana School of Public Health
+- **Professional titles:** Biostatistical Specialist, Public Health Ontario; Adjunct Professor, University of Toronto
+
+**Lennon is not PI-eligible and must not be listed as PI.** Laura should enter these details only if the portal supports a collaborator/project-lead entry; if it only accepts PIs and trainees, describe Lennon in the project narrative or ask DSI how to record him.
+
+### Reference files
+
+- [Laura review memo PDF](2026-09-dsi-laura-review-memo.pdf) — concise decision questions and review priorities.
+- [Portal-ready application PDF](2026-09-dsi-claude-portal-ready.pdf) — clean copy for reviewing the proposed form text. Use the linked Markdown version above as the copy/paste source.
+- [Lennon Li CV PDF](Lennon_Li_DSI_AI_CV_2026.pdf) — background on the collaborator’s qualifications; this is not a PI CV and does not replace Laura’s required CV.
+- [Full technical proposal PDF](2026-09-dsi-anthropic-ai-privacy-firewall-proposal.pdf) — detailed rationale, methods, benchmark design, and milestones.
+- [Budget model PDF](2026-09-dsi-claude-budget-model.pdf) — detailed workload and cost assumptions.
+
+Keep these PDFs alongside this HTML file so the links below open when the packet is shared. No separate long-form proposal upload is listed in the call; Laura should check the live portal for an optional attachment field.
 
 ---
 
@@ -58,7 +107,7 @@ privacy-preserving AI; statistical calibration; selective prediction; data acces
 
 For each PI, DSI requires evidence of at least one external grant **secured or applied for as lead applicant within the past three years**.
 
-**Laura C. Rosella — LAURA TO CONFIRM exact wording**
+**LAURA: confirm this grant qualifies and verify the exact wording against your records.**
 - Agency/program: CIHR / Diabetes Canada — Embracing Diversity to Achieve Precision & Health Equity Team Grant
 - Proposal: *Developing a Precision Participatory and Multi-Level Approach for Population-Based Diabetes Risk Assessment to Address Inequities in Type 2 Diabetes*
 - Status: Funded, 2025
@@ -66,7 +115,7 @@ For each PI, DSI requires evidence of at least one external grant **secured or a
 
 ### Terms and Conditions
 
-**LAURA:** verify and accept Claude/Anthropic terms in the portal.
+**LAURA: verify and accept Claude/Anthropic terms in the portal.**
 
 ---
 
@@ -76,7 +125,7 @@ The portal asks for role, name, email, institution, division, and unit for all P
 
 ### PI
 
-- **Role:** NPI / PI — **LAURA TO CONFIRM portal terminology**
+- **Role:** NPI / PI — **LAURA: confirm the portal’s exact PI terminology.**
 - **Name:** Laura C. Rosella
 - **Email:** laura.rosella@utoronto.ca
 - **Institution:** University of Toronto
@@ -85,22 +134,28 @@ The portal asks for role, name, email, institution, division, and unit for all P
 
 ### Project lead / collaborator
 
-- **Name:** Lennon Li
-- **Role:** **TO CONFIRM from portal choices; do not list as PI because the budgetary-appointment criterion is not met**
-- **Institution / unit / email:** **Lennon to complete**
+- **Name:** Ye Lennon Li, PhD, P.Stat.
+- **Proposed role/description:** Project Lead / Technical Lead — AI Privacy-Firewall Architecture and Software Methods. If the form uses a fixed role list, **Laura: select the closest permitted collaborator/project-lead option; Lennon is not PI-eligible and must not be listed as PI.**
+- **Email:** ye.li@utoronto.ca
+- **Institution/affiliations:** Public Health Ontario; University of Toronto
+- **Division:** Dalla Lana School of Public Health, University of Toronto
+- **Unit:** Division of Biostatistics, Dalla Lana School of Public Health
+- **Professional titles:** Biostatistical Specialist, Public Health Ontario; Adjunct Professor, University of Toronto
 
-If the portal only records PIs and trainees and has no collaborator category, confirm with DSI whether Lennon should be entered in this tab or described only in the project narrative.
+**Laura: if the portal only records PIs and trainees and has no collaborator category, check with DSI whether Lennon should be entered here or described only in the project narrative.**
 
 ### Planned trainee cohort
 
 We propose to involve **3–5 Biostatistics/data-science trainees** in supervised project work, potentially through existing practicum or research-project mechanisms subject to program approval. The training objective is not only to teach students how to use AI to analyze data and prototype applications, but how to **evaluate AI statistically**: define reference outcomes, quantify error, calibrate probabilities, assess uncertainty, study abstention and correlated failures, and decide when human review is required. Trainees will contribute to benchmark construction, classifier evaluation, adversarial testing, reproducibility, open-source application development, and independent replication. Claude API credits will support their research workflows; the credit award will **not** be represented as trainee salary support.
 
 - **Names/roles:** to be added if required by the portal once trainees are identified.
-- **Practicum mechanism:** to be confirmed with the Biostatistics program.
+- **Laura: confirm whether the proposed practicum/supervised-project mechanism is realistic; add trainee names only if the portal requires them.**
 
 ---
 
 ## Tab 4 — Proposal
+
+The form-ready narrative is included below. For the study design, benchmark rules, evaluation criteria, and phased milestones in full, see the [full technical proposal PDF](2026-09-dsi-anthropic-ai-privacy-firewall-proposal.pdf).
 
 ### A. Project Type
 
@@ -112,13 +167,13 @@ Researchers increasingly use cloud AI systems to prototype statistical analyses,
 
 Synthetic data can reduce direct exposure of PI/PHI, but “synthetic” is not a privacy certificate. A generated dataset may preserve rare combinations, sensitive relationships, or source-like records, while an agentic workflow may repeatedly request additional context.
 
-We will formalize this as a calibrated statistical decision problem and compare deterministic privacy safeguards, an interpretable access-decision model, and semantic classifiers. Raw probabilities will be recalibrated on held-out data; entropy, probability margin, disagreement, abstention, and risk-coverage will be studied. We will also test a **dual-gate authorization strategy** in which independently developed structured and semantic classifiers must concur before bounded access is permitted, estimating individual and joint inappropriate-authorization rates, error dependence, and human-review burden.
+We will formalize this as a calibrated statistical decision problem and compare deterministic privacy safeguards, an interpretable access-decision model, and semantic classifiers. Raw probabilities will be recalibrated on held-out data; entropy, probability margin, disagreement, abstention, and risk-coverage will be studied. We will test **dual-gate authorization** against simpler gates at comparable automatic coverage and human-review burden, with thresholds chosen on calibration data and the test locked until final comparison. The local English Laya baseline will use a versioned semantic capsule of at most 512 tokens, equivalent case information for semantic comparators, and structured variables kept separate. Longer Laya input requires a separate pre-specified supported evaluation.
 
 A central methodological idea is to convert an otherwise difficult-to-evaluate natural-language AI judgment into a **typed classification problem with explicit outcomes and probabilities**. This creates a natural role for biostatistics: proper scoring rules, calibration, uncertainty quantification, selective prediction, confidence intervals, subgroup analysis, and reproducible held-out validation.
 
-This also targets an emerging AI design direction: specialized decision models that consume semantic context but return standardized choices and probabilities rather than prose. Such outputs are easier to integrate, calibrate, and audit than free-form language. Privacy is our primary testbed; the training and evaluation tools are deliberately reusable.
+Specialized decision models return standardized choices and probabilities that can be calibrated and audited. Privacy is our primary testbed; the evaluation tools are reusable.
 
-We will generate approximately **2,000–5,000 candidate scenarios** from public RDM/privacy guidance, public data dictionaries and repositories, synthetic counterfactuals, and—if agreements permit—de-identified or abstracted decision cases contributed by privacy/data-access partners. A smaller rigorously human-adjudicated core benchmark will use scenario-family-level train/calibration/test separation. Expert annotation will also record **potential harm if exposure occurs**, enabling harm-weighted false-authorization and high-severity miss rates.
+We will generate approximately **2,000–5,000 candidate scenarios** from public RDM/privacy guidance, public data dictionaries and repositories, and synthetic counterfactuals. A core of at least **600 independent human-adjudicated scenario families** will be split 360/120/120 for development/calibration/locked test, with at least 40 high-risk test families. Every test case and a stratified 20% of development cases will be double reviewed; disagreements will be adjudicated. Expert annotation will record **potential harm if exposure occurs**. Inference covers sampled public/synthetic families and planned perturbations; very rare failure rates remain imprecise.
 
 The project has three reusable outputs: an **open-source human-gated AI privacy firewall** spanning DataGangeR and Which; a **general classifier-evaluation framework** for statistical evaluation of AI decisions; and a supervised **3–5 trainee cohort**. Students will learn not only to use AI for analysis and application building, but to evaluate its outputs and uncertainties using statistical methods.
 
@@ -140,21 +195,21 @@ Claude API credits will support five connected research functions.
 
 **Fifth, Claude will support a supervised cohort of approximately 3–5 Biostatistics/data-science trainees and, if feasible, a small public-health implementation pilot.** Trainees will use versioned workflows for benchmark development, classifier evaluation, calibration/uncertainty analysis, blinded review, application building, reproducibility exercises, adversarial testing, and release validation. The training objective is to prepare the next generation of statisticians to do more than prompt AI: they will learn to build with it and then evaluate its classifications, probabilities, uncertainty, failure modes, and need for human review using statistical methods. Any pilot, potentially with PHO, will be contingent on organizational approval and will use approved/public/synthetic representations rather than transmitting restricted source records.
 
-All experiments will record model, rubric, package, orchestration-policy, dataset, and split versions. Claude will provide research evidence, not policy authority. Claude-derived probabilities will be treated as predictions requiring calibration and uncertainty evaluation; they will be compared using proper scoring rules, selective prediction, disagreement/joint-error analysis, and human-review burden rather than simple accuracy alone. Sonnet will carry most high-volume experimentation; Opus 5.5 will be used selectively for complex coding, independent review, and model/version re-evaluation; Fable 5.1 (or a formally released successor such as Fable 5.2) will be reserved for selected high-stakes planning and risk-evaluation tasks where added capability justifies the higher cost.
+All experiments will record model, rubric, package, orchestration-policy, dataset, and split versions. Claude will provide research evidence, not policy authority. Claude-derived probabilities will be treated as predictions requiring calibration and uncertainty evaluation; they will be compared using proper scoring rules, selective prediction, disagreement/joint-error analysis, and human-review burden rather than simple accuracy alone. Sonnet will carry most high-volume experimentation; Opus 5.5 will be used selectively for complex coding and review; Fable 5.1, or an officially released successor with verified identifier and price, will be reserved for selected high-stakes planning and risk-evaluation tasks.
 
 ### D. Amount Requested
 
 **CAD $75,000 — WORKING REQUEST**
 
-**Budget note:** This amount should be finalized only after a quantitative token-usage calculation. Current Claude pricing makes $75,000 a substantial research allocation; the application should demonstrate enough replicated inference, benchmark augmentation, long-context testing, robustness runs, and model/version sensitivity analyses to credibly exhaust the credits within 12 months.
+**LAURA: approve or revise the CAD $75,000 request before submission.** The quantitative workload and token-cost calculation is complete in the [budget model PDF](2026-09-dsi-claude-budget-model.pdf) and [editable source](2026-09-dsi-claude-budget-model.md). Its rates, exchange conversion, Batch assumption, and projected usage remain planning assumptions to verify before submission; the request is a ceiling, not a commitment to exhaust credits.
 
 ### E. Budget Justification — maximum 500 words
 
-We request CAD $75,000 in Claude API credits over 12 months. The request is based on a bottom-up work plan rather than a single large inference estimate. Using the current planning assumptions, expected use is approximately US$52,375, or about CAD $73,650 at the exchange rate used for budgeting, leaving a small margin for workload and exchange-rate variation.
+We request CAD $75,000 in Claude API credits over 12 months. The bottom-up workload model estimates US$52,375, or CAD $73,660.20 at 1 USD = 1.4064 CAD, rounded to approximately CAD $73,660, leaving a modest margin for variation.
 
 Building and benchmark development. Approximately US$14,250 supports candidate-case generation, labelled-data workflows, open-source coding, and implementation of the DataGangeR/Which privacy-gating and classifier-evaluation framework. This includes constructing 2,000–5,000 candidate scenarios, generating controlled counterfactuals and hard cases, building model adapters, implementing calibration and abstention workflows, and packaging reproducible software.
 
-Testing and statistical evaluation. Approximately US$22,000 supports the largest experimental workload: bulk benchmark scoring, robustness and adversarial experiments, orchestration/regression validation, and model/version re-evaluation. This is where repeated API calls are necessary to estimate calibration, selective risk, subgroup performance, wording sensitivity, joint errors, harm-weighted failures, and stability across model versions. Repeated held-out evaluation and independent replication are essential because the project studies uncertainty and failure rates, not one-off model demonstrations.
+Testing and statistical evaluation. Approximately US$22,000 supports bulk scoring, robustness and adversarial experiments, orchestration/regression validation, and model/version re-evaluation. The 200,000 one-call bulk evaluations reflect 2,500 candidate cases × four variants × four repeats × five model/rubric-version conditions; they are usage units, not independent observations or a power calculation. Other budgeted runs are multi-call sessions with aggregate token totals.
 
 Scientific planning and difficult-case adjudication. Approximately US$6,000 is reserved for selected high-capability review of ambiguous or high-consequence cases, experiment design, risk analysis, and independent methodological critique.
 
@@ -162,7 +217,7 @@ Education and supervised research. Approximately US$7,125 supports 3–5 Biostat
 
 Pilot and translation. Approximately US$3,000 is reserved for a small approval-dependent public-health implementation pilot using approved/public/synthetic representations. If a pilot is not feasible within the award period, these credits will instead support additional external validation, replication, or adjudicated benchmark cases.
 
-Sonnet will carry most high-volume work; Opus 5.5 will be used selectively for complex coding, independent review, and model/version re-evaluation; Fable 5.1 or a formally released successor will be reserved for selected high-stakes planning and difficult-case review. Batch processing and caching will be used where appropriate. API use will be logged by model, experiment, workstream, token count, and purpose. The phased stop/go design also limits waste: later modelling stages proceed only if earlier stages demonstrate sufficient value.
+Sonnet will carry most high-volume work; Opus 5.5 and Fable 5.1 have selective roles. Any successor must be officially released with verified identifier and price. Only bulk scoring assumes Batch pricing; other rows use uncached rates without a cache discount. Actual calls, tokens, Batch and cache use will be logged. Later stages proceed only if earlier gates demonstrate value.
 
 ### F. AI Safety — maximum 500 words
 
@@ -195,9 +250,9 @@ The primary safety endpoint will include **inappropriate authorization**—allow
 
 ## Tab 5 — CVs
 
-Required: **PDF CV for every PI.**
+Required: **Laura: provide/upload your PDF CV. A PDF CV is required for every PI.**
 
-- Laura C. Rosella — **LAURA TO PROVIDE/UPLOAD**
+- Laura C. Rosella — **LAURA: provide/upload your CV.**
 - If another eligible Co-PI is added, that person's PDF CV is also required.
 - Lennon does not need a PI CV unless the portal/application instructions separately request collaborator CVs.
 
@@ -205,7 +260,7 @@ Required: **PDF CV for every PI.**
 
 ## Demographic Survey
 
-Mandatory for all PI applicants.
+**Laura: mandatory for all PI applicants; complete/update it if DSI does not already have a current response on file.**
 
 - Laura — **complete/update if DSI does not already have a current response on file.**
 
@@ -213,25 +268,23 @@ Mandatory for all PI applicants.
 
 # Final submission checklist
 
-- [ ] Laura confirms willingness to be NPI/PI and is not PI on another proposal in this round.
-- [ ] Laura reviews title, abstract, project description, Claude-credit purpose, budget, and AI-safety text.
-- [ ] Laura confirms exact external grant agency/program/title and lead-applicant status.
-- [ ] Laura provides PDF CV.
-- [ ] Confirm Lennon's correct team role in Good Grants.
-- [ ] Add a quantitative token/cost model supporting the requested CAD $75,000.
-- [ ] Confirm planned **3–5 trainee** cohort, recruitment/practicum mechanism, and whether names are required at submission.
-- [ ] Decide whether to name PHO as a **potential** pilot site or use generic "public-health pilot" wording until organizational approval is obtained.
+- [ ] **Laura confirms PI eligibility and that she is not PI on another proposal in this round.**
+- [ ] **Laura reviews and approves the title, abstract, project description, Claude-credit purpose, budget, and AI-safety text.** See the [review memo PDF](2026-09-dsi-laura-review-memo.pdf) for decision prompts.
+- [ ] **Laura confirms exact external-grant agency/program/title, status/date, and lead-applicant wording.**
+- [ ] **Laura provides and uploads her PDF CV.**
+- [ ] **Laura enters Lennon’s listed name, contact, and affiliation details if the portal supports a collaborator/project-lead role; select the closest permitted role, never PI.**
+- [x] Quantitative token/cost model prepared in `2026-09-dsi-claude-budget-model.md`; verify live prices and exchange conversion before submission.
+- [ ] **Laura confirms the 3–5 trainee framing, recruitment/practicum mechanism, and whether names are required at submission.**
+- [ ] **Laura decides whether to name PHO as a potential pilot site or use generic “public-health pilot” wording** until organizational approval is obtained.
 - [ ] Identify 1–3 potential privacy/data-access partners for abstracted external-validation cases; do not imply participation before approval.
 - [ ] Pre-specify the four stop/go gates and minimum deliverable at each phase.
 - [ ] Confirm open-source deliverables: DataGangeR/Which integration, orchestration layer, prospective labelled-data/model-improvement framework, benchmark, and regression-validation suite.
 - [ ] Keep secondary public-health uses as future extensibility only; primary 12-month study remains privacy-focused.
 - [ ] If PHO is named, retain conditional wording unless organizational approval is obtained.
 - [ ] Confirm dissemination/translation plan: primary methods manuscript + open software/benchmark + implementation guidance, with software/evaluation and pilot publications pursued when mature.
-- [ ] Laura verifies Anthropic terms and conditions.
-- [ ] Laura completes demographic survey if required.
-- [ ] Enter all fields in Good Grants.
-- [ ] Final proofread against portal character/word counts.
-- [ ] Submit before **September 25, 2026, 23:59 ET**.
+- [ ] **Laura verifies and accepts Anthropic terms and conditions.**
+- [ ] **Laura completes the demographic survey if required/current response is not on file.**
+- [ ] **Laura enters the finalized fields in Good Grants, checks the rendered form and word/character limits, and submits before September 25, 2026, 23:59 ET.**
 
 ---
 
@@ -248,3 +301,7 @@ A 2025 DLSPH announcement reports that a team led by Laura received $2 million f
 - DSI call: https://datasciences.utoronto.ca/claude-api-credit/
 - Application portal: https://apply.datasciences.utoronto.ca/
 - Full working proposal: ./2026-09-dsi-anthropic-ai-privacy-firewall-proposal.md
+- [Full technical proposal PDF](2026-09-dsi-anthropic-ai-privacy-firewall-proposal.pdf)
+- [Budget model PDF](2026-09-dsi-claude-budget-model.pdf)
+- [Laura review memo PDF](2026-09-dsi-laura-review-memo.pdf)
+- [Portal-ready application PDF](2026-09-dsi-claude-portal-ready.pdf)

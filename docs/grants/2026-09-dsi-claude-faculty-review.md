@@ -78,14 +78,14 @@ The statistical and semantic components provide evidence; the policy and human-r
 
 The primary unit will be a **data-access scenario** containing a dataset description, selected variable descriptions, measurable structural characteristics, intended research purpose, proposed AI task, execution environment, transformations already applied, and an expert-reviewed recommended action.
 
-The initial benchmark will target approximately **2,000–5,000 curated scenarios**, drawing primarily from public research documentation, public data dictionaries, governance guidance, public/synthetic privacy examples, and controlled counterfactual cases. A high-value subset will receive independent double annotation.
+We will generate approximately **2,000–5,000 candidate scenarios** from public documentation and synthetic counterfactuals. The gold-standard core will contain **at least 600 independent human-adjudicated scenario families**, split by family/source into 360 development, 120 calibration, and 120 locked test families (60/20/20). At least 40 locked-test families will be pre-designated high risk. All variants of a source case remain within one split. Two independent reviewers will label every test case and a stratified 20% of development cases; disagreements will be adjudicated. Calibration cases also receive human adjudication. Reviewer and trainee effort will be planned and supervised through existing arrangements; API credits do not pay salaries.
 
-Development, calibration, and final test sets will be frozen before final model comparison.
+Development and calibration determine models, prompts, and thresholds before the locked test is opened for the final comparison. Inference is limited to sampled public/synthetic scenario families and specified perturbations; even 40 high-risk test families cannot estimate very rare failure rates precisely.
 
 ### Comparators
 
 - existing deterministic privacy logic;
-- penalized logistic/ordinal regression and generalized additive models;
+- penalized multinomial or one-versus-rest models, with generalized additive terms where justified;
 - compact local semantic models such as Laya;
 - Claude as a frontier semantic comparator;
 - transparent combinations only if each component demonstrates incremental value.
@@ -100,6 +100,10 @@ The emphasis will be on consequential error and calibration rather than raw accu
 - selective risk at pre-specified coverage;
 - coverage under abstention thresholds;
 - human-review burden.
+
+Dual-gate success requires lower inappropriate authorization than deterministic-only or either single gate at comparable automatic coverage and human-review burden. Matched-coverage risk comparisons and family-clustered intervals will distinguish a true gain from simply escalating more cases to reviewers.
+
+The local English Laya baseline will use a versioned semantic capsule of at most 512 tokens. Semantic comparators receive equivalent case information, while structured variables stay separate. Longer Laya input is reserved for a separate pre-specified evaluation if the selected checkpoint and runtime support it.
 
 A central operational measure is:
 
@@ -185,18 +189,21 @@ Expected outputs include:
 
 ## Budget
 
-**Requested: CAD $75,000 in Claude API credits over 12 months.**
+**Requested: CAD $75,000 in Claude API credits over 12 months.** The workload-based plan projects **US$52,375**, or **CAD $73,660.20** at 1 USD = 1.4064 CAD, rounded to about CAD $73,660. The request leaves a modest variation margin. Detailed token arithmetic and published planning rates are in `2026-09-dsi-claude-budget-model.md`.
 
-| Activity | Share | Approx. value |
+| Workload | Scale | Planned USD |
 |---|---:|---:|
-| Benchmark construction and controlled augmentation | 20% | $15,000 |
-| Frontier semantic-model evaluation | 25% | $18,750 |
-| Counterfactual and robustness experiments | 25% | $18,750 |
-| Calibration, replication, and sensitivity analyses | 15% | $11,250 |
-| Research/software workflow support | 10% | $7,500 |
-| Replication contingency | 5% | $3,750 |
+| Candidate-case and labelled-data research | 5,000 sessions | $2,250 |
+| High-stakes planning and risk review | 2,000 sessions | $6,000 |
+| Bulk benchmark and robustness scoring | 200,000 one-call evaluations | $7,000 |
+| Orchestration and regression validation | 10,000 sessions | $9,000 |
+| Supervised trainee research | 9,500 sessions | $7,125 |
+| Open-source coding and validation | 4,000 sessions | $12,000 |
+| Conditional public-health pilot | 3,000 sessions | $3,000 |
+| Model/version re-evaluation | 4,000 sessions | $6,000 |
+| **Total** | | **$52,375** |
 
-Local open models and conventional statistical models do not consume Claude credits. Claude usage is concentrated where a frontier semantic comparator materially strengthens the study.
+A budgeted run means one workload unit. The 200,000 bulk evaluations are one API call each: 2,500 candidate cases × four variants × four repeats × five model/rubric-version conditions. This multiplication estimates use, not independent samples or statistical power. The other rows are multi-call aggregate sessions with summed tokens. Only bulk scoring assumes Batch pricing; the rest use uncached standard rates, with no cache discount assumed. Local Laya and conventional statistical models do not consume Claude credits.
 
 ---
 

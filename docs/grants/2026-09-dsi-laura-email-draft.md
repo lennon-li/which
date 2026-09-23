@@ -14,7 +14,7 @@ The main idea is to treat AI data-access judgments as a statistical classificati
 
 I have a few questions where your judgment would be particularly useful:
 
-1. **Budget:** Does CAD $75,000 feel appropriate, or would you prefer a lower request? The bottom-up plan uses about CAD $73,650. I am also wondering whether DSI may offer a smaller allocation than requested; if so, the project can scale by protecting the benchmark/core evaluation/software first and reducing robustness runs, model-version replication, and the optional pilot.
+1. **Budget:** Does CAD $75,000 feel appropriate, or would you prefer a lower request? The bottom-up plan projects about CAD $73,660 of usage from 237,500 workload units and explicit token assumptions. Bulk scoring uses Batch pricing; other rows assume standard uncached rates. If DSI offers less, we can protect the adjudicated benchmark and core evaluation/software first, then reduce robustness repeats, model-version replication, and the optional pilot.
 
 2. **External grant:** Could you confirm the exact agency/program, proposal title, status, and lead-applicant wording for the recent CIHR/Diabetes Canada grant we should use as evidence?
 

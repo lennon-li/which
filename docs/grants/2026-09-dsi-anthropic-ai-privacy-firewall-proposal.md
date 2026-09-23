@@ -125,7 +125,7 @@ flowchart TB
     A --> C["Bounded local summary / data dictionary"]
     B --> D["Structured privacy features"]
     C --> E["Compact local semantic model<br/>(e.g. Laya)"]
-    D --> F["Interpretable statistical access-decision model<br/>(logistic / ordinal / GAM)"]
+    D --> F["Interpretable statistical access-decision model<br/>(multinomial / one-vs-rest / GAM)"]
     E --> G["Calibrated semantic evidence"]
     F --> H["Calibrated statistical evidence"]
     B --> I["Hard blockers / known facts"]
@@ -249,7 +249,7 @@ If approvals permit, a partner pilot will test the released framework on approve
 
 ## 5.3 Proposed target size
 
-The project will generate approximately **2,000–5,000 candidate scenarios** from public documentation, synthetic cases, and controlled counterfactuals. A smaller rigorously curated core benchmark will receive human adjudication, with an independently double-annotated high-value subset. This keeps expert-review burden feasible while preserving a large candidate pool for development and stress testing.
+The project will generate approximately **2,000–5,000 candidate scenarios** from public documentation, synthetic cases, and controlled counterfactuals. From these, the core benchmark will contain **at least 600 independent, human-adjudicated scenario families**, split at the family/source level into 360 development, 120 calibration, and 120 locked test families (60/20/20). At least 40 locked-test families will be pre-designated high risk. A family includes all paraphrases, counterfactuals, and controlled variants of one source case; its variants stay in one split. The larger candidate pool supports development and stress tests but is not counted as 2,000–5,000 independent gold-standard observations.
 
 The benchmark will intentionally oversample difficult boundaries, including direct versus non-person identifiers; sensitive versus merely technical fields; individual identifiers versus combination risks; free text with and without sensitive content; fine versus coarse geography; fine versus coarse dates; local versus external agent execution; schema-only versus row-level access; and original versus transformed/synthetic data.
 
@@ -270,7 +270,7 @@ For safety-oriented evaluation, we will also pre-specify derived binary endpoint
 
 Each case will include case identifier, **source tier/provenance**, natural-language scenario, structured feature representation, expert action label, annotator certainty, brief rationale, difficulty/adversarial flag, and split assignment. Adjudicators will also record an **exposure-impact profile** covering identifiability/linkability, sensitivity, scale, vulnerability, exploitability, and persistence/irreversibility.
 
-For a subset, two independent reviewers will label the case before reconciliation. Human disagreement will be reported rather than hidden. Train, calibration, and test assignment will occur at the **scenario-family/source level** so that paraphrases, counterfactuals, or variants derived from the same source case cannot leak across partitions.
+Two independent reviewers will label **every locked-test case** and a stratified **20% of development cases**, including high-risk and ambiguous strata, before an adjudicator resolves disagreements. Calibration cases receive human adjudication under the same rubric; the team will pre-specify any additional double review. For one case per 600-family core, this means at least 792 initial review assignments: 600 first reviews plus 120 test and 72 development second reviews. Variant reviews and disagreement adjudication add work. We will report initial agreement, disagreement, and adjudication decisions. Reviewer effort and the proposed trainee/practicum contribution will be confirmed before work begins and supervised by the project team; Claude credits pay for API use, **not reviewer or trainee salaries**. Split assignment occurs at the **scenario-family/source level**. The locked test remains unseen for model fitting, threshold selection, prompt revision, and gate selection until the final comparison. Inference is to the sampled public/synthetic, deliberately enriched scenario-family distribution and specified perturbations, not to all clinical deployments. Even with 40 high-risk test families, very rare failure rates cannot be estimated precisely; we will report family-clustered intervals and counts rather than claim proof of safety.
 
 ---
 
@@ -319,6 +319,8 @@ Its role is to establish how much signal a capable frontier model can extract fr
 Laya is particularly relevant because it represents the deployment direction of interest: a compact, open, locally executable decision model.
 
 The study will evaluate stock Laya, calibrated stock Laya, domain-adapted Laya only if the calibrated stock model adds residual value, and a frontier Claude comparator on the same cases. Jev will be treated as a hosted typed-decision comparator that can be calibrated and evaluated through the same interface, not as a locally fine-tuned model.
+
+For the local English Laya baseline, each case supplies a **versioned semantic capsule of at most 512 tokens**: a bounded description of dataset meaning, intended task, access environment, and transformation state. Structured variables used by the statistical gate remain separate and are not silently appended to Laya's text. Semantic comparators receive equivalent case information under the same rubric, with their formatting and token accounting recorded. A longer Laya input may be tested only in a separately pre-specified evaluation if the selected checkpoint and runtime support it; it is not assumed in the baseline.
 
 The final goal is not to prove that one named model is universally best. It is to determine whether the **compact local decision-model class** is useful as a privacy boundary.
 
@@ -391,7 +393,7 @@ A particularly relevant operational quantity is:
 
 > **Among cases for which the system chooses not to defer to a human, how often is its decision correct?**
 
-Risk-coverage curves will therefore be central to evaluation. A privacy gate should be allowed to say "uncertain." For a confidence threshold \(\tau\),
+Risk-coverage curves will therefore be central to evaluation. A privacy gate should be allowed to say "uncertain." For a confidence threshold $\tau$,
 
 $$
 R(\tau)=E\{L(Y,\hat Y)\mid C\ge\tau\},
@@ -418,7 +420,7 @@ For each semantic classifier we will evaluate:
 
 Calibration methods may include temperature scaling, logistic/Platt-style calibration, or isotonic regression, selected using calibration data rather than the final test set.
 
-We will also evaluate a **dual-gate authorization strategy**. Gate A will emphasize structured/statistical evidence and Gate B semantic/contextual evidence. Bounded access is eligible only when both gates authorize it and no deterministic hard blocker applies. Disagreement or uncertainty triggers human review or a more restrictive representation.
+We will also evaluate a **dual-gate authorization strategy**. Gate A will emphasize structured/statistical evidence and Gate B semantic/contextual evidence. Bounded access is eligible only when both gates authorize it and no deterministic hard blocker applies. Disagreement or uncertainty triggers human review or a more restrictive representation. We will compare this with deterministic-only and each single-gate policy under the same hard blockers, using calibration data to pre-specify thresholds. Success requires a lower inappropriate-authorization rate, including high-risk misses, at **comparable automatic coverage and human-review burden**; risk-coverage curves and matched-coverage comparisons will show whether any apparent gain is simply due to sending more cases to people. The locked test is opened only once for the final pre-specified comparison, with family-clustered uncertainty intervals.
 
 The key safety quantity is not just each classifier's error rate but the **joint inappropriate-authorization probability**:
 
@@ -577,7 +579,7 @@ Complete Which, migrate the working Jev decision path, add Laya parity, and esta
 
 ## WP2 — Privacy benchmark
 
-Formalize the agent-access outcome and exposure-impact profile; construct scenarios from public RDM/privacy guidance, health-data dictionaries, public repositories, and synthetic counterfactuals; add approved partner-derived abstracted cases if available; establish annotation guidance; double-annotate a high-value subset; and freeze development/calibration/test splits.
+Formalize the agent-access outcome and exposure-impact profile; construct scenarios from public RDM/privacy guidance, health-data dictionaries, public repositories, and synthetic counterfactuals; add approved partner-derived abstracted cases if available; establish annotation guidance; double-review every locked-test case and a stratified 20% of development cases; adjudicate disagreements; and freeze family-level development/calibration/test splits.
 
 ## WP3 — Statistical comparator
 
@@ -705,7 +707,7 @@ Claude API credits will support five connected research functions.
 
 **Fifth, Claude will support a supervised cohort of approximately 3–5 Biostatistics/data-science trainees and, if feasible, a small public-health implementation pilot.** Trainees will use versioned workflows for benchmark development, classifier evaluation, calibration/uncertainty analysis, blinded review, application building, reproducibility exercises, adversarial testing, and release validation. The training objective is to prepare the next generation of statisticians to do more than prompt AI: they will learn to build with it and then evaluate its classifications, probabilities, uncertainty, failure modes, and need for human review using statistical methods. Any pilot, potentially with PHO, will be contingent on organizational approval and will use approved/public/synthetic representations rather than transmitting restricted source records.
 
-All experiments will record model, rubric, package, orchestration-policy, dataset, and split versions. Claude will provide research evidence, not policy authority. Claude-derived probabilities will be treated as predictions requiring calibration and uncertainty evaluation; they will be compared using proper scoring rules, selective prediction, disagreement/joint-error analysis, and human-review burden rather than simple accuracy alone. Sonnet will carry most high-volume experimentation; Opus 5.5 will be used selectively for complex coding, independent review, and model/version re-evaluation; Fable 5.1 (or a formally released successor such as Fable 5.2) will be reserved for selected high-stakes planning and risk-evaluation tasks where added capability justifies the higher cost.
+All experiments will record model, rubric, package, orchestration-policy, dataset, and split versions. Claude will provide research evidence, not policy authority. Claude-derived probabilities will be treated as predictions requiring calibration and uncertainty evaluation; they will be compared using proper scoring rules, selective prediction, disagreement/joint-error analysis, and human-review burden rather than simple accuracy alone. Sonnet will carry most high-volume experimentation; Opus 5.5 will be used selectively for complex coding, independent review, and model/version re-evaluation; Fable 5.1, or an officially released successor with a verified API identifier and price, will be reserved for selected high-stakes planning and risk-evaluation tasks where added capability justifies the higher cost.
 
 ---
 
@@ -714,7 +716,7 @@ All experiments will record model, rubric, package, orchestration-policy, datase
 
 We request **CAD $75,000 in Claude API credits over 12 months**.
 
-A bottom-up planning model supports this request using the current Claude lineup. As of September 22, 2026, **Claude Opus 5.5** was released at US$4/M input and US$20/M output tokens. **Claude Fable 5.1**, currently the publicly available Fable model, is US$10/M input and US$50/M output and will be reserved for selected high-stakes planning, risk review, and difficult-case adjudication. If Fable 5.2 or a successor becomes officially available during the award, it will be evaluated prospectively under the same frozen protocol rather than assumed in advance.
+A bottom-up planning model supports this request using the current Claude lineup. As of September 22, 2026, **Claude Opus 5.5** was released at US$4/M input and US$20/M output tokens. **Claude Fable 5.1**, the documented public Fable model, is US$10/M input and US$50/M output and will be reserved for selected high-stakes planning, risk review, and difficult-case adjudication. Only an officially released successor with a verified API identifier and published price would be evaluated prospectively under the frozen protocol.
 
 Illustrative annual usage:
 
@@ -728,9 +730,11 @@ Illustrative annual usage:
 | Open-source coding / validation | ~4,000 long-context runs | Opus 5.5 | $12,000 |
 | Conditional public-health pilot | ~3,000 runs | Sonnet 5 | $3,000 |
 | Model/version re-evaluation | ~4,000 runs | Opus 5.5 | $6,000 |
-| **Planned total** |  |  | **~$52,375 USD (~$73,650 CAD)** |
+| **Planned total** |  |  | **~$52,375 USD (~$73,660 CAD)** |
 
 The remaining margin accommodates exchange-rate movement and workload variation. These are planning assumptions, not quotas. The trainee workload assumes a supervised cohort of approximately 3–5 students using versioned AI workflows for both application development and statistical evaluation; credits support API use, not compensation. API use will be logged by experiment, model, user/workstream, token count, and purpose.
+
+In this budget a run is a workload unit at the row's average input/output token totals. The 200,000 bulk evaluations are one API call apiece, illustrated by 2,500 candidate cases × 4 controlled variants × 4 repeats × 5 pre-specified model/rubric-version conditions. This is a usage calculation, not a claim of 200,000 independent cases or statistical power. Other rows are multi-call aggregate sessions with tokens summed across tool turns, retries, and context. The bulk row alone assumes published Batch pricing; other rows use standard uncached rates, so no caching discount is budgeted. At 1 USD = 1.4064 CAD, US$52,375 is CAD $73,660.20, rounded to approximately CAD $73,660. The detailed row arithmetic is in the budget model.
 
 The project is explicitly designed for classification errors. A semantic classifier cannot independently authorize sensitive-data access. Deterministic hard blockers remain authoritative; low-confidence predictions abstain; disagreement between statistical and semantic evidence escalates to human review; and consequential releases require human approval. Post-release regression tests, audit logs, and versioned rollback points allow a model or policy change to be withdrawn if error rates worsen.
 
