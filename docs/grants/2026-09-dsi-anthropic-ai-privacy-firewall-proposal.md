@@ -78,17 +78,29 @@ Large language models can interpret context but are not automatically calibrated
 
 For privacy-sensitive applications, a semantically capable model should therefore provide **evidence**, not policy authority.
 
-## 1.4 Why compact local models are particularly promising
+## 1.4 Why compact decision models are technically interesting
 
-A central hypothesis of this project is that small typed-decision models can occupy a useful middle layer between hard privacy rules and powerful external AI systems.
+A central hypothesis of this project is that typed decision models can occupy a useful middle layer between hard privacy rules and powerful generative AI systems.
 
-The recent release of compact typed-decision models such as **Laya** makes this architecture newly testable. A semantic gate can plausibly run inside the trusted environment and return structured probabilistic decisions without first sending sensitive context to a remote service. Whether such models are sufficiently accurate, calibrated, robust, and efficient for privacy-sensitive use remains an empirical question that this project will evaluate.
+Traditional generative LLMs are autoregressive: they repeatedly predict the next token and produce an open-ended sequence that must then be interpreted, parsed, or constrained for software use. **Jev** is architecturally different at the interface and training objective: TypeSafe describes it as a non-generative System One model with a parallel sampler and Reinforcement Learning for Calibrated Decisions (RLCD), returning typed choices, scores, or binary probabilities instead of prose. Its internal weights and detailed model architecture are not public, so we will evaluate the observable decision interface rather than assume vendor claims about internals.
 
-The proposed architecture treats such a model as a **local AI privacy firewall**: a semantic gate that interprets bounded metadata, data dictionaries, column summaries, and requested agent actions before deciding whether information should be exposed, transformed, or escalated for human review.
+**Laya** provides an open, inspectable implementation of the same broad decision-model idea. Its published English checkpoint uses a bidirectional ModernBERT-large encoder plus a small decision head; candidate options are scored directly and normalized into probabilities in a single forward pass. Unlike a conventional task-specific classifier with a permanently fixed label set, its answer options are supplied at inference time. Unlike a generative LLM, it does not need to produce and then re-parse a natural-language answer. Laya's open weights also make local deployment and domain-specific adaptation experimentally testable.
+
+These systems therefore combine features of semantic language models and classifiers: they can interpret unstructured context, while producing a finite, machine-readable probability distribution. That distinction matters statistically. A fixed answer space reduces interpretation variability, and numerical probabilities can be calibrated, scored, thresholded, compared, and audited. The numbers are not assumed to be correct merely because they are numeric; **their calibration is itself a primary object of study**.
+
+The proposed architecture treats a compact local model as a **local AI privacy firewall**: a semantic gate that interprets bounded metadata, data dictionaries, column summaries, and requested agent actions before deciding whether information should be exposed, transformed, or escalated for human review.
 
 The firewall is not a guarantee of anonymity or regulatory compliance. It is a calibrated decision layer designed to reduce unnecessary exposure.
 
-## 1.5 Motivating workflow
+## 1.5 Significance beyond the privacy use case
+
+We view decision-native models as an **emerging development direction**, not yet a settled industry standard. The appearance of a hosted decision model (Jev), an open local implementation (Laya), and early framework integrations suggests growing interest in separating fast, bounded decisions from expensive open-ended generation. The attraction is practical: specialized decision models can be smaller, cheaper to invoke, easier to self-host when open weights are available, and easier to connect safely to ordinary software control flow.
+
+They may also be easier for people to evaluate. Free-form language can be persuasive while remaining difficult to score reproducibly; typed decisions force the model into a standardized answer space and expose quantitative uncertainty that statisticians can test. This creates a need for two pieces of infrastructure that are currently immature: **(1) reproducible tools to train or adapt decision models for domain tasks, and (2) statistical tools to evaluate calibration, uncertainty, failure dependence, abstention, drift, and consequence-weighted error.**
+
+Privacy-aware medical/public-health data access is the primary scientific application and validation testbed in this grant. We do **not** propose to solve every decision-model use case. The broader significance is that the training and evaluation framework developed here can remain useful if decision-native models become a common component of future AI systems.
+
+## 1.6 Motivating workflow
 
 A biostatistics trainee is building a prototype application from medical or public-health data with a cloud coding agent. The agent can work from variable names alone, but development is faster if it can see realistic distributions, edge cases, and example records. The researcher generates a synthetic dataset and is tempted to upload it.
 
@@ -511,6 +523,7 @@ The goal is to train statisticians who can both exploit frontier AI capability a
 - abstention and threshold utilities;
 - train/calibration/test split support;
 - benchmark formats;
+- reusable training/adaptation interfaces for open decision models where weights are available, with human-governed data/version manifests;
 - a reusable classifier-evaluation framework covering calibration, uncertainty, selective prediction, dual-gate/joint-error analysis, subgroup robustness, model/version drift, and regression release gates;
 - evaluation metrics and confidence intervals;
 - engine comparison;
@@ -538,7 +551,7 @@ The goal is to train statisticians who can both exploit frontier AI capability a
 
 ## WP1 — Decision and classifier-evaluation infrastructure
 
-Complete Which, migrate the working Jev decision path, add Laya parity, and establish a reusable classifier-evaluation layer for probability calibration, uncertainty, abstention/risk-coverage, dual-gate joint-error analysis, model/version comparison, confidence intervals, and regression release criteria. Validate the infrastructure prospectively using real typed-decision tasks.
+Complete Which, migrate the working Jev decision path, add Laya parity, and establish reusable **training/adaptation interfaces for open decision models** plus a classifier-evaluation layer for probability calibration, uncertainty, abstention/risk-coverage, dual-gate joint-error analysis, model/version comparison, confidence intervals, and regression release criteria. Jev will remain a hosted comparator; trainable local models such as Laya can use the adaptation pipeline when justified. Validate the infrastructure prospectively using real typed-decision tasks.
 
 ## WP2 — Privacy benchmark
 
@@ -739,6 +752,7 @@ Claude will support labelled-data development, robustness testing, independent e
 ## Software and evaluation infrastructure
 
 - an open-source, human-gated AI privacy-firewall framework spanning DataGangeR and Which;
+- reusable training/adaptation tooling for open typed-decision models, with human-governed labelled-data and version manifests;
 - a reusable classifier-evaluation framework in Which for calibration, uncertainty, selective prediction, dual-gate/joint-error analysis, subgroup robustness, model/version drift, and regression release gates;
 - a policy-controlled orchestration layer for deterministic tools, statistical models, Laya/Jev, Claude, and human review;
 - a reusable, human-governed prospective labelled-data and model-improvement framework, with Laya tuning and hosted-model calibration/evaluation exposed through open-source interfaces where useful;
@@ -815,7 +829,7 @@ At the same time, capable semantic models and compact local decision models now 
 
 The methodological opportunity is to turn consequential AI judgments from difficult-to-evaluate free-form language into typed predictions with explicit reference outcomes, then bring conventional statistical principles—calibration, held-out validation, uncertainty, proper scoring, selective prediction, and incremental-value analysis—to their evaluation. This is also an educational opportunity: statisticians already possess much of the methodological vocabulary needed to evaluate classifiers rigorously, but need training to apply it to AI systems.
 
-The practical opportunity is to create a local decision boundary that lets researchers benefit from increasingly capable AI while minimizing unnecessary exposure of research participants' information.
+The practical opportunity is to create a local decision boundary that lets researchers benefit from increasingly capable AI while minimizing unnecessary exposure of research participants' information. More broadly, if typed decision models become a common complement to generative LLMs, reproducible training/adaptation and statistical evaluation infrastructure will become increasingly important.
 
 ---
 
@@ -856,7 +870,10 @@ Anthropic's Canadian research initiative emphasizes beneficial and responsible a
 - Microsoft Presidio.  
   https://github.com/microsoft/presidio
 
-- Laya.  
+- TypeSafe AI. **Introducing System One Models & Jev.** 2026.  
+  https://typesafe.ai/blog/introducing-system-one-models-and-jev
+
+- Laya. **Model card and architecture.**  
   https://huggingface.co/convaiinnovations/laya
 
 - RouteLLM.  
