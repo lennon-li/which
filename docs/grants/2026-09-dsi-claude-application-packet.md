@@ -123,6 +123,10 @@ The project builds directly on DataGangeR, an open-source R framework for privac
 
 A major deliverable will be an **open-source, human-gated AI privacy-firewall framework** that can orchestrate deterministic privacy checks, statistical risk models, compact local models such as Laya/Jev, frontier-model comparison, and human review under an explicit policy. The orchestration layer will control which component is invoked, what information it can see, when disagreement triggers escalation, and how the complete decision trail is logged.
 
+A second major deliverable will be a reusable **training and continuous-improvement framework** for compact decision models such as Jev and Laya. It will support prospective collection of labelled decisions, versioned train/calibration/test splits, human adjudication, error analysis, calibration, retraining triggers, and regression evaluation. Claude can assist with candidate-case generation, label suggestion, difficult-case discovery, experiment design, training supervision, and independent evaluation, while human reviewers retain control of gold labels and release decisions.
+
+This framework is intentionally broader than privacy. Privacy-aware AI access will be the first high-stakes application, but the same decision infrastructure can support other public-health and research decisions such as aberration detection, escalation, intervention/action selection, and abstention when evidence is insufficient.
+
 The project will also create an open benchmark and regression-validation suite so that new model versions and software releases can be re-evaluated as AI technology changes. Students and trainees will participate in benchmark construction, blinded review, robustness testing, replication, and software validation.
 
 Subject to organizational approval, we will seek a **real-world public-health pilot**, potentially with Public Health Ontario (PHO), to test the framework on realistic research workflows without requiring confidential records to be sent to Claude.
@@ -133,11 +137,11 @@ Claude API credits will support five complementary research functions.
 
 **First, Claude will serve as a frontier semantic-model comparator.** Each benchmark case will contain a versioned description of a dataset, intended use, proposed AI-agent operation, and access conditions. Claude will return structured decisions under a fixed rubric. Its predictions and uncertainty behavior will be compared with an interpretable statistical model and with compact local models such as Laya operating on the same cases. Claude will not define ground truth.
 
-**Second, Claude will support benchmark construction and stress testing.** We will use Claude to help transform public privacy, research-data, and access documentation into candidate scenarios; generate controlled counterfactual variations; identify ambiguous wording; and propose difficult cases for expert review. Claude-generated material will remain candidate material: human reviewers will approve benchmark cases and gold labels, and provenance will be retained.
+**Second, Claude will support labelled-data construction and training supervision.** We will use Claude to transform public research/privacy documentation into candidate scenarios; generate controlled counterfactuals and difficult cases; propose provisional labels and rationales for human adjudication; identify class imbalance and blind spots; assist with experiment design; and review error patterns during Jev/Laya tuning. Claude outputs will remain candidate evidence rather than ground truth. Human reviewers will approve gold labels, training-set additions, retraining decisions, and final model releases.
 
 **Third, Claude will support systematic robustness experiments.** We will vary access purpose, identifiability, sensitivity, wording, agent location, requested operation, and transformations while holding other factors fixed. These repeated experiments will quantify whether semantic decisions respond to relevant privacy evidence or superficial phrasing.
 
-**Fourth, Claude will support development and validation of the open-source orchestration layer.** We will test end-to-end agent-team workflows in which deterministic checks, statistical models, compact local models such as Laya/Jev, Claude, and human reviewers have explicitly bounded roles. Claude will be used to exercise normal, ambiguous, adversarial, disagreement, and model-failure scenarios; to independently review selected local-model decisions; and to support regression testing after changes to models, policies, or package code.
+**Fourth, Claude will support development and validation of the open-source orchestration and training framework.** We will test end-to-end agent-team workflows in which deterministic checks, statistical models, compact local models such as Laya/Jev, Claude, and human reviewers have explicitly bounded roles. Claude will be used to exercise normal, ambiguous, adversarial, disagreement, and model-failure scenarios; independently review selected local-model decisions; help supervise iterative tuning; and support regression testing after changes to models, training data, policies, or package code. The same framework will support continuous labelled-data collection and retraining across multiple decision tasks, not only privacy.
 
 **Fifth, Claude credits will support trainee-led replication and a potential public-health pilot.** Students and trainees will use the API within versioned research workflows for benchmark development, blinded replication, error analysis, robustness experiments, and package validation. Subject to PHO approval, a pilot will evaluate the framework on realistic public-health research workflows using approved/public/synthetic representations rather than transmitting restricted source records.
 
@@ -159,14 +163,14 @@ The core benchmark will contain approximately 2,000–5,000 expert-reviewed data
 
 Planned credit use is organized around five workloads:
 
-- **25% — benchmark and frontier-model experiments:** structured Claude inference across benchmark cases, counterfactual variants, and selected model/configuration comparisons;
-- **20% — open-source package and orchestration validation:** adversarial tests, disagreement handling, agent-team workflow testing, independent review, and regression suites after package/model/policy changes;
-- **20% — robustness, calibration, and replication:** paraphrase/context perturbations, selective-prediction experiments, repeated runs, and independent frozen-set replication;
+- **25% — labelled-data construction and frontier-model experiments:** candidate-case generation, provisional labelling for human adjudication, hard-case discovery, structured Claude inference, counterfactual variants, and selected model/configuration comparisons;
+- **20% — open-source orchestration and training-framework validation:** agent-team workflow testing, continuous data-collection pipelines, Jev/Laya tuning supervision, disagreement handling, independent review, and regression suites after package/model/training-data/policy changes;
+- **20% — robustness, calibration, and replication:** paraphrase/context perturbations, selective-prediction experiments, repeated runs, calibration studies, and independent frozen-set replication;
 - **15% — trainee research and training:** supervised student use for benchmark construction, blinded review, error analysis, reproducibility exercises, and validation of successive releases;
 - **10% — potential public-health pilot:** realistic workflow testing, implementation evaluation, and post-pilot regression testing, subject to organizational approval;
 - **10% — model/version and pricing contingency:** re-evaluation when Claude models, local models, context windows, or API prices change during the award period.
 
-The project will deliver reusable open-source software, not a one-time model comparison. Because the software may mediate consequential decisions about AI access to research data, meaningful changes to models, package code, or orchestration policy will trigger human-gated validation cycles and regression testing.
+The project will deliver reusable open-source software, not a one-time model comparison. In addition to the privacy firewall, it will deliver a general training/continuous-learning framework or reusable skill/plugin for compact decision models such as Jev and Laya. The framework will support prospective labelled-data collection, human adjudication, tuning, calibration, release gating, and regression testing. Privacy will be the initial application, while later public-health tasks may include aberration detection, escalation, and action selection. Because these systems may mediate consequential decisions, meaningful changes to models, training data, package code, or orchestration policy will trigger human-gated validation cycles and regression testing.
 
 Local training/fine-tuning of Laya/Jev will not consume Claude credits directly. Claude credits will support the surrounding scientific workload: benchmark construction, frontier comparison, adversarial testing, calibration research, independent review, and end-to-end validation.
 
@@ -220,7 +224,8 @@ Mandatory for all PI applicants.
 - [ ] Add a quantitative token/cost model supporting the requested CAD $75,000.
 - [ ] Confirm expected trainee count and trainee roles.
 - [ ] Decide whether to name PHO as a **potential** pilot site or use generic "public-health pilot" wording until organizational approval is obtained.
-- [ ] Confirm open-source deliverables: DataGangeR/Which integration, orchestration layer, benchmark, and regression-validation suite.
+- [ ] Confirm open-source deliverables: DataGangeR/Which integration, orchestration layer, continuous labelled-data/training framework (skill/plugin), benchmark, and regression-validation suite.
+- [ ] Decide how broadly to name secondary public-health use cases (e.g., aberration detection, escalation/action selection) without diluting the privacy-focused primary study.
 - [ ] Laura verifies Anthropic terms and conditions.
 - [ ] Laura completes demographic survey if required.
 - [ ] Enter all fields in Good Grants.
