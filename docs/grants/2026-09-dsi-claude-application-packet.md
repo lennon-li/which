@@ -118,9 +118,11 @@ A central methodological idea is to convert an otherwise difficult-to-evaluate n
 
 This also targets an emerging AI design direction: specialized decision models that consume semantic context but return standardized choices and probabilities rather than prose. Such outputs are easier to integrate, reproduce, calibrate, and audit than free-form language. Privacy is our primary testbed; the training and evaluation tools are deliberately reusable.
 
-We will generate approximately **2,000–5,000 candidate scenarios**, with a smaller rigorously human-adjudicated core benchmark and scenario-family-level train/calibration/test separation. Expert annotation will also record **potential harm if exposure occurs** (e.g., identifiability, sensitivity, scale, vulnerability, exploitability, and irreversibility), allowing harm-weighted false-authorization and high-severity miss rates rather than treating every error as equally consequential.
+We will generate approximately **2,000–5,000 candidate scenarios** from public RDM/privacy guidance, public data dictionaries and repositories, synthetic counterfactuals, and—if agreements permit—de-identified or abstracted decision cases contributed by privacy/data-access partners. A smaller rigorously human-adjudicated core benchmark will use scenario-family-level train/calibration/test separation. Expert annotation will also record **potential harm if exposure occurs**, enabling harm-weighted false-authorization and high-severity miss rates.
 
 The project has three reusable outputs: an **open-source human-gated AI privacy firewall** spanning DataGangeR and Which; a **general classifier-evaluation framework** for statistical evaluation of AI decisions; and a supervised **3–5 trainee cohort**. Students will learn not only to use AI for analysis and application building, but to evaluate its outputs and uncertainties using statistical methods.
+
+The study is deliberately phased: public/synthetic benchmark → model evaluation → dual-gate integration → optional partner validation/pilot. Each phase has a stop/go gate, so a negative result still yields a benchmark, evaluation framework, and publishable evidence rather than an unfinished system.
 
 A manuscript is not the endpoint. We will release software, benchmark/evaluation assets, and implementation guidance and, if approvals permit, conduct a small public-health implementation pilot, potentially with PHO.
 
@@ -229,6 +231,8 @@ Mandatory for all PI applicants.
 - [ ] Add a quantitative token/cost model supporting the requested CAD $75,000.
 - [ ] Confirm planned **3–5 trainee** cohort, recruitment/practicum mechanism, and whether names are required at submission.
 - [ ] Decide whether to name PHO as a **potential** pilot site or use generic "public-health pilot" wording until organizational approval is obtained.
+- [ ] Identify 1–3 potential privacy/data-access partners for abstracted external-validation cases; do not imply participation before approval.
+- [ ] Pre-specify the four stop/go gates and minimum deliverable at each phase.
 - [ ] Confirm open-source deliverables: DataGangeR/Which integration, orchestration layer, prospective labelled-data/model-improvement framework, benchmark, and regression-validation suite.
 - [ ] Keep secondary public-health uses as future extensibility only; primary 12-month study remains privacy-focused.
 - [ ] If PHO is named, retain conditional wording unless organizational approval is obtained.
