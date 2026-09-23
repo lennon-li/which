@@ -395,6 +395,14 @@ This follows the selective-classification literature, which explicitly trades co
 
 The statistical objective is therefore broader than building a classifier: **we will estimate, calibrate, compare, and stress-test the full decision system, including uncertainty, error dependence, abstention, and human-review cost.**
 
+We will also distinguish **error frequency from error consequence**. Human adjudicators will assign a structured exposure-impact profile (identifiability/linkability, sensitivity, scale, vulnerability, exploitability, and persistence/irreversibility). This supports severity-aware endpoints such as a **harm-weighted false-authorization rate** and a **high-severity miss rate**:
+
+~~~text
+P(authorize | unsafe, high-impact)
+~~~
+
+For dual gates, we will therefore examine not only how often both gates fail, but whether they prevent the most consequential failures. Harm labels will be assigned independently of model predictions and retained as component ratings rather than collapsed into a single opaque score.
+
 
 ---
 
@@ -467,7 +475,7 @@ The trainee program will therefore teach a two-part workflow:
 1. **Use AI effectively** for statistical programming, analysis prototyping, and application development.
 2. **Evaluate AI statistically** by defining outcomes, constructing held-out tests, calibrating probabilities, quantifying uncertainty and error, testing robustness, and specifying when a human should intervene.
 
-The goal is to train statisticians who can both exploit frontier AI capability and independently assess whether its outputs deserve trust in a given context.
+The goal is to train statisticians who can both exploit frontier AI capability and independently assess whether its outputs deserve trust in a given context—including the statistical principle that **classification errors should be weighted by their consequences, not merely counted**.
 
 ---
 
@@ -699,7 +707,7 @@ We will build a provenance-tracked benchmark from public documentation, data dic
 - incremental-value analysis for semantic decision models;
 - transparent ensemble/dual-gate methodology if justified;
 - calibration and uncertainty analysis for typed semantic decision models;
-- statistical analysis of joint unsafe-error probability, error dependence, abstention, and human-review burden.
+- statistical analysis of joint unsafe-error probability, error dependence, abstention, human-review burden, and severity-weighted consequences of false authorization.
 
 ## Data
 
@@ -774,6 +782,7 @@ A public-health pilot is important because the project is intended for use, not 
 | Pilot approvals/timing are unavailable | Pilot remains optional and does not affect completion of primary aims |
 | Dual gates make correlated mistakes | Measure joint error and dependence explicitly; diversify evidence/model families; do not assume independence |
 | Raw model confidence is overconfident | Recalibrate on held-out data; use abstention, risk-coverage analysis, and human review |
+| Error counts hide consequence | Annotate exposure impact and report harm-weighted false authorization and high-severity miss rates |
 
 ---
 
