@@ -8,83 +8,60 @@
 
 Claude API prices are in USD.
 
-| Model / mode | Input | Output |
-|---|---:|---:|
-| Claude Sonnet 5, standard | US$2 / 1M tokens | US$10 / 1M tokens |
-| Claude Opus 5, standard | US$5 / 1M tokens | US$25 / 1M tokens |
-| Claude Sonnet 5, batch | US$1 / 1M tokens | US$5 / 1M tokens |
+| Model / mode | Input | Output | Planned role |
+|---|---:|---:|---|
+| Claude Sonnet 5 | US$2 / 1M | US$10 / 1M | high-volume experiments, trainee workflows |
+| Claude Opus 5.5 | US$4 / 1M | US$20 / 1M | complex coding, independent review, version re-evaluation |
+| Claude Fable 5.1 | US$10 / 1M | US$50 / 1M | selected high-stakes planning/risk adjudication |
+| Claude Sonnet 5 Batch | US$1 / 1M | US$5 / 1M | bulk benchmark and robustness scoring |
 
-Batch processing is 50% of standard API pricing.
+**Freshness note.** Opus 5.5 was released on September 22, 2026. Fable 5.1 remains Anthropic's currently documented public Fable release. Fable 5.2 has been reported in pre-release testing but has no official Anthropic API identifier or pricing as of this date. If Fable 5.2 or another successor becomes officially available during the award, it will be evaluated prospectively rather than budgeted at an invented price.
 
-Bank of Canada daily rate on 2026-09-22: **1 USD = 1.4064 CAD**. Therefore:
-- CAD $50,000 ≈ US$35,552
-- CAD $75,000 ≈ US$53,328
-- CAD $100,000 ≈ US$71,104
+Bank of Canada daily rate used for planning: **1 USD = 1.4064 CAD**.
 
 ## Planned workload assumptions
 
 | Workload | Runs/evals | Avg input/run | Avg output/run | Model/mode | Estimated USD |
 |---|---:|---:|---:|---|---:|
-| Candidate-case / labelled-data research | 5,000 | 150k | 15k | Sonnet standard | $2,250 |
-| High-capability adjudication/error review | 2,000 | 200k | 20k | Opus standard | $3,000 |
-| Bulk benchmark / robustness scoring | 200,000 | 20k | 3k | Sonnet batch | $7,000 |
-| Orchestration / regression validation | 10,000 | 300k | 30k | Sonnet standard | $9,000 |
-| Trainee research | 9,000 | 250k | 25k | Sonnet standard | $6,750 |
-| Open-source coding / validation | 7,000 | 500k | 50k | Sonnet standard | $10,500 |
-| Conditional public-health implementation pilot | 3,000 | 350k | 30k | Sonnet standard | $3,000 |
-| Model/version re-evaluation | 6,000 | 250k | 25k | Opus standard | $11,250 |
-| **Total** |  |  |  |  | **$52,750 USD** |
+| Candidate-case / labelled-data research | 5,000 | 150k | 15k | Sonnet 5 | $2,250 |
+| High-stakes planning/risk adjudication | 2,000 | 200k | 20k | Fable 5.1 | $6,000 |
+| Bulk benchmark / robustness scoring | 200,000 | 20k | 3k | Sonnet 5 Batch | $7,000 |
+| Orchestration / regression validation | 10,000 | 300k | 30k | Sonnet 5 | $9,000 |
+| Trainee research | 9,500 | 250k | 25k | Sonnet 5 | $7,125 |
+| Open-source coding / validation | 4,000 | 500k | 50k | Opus 5.5 | $12,000 |
+| Conditional public-health implementation pilot | 3,000 | 350k | 30k | Sonnet 5 | $3,000 |
+| Model/version re-evaluation | 4,000 | 250k | 25k | Opus 5.5 | $6,000 |
+| **Total** |  |  |  |  | **$52,375 USD** |
 
-At 1.4064 CAD/USD, this is approximately **CAD $74,180**.
+At 1.4064 CAD/USD, this is approximately **CAD $73,650**, leaving a modest margin for exchange-rate and workload variation within a CAD $75,000 request.
 
-## Formula checks
+## Classification-error fallback and risk control
 
-- Sonnet 150k input + 15k output = 0.15×$2 + 0.015×$10 = **$0.45/run**
-- Opus 200k input + 20k output = 0.20×$5 + 0.020×$25 = **$1.50/run**
-- Sonnet Batch 20k input + 3k output = 0.020×$1 + 0.003×$5 = **$0.035/evaluation**
-- Sonnet 300k input + 30k output = 0.30×$2 + 0.030×$10 = **$0.90/run**
-- Sonnet 250k input + 25k output = 0.25×$2 + 0.025×$10 = **$0.75/run**
-- Sonnet 500k input + 50k output = 0.50×$2 + 0.050×$10 = **$1.50/run**
-- Sonnet 350k input + 30k output = 0.35×$2 + 0.030×$10 = **$1.00/run**
-- Opus 250k input + 25k output = 0.25×$5 + 0.025×$25 = **$1.875/run**
+The package must assume that classifiers will sometimes be wrong. A model prediction is therefore **evidence, not authorization**.
 
-## Why these workloads are plausible
+Operational fallback:
+1. **Hard blockers dominate.** Known direct identifiers, prohibited exposures, and other deterministic constraints cannot be overridden by a model.
+2. **Abstain on uncertainty.** Calibrated confidence below a pre-specified threshold routes to human review.
+3. **Escalate disagreement.** Material disagreement between deterministic rules, the interpretable statistical model, and semantic models triggers review.
+4. **Fail conservatively.** Out-of-distribution or malformed cases default to a more restrictive representation, transformation, or no direct exposure.
+5. **Human release gate.** Consequential policy/model releases require explicit human approval.
+6. **Audit and rollback.** Every decision records versions, scores, evidence, and overrides. Regression monitoring can suspend or roll back a model/checkpoint/policy.
+7. **Measure the failure mode.** The primary safety endpoint includes inappropriate authorization, so the fallback is empirically evaluated.
 
-The high call count is driven mostly by **200,000 inexpensive batch evaluations**, not by hundreds of thousands of interactive researcher sessions. Agentic runs are long-context, multi-step research/software workflows that may include repository context, data dictionaries, benchmark cases, model outputs, validation traces, tool results, and iterative code/review cycles.
+## Why use multiple Claude tiers
 
-A proposed trainee scale of roughly 4–6 students/research trainees can account for ~9,000 supervised research runs over a year without requiring extreme individual use. For example, 5 trainees × 180 active research days × 10 API workflows/day = 9,000 workflows.
+- **Sonnet 5:** economical high-volume experimental work.
+- **Opus 5.5:** newly released frontier model for complex coding, independent review, and version-drift evaluation.
+- **Fable 5.1 / future Fable successor:** selected planning, risk-evaluation, and difficult-case adjudication where the higher cost is justified.
+- **Local Laya:** privacy-preserving local decision model; tuning uses local/separately funded compute.
+- **Jev:** hosted typed-decision comparator; calibrated/evaluated rather than treated as a local trainable checkpoint.
 
-The model-version allocation is intentionally substantial because the project studies calibration and robustness in a fast-changing technology environment. It allows a frozen benchmark to be re-run prospectively when materially different Claude or local-model versions appear.
-
-## Sensitivity / safeguards
-
-This is a **planning model, not a commitment to manufacture usage**.
-
-Factors that may reduce spend:
-- prompt caching;
-- increased use of batch processing;
-- model price reductions;
-- shorter-than-assumed contexts;
-- a pilot not proceeding.
-
-Factors that may increase spend:
-- newly released higher-capability models;
-- larger context requirements;
-- additional independent replications;
-- newly discovered failure modes requiring challenge-set expansion.
-
-If realized costs are lower, capacity should be reassigned in this order:
-1. independent held-out replication;
-2. robustness/adversarial testing;
-3. model/version re-evaluation;
-4. regression validation of open-source releases;
-5. additional human-adjudicated benchmark cases.
-
-The scientific objectives and benchmark definition should not be expanded merely to consume credits.
+This portfolio lets the study test whether expensive frontier reasoning is actually necessary, and where compact/local models are sufficient.
 
 ## Sources
 
 - DSI Claude API Credit Award: https://datasciences.utoronto.ca/claude-api-credit/
+- Anthropic Opus 5.5 announcement: https://www.anthropic.com/claude-opus-5-5
 - Anthropic Claude Platform pricing: https://platform.claude.com/docs/en/about-claude/pricing
-- Anthropic batch-processing pricing: https://platform.claude.com/docs/en/build-with-claude/batch-processing
+- Anthropic Fable 5.1 docs: https://platform.claude.com/docs/en/models/fable-5-1/overview
 - Bank of Canada Daily Digest: https://www.bankofcanada.ca/rates/daily-digest/
