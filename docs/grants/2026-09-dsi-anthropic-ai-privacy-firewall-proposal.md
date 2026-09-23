@@ -456,6 +456,19 @@ That perspective motivates a central principle:
 
 > **A semantically persuasive AI output should be treated as a statistical prediction to be calibrated and validated, not as ground truth because it sounds reasonable.**
 
+## 13.6 Training the next generation of statisticians
+
+Many current AI workflows teach students how to prompt a model, generate code, or accelerate analysis. We want to add the complementary skill that statisticians are particularly well equipped to provide: **how to evaluate an AI decision quantitatively**.
+
+Open-ended LLM outputs are often difficult to validate with conventional statistical tools because the response space is unconstrained natural language. In this project, important AI judgments will be expressed as typed outcomes with probabilities, abstention, and explicit reference actions. That makes questions such as calibration, discrimination, uncertainty, selective risk, error dependence, subgroup performance, and reproducibility directly estimable.
+
+The trainee program will therefore teach a two-part workflow:
+
+1. **Use AI effectively** for statistical programming, analysis prototyping, and application development.
+2. **Evaluate AI statistically** by defining outcomes, constructing held-out tests, calibrating probabilities, quantifying uncertainty and error, testing robustness, and specifying when a human should intervene.
+
+The goal is to train statisticians who can both exploit frontier AI capability and independently assess whether its outputs deserve trust in a given context.
+
 ---
 
 # 14. Which versus DataGangeR
@@ -516,7 +529,7 @@ Test incremental semantic value, evaluate transparent fusion and dual-gate autho
 
 ## WP6 — Trainee research, dissemination, and implementation pilot
 
-Recruit and supervise approximately 3–5 Biostatistics/data-science trainees, potentially through practicum or supervised project mechanisms. Trainees will contribute to benchmark curation, classifier evaluation, calibration/uncertainty analysis, open-source application development, independent replication, robustness testing, and release validation.
+Recruit and supervise approximately 3–5 Biostatistics/data-science trainees, potentially through practicum or supervised project mechanisms. The cohort will be trained in a paired workflow: **use AI to build, then use statistics to evaluate what AI produced**. Trainees will contribute to benchmark curation, typed classifier evaluation, calibration/uncertainty analysis, open-source application development, independent replication, robustness testing, and release validation.
 
 The project will not stop at a manuscript. We will release the software, benchmark/evaluation assets, and implementation guidance. If approvals and timing permit, we will conduct a small public-health implementation pilot, potentially with PHO, using approved/public/synthetic representations. The pilot will assess usability, workflow fit, failure modes, and external validity, and may support a subsequent implementation/public-health methods publication. The pilot remains approval-dependent and is not required to complete the primary statistical aims.
 
@@ -708,7 +721,7 @@ We will build a provenance-tracked benchmark from public documentation, data dic
 
 ## Training and translational impact
 
-- a supervised 3–5 trainee program in statistically grounded AI application development and evaluation;
+- a supervised 3–5 trainee program in **AI application development plus statistical evaluation of AI classifications, probabilities, uncertainty, and failure modes**;
 - a practical reference architecture for local AI privacy firewalls;
 - guidance on when compact local models are sufficient;
 - evidence for when human review remains necessary;
@@ -728,7 +741,7 @@ The project is designed to produce **research evidence, reusable infrastructure,
 1. **Primary methods manuscript:** calibration, uncertainty, selective prediction, and dual-gate safety for AI data-access decisions, including joint-error dependence and human-review burden.
 2. **Open-source release:** DataGangeR/Which privacy-gating workflow plus the reusable classifier-evaluation framework, regression tests, versioned evaluation manifests, and implementation documentation.
 3. **Open benchmark/evaluation assets:** provenance-tracked scenarios, annotation guidance, frozen evaluation splits where licensing permits, and reproducible statistical analysis code.
-4. **Trainee outputs:** supervised student analyses, reproducibility reports, presentations/posters, and documented contributions to software/evaluation modules.
+4. **Trainee outputs:** supervised student analyses, reproducibility reports, presentations/posters, and documented contributions to software/evaluation modules, with a reusable training workflow for statistically evaluating AI classifiers and their uncertainty.
 
 ### Follow-on publication opportunities
 
@@ -770,7 +783,7 @@ AI agents are moving from text generation toward direct participation in scienti
 
 At the same time, capable semantic models and compact local decision models now make it possible to ask whether contextual privacy reasoning can be operationalized without placing all decision authority in a large external model.
 
-The methodological opportunity is to bring conventional statistical principles—explicit outcomes, calibration, held-out validation, uncertainty, proper scoring, and incremental-value analysis—to a problem that is often handled through informal prompting.
+The methodological opportunity is to turn consequential AI judgments from difficult-to-evaluate free-form language into typed predictions with explicit reference outcomes, then bring conventional statistical principles—calibration, held-out validation, uncertainty, proper scoring, selective prediction, and incremental-value analysis—to their evaluation. This is also an educational opportunity: statisticians already possess much of the methodological vocabulary needed to evaluate classifiers rigorously, but need training to apply it to AI systems.
 
 The practical opportunity is to create a local decision boundary that lets researchers benefit from increasingly capable AI while minimizing unnecessary exposure of research participants' information.
 
@@ -778,7 +791,7 @@ The practical opportunity is to create a local decision boundary that lets resea
 
 # 27. Program alignment
 
-The University of Toronto Data Sciences Institute Claude API Credit Award provides up to CAD $100,000 in Claude API credits for research projects over a maximum of 12 months. The proposed project uses Claude as a research instrument and frontier comparator while directly addressing responsible AI deployment, privacy, statistical methodology, reproducibility, open research software, and hands-on training of 3–5 Biostatistics/data-science trainees in statistically grounded AI evaluation.
+The University of Toronto Data Sciences Institute Claude API Credit Award provides up to CAD $100,000 in Claude API credits for research projects over a maximum of 12 months. The proposed project uses Claude as a research instrument and frontier comparator while directly addressing responsible AI deployment, privacy, statistical methodology, reproducibility, open research software, and hands-on training of 3–5 Biostatistics/data-science trainees to both build with AI and evaluate its outputs and uncertainties using statistical methods.
 
 Anthropic's Canadian research initiative emphasizes beneficial and responsible applications of AI, including trust and safety and health/science research. This project connects those themes through a concrete methodological problem: determining the minimum information an AI system should receive to contribute productively to scientific work.
 
