@@ -1,5 +1,5 @@
 # Measure Before You Share
-## Calibration, Uncertainty, and Dual-Gate Safety for AI Access to Research Data
+## Calibration, Uncertainty, and Dual-Gate Safety for AI Access to Medical and Public-Health Data
 
 **Target program:** University of Toronto Data Sciences Institute — Claude API Credit Award, Claude Research tier  
 **Status:** Faculty-review draft  
@@ -158,6 +158,8 @@ flowchart TB
 
 **Hypothesis 3.** Gates with intentionally diversified evidence and error mechanisms will have lower joint inappropriate-authorization rates than either gate alone, although at the cost of reduced automatic coverage.
 
+**RQ7.** Do severity-aware measures of potential disclosure harm change model or threshold choices relative to unweighted error rates?
+
 ---
 
 # 4. Research design
@@ -232,7 +234,7 @@ For safety-oriented evaluation, we will also pre-specify derived binary endpoint
 
 ## 5.5 Annotation
 
-Each case will include case identifier, source/provenance, natural-language scenario, structured feature representation, expert action label, annotator certainty, brief rationale, difficulty/adversarial flag, and split assignment.
+Each case will include case identifier, source/provenance, natural-language scenario, structured feature representation, expert action label, annotator certainty, brief rationale, difficulty/adversarial flag, and split assignment. Adjudicators will also record an **exposure-impact profile** covering identifiability/linkability, sensitivity, scale, vulnerability, exploitability, and persistence/irreversibility.
 
 For a subset, two independent reviewers will label the case before reconciliation. Human disagreement will be reported rather than hidden. Train, calibration, and test assignment will occur at the **scenario-family/source level** so that paraphrases, counterfactuals, or variants derived from the same source case cannot leak across partitions.
 
@@ -254,26 +256,17 @@ A conventional statistical model will be developed as a first-class comparator, 
 
 Candidate predictors include record count, number of variables, direct/quasi/sensitive counts, maximum uniqueness ratio, minimum equivalence-class size, rare-category prevalence, free-text presence, temporal precision, geographic precision, combination uniqueness, missingness summaries, entropy/cardinality summaries, original versus transformed status, requested operation, local versus external access boundary, and deterministic privacy flags.
 
-Initial models will prioritize interpretability:
+Because the four reference actions are **not assumed to form a single ordinal scale**, the primary structured model will use multinomial or one-versus-rest formulations, with generalized additive terms where justified. For action (j),
 
-1. penalized logistic or ordinal regression;
-2. generalized additive models;
-3. more flexible machine-learning comparators only if justified.
+$$
+P(Y_i=j\mid X_i)=
+\frac{\exp\{\alpha_j+f_j(X_i)\}}
+{\sum_{\ell=1}^{4}\exp\{\alpha_\ell+f_\ell(X_i)\}}.
+$$
 
-A representative formulation is:
+A separate binary safety endpoint will model inappropriate authorization directly. More flexible machine-learning comparators will be added only if they improve pre-specified held-out criteria.
 
-~~~text
-logit P(Y >= k)
-  = alpha_k
-  + f1(uniqueness)
-  + f2(record_count)
-  + beta1 * I(free_text)
-  + beta2 * I(sensitive)
-  + beta3 * I(external_agent)
-  + ...
-~~~
-
-This model asks how far carefully engineered structural evidence can take us without semantic AI.
+This comparator asks how far carefully engineered structural evidence can take us without semantic AI.
 
 ---
 
@@ -341,11 +334,13 @@ Overall accuracy will not be the primary measure.
 
 ## Primary metrics
 
-- false-negative rate among high-risk cases;
-- Brier score or other proper probabilistic loss;
+- inappropriate-authorization rate and false-negative rate among high-risk cases;
+- high-severity miss rate and harm-weighted inappropriate authorization;
+- Brier score and log loss;
 - calibration;
 - selective risk at pre-specified coverage;
-- coverage at pre-specified abstention thresholds.
+- coverage at pre-specified abstention thresholds;
+- joint unsafe-authorization rate for the dual-gate system.
 
 ## Secondary metrics
 
@@ -362,7 +357,15 @@ A particularly relevant operational quantity is:
 
 > **Among cases for which the system chooses not to defer to a human, how often is its decision correct?**
 
-Risk-coverage curves will therefore be central to evaluation. A privacy gate should be allowed to say "uncertain."
+Risk-coverage curves will therefore be central to evaluation. A privacy gate should be allowed to say "uncertain." For a confidence threshold \(\tau\),
+
+$
+R(\tau)=E\{L(Y,\hat Y)\mid C\ge\tau\},
+\qquad
+\mathrm{Coverage}(\tau)=P(C\ge\tau),
+$
+
+so safety can be evaluated explicitly against the fraction of cases handled automatically.
 
 ## 11.1 Uncertainty, calibration, and dual-gate safety
 
@@ -385,23 +388,41 @@ We will also evaluate a **dual-gate authorization strategy**. Gate A will emphas
 
 The key safety quantity is not just each classifier's error rate but the **joint inappropriate-authorization probability**:
 
-~~~text
-P(E_A ∩ E_B | Y = unsafe)
-~~~
+$
+J=P(E_A\cap E_B\mid Y=\text{unsafe}).
+$
 
-together with the dependence of the two error indicators. We will estimate whether intentionally diversified gates reduce family-wise unsafe authorization relative to either gate alone, and quantify the corresponding increase in abstention and human-review burden. Independence will be encouraged through distinct feature representations, model classes, and development samples; it will **not** be assumed merely because two bootstrap samples were used.
+We will also estimate excess joint failure beyond the independence benchmark,
+
+$
+\Delta
+=J-
+P(E_A\mid Y=\text{unsafe})
+P(E_B\mid Y=\text{unsafe}),
+$
+
+so correlated failure is measured rather than assumed away. We will test whether intentionally diversified gates reduce joint unsafe authorization relative to either gate alone and quantify the corresponding increase in abstention and human-review burden. Independence will be encouraged through distinct feature representations, model classes, and development samples; it will **not** be inferred merely because two bootstrap samples were used.
 
 This follows the selective-classification literature, which explicitly trades coverage for lower prediction risk (Geifman & El-Yaniv, 2017; 2019). Where sample size and exchangeability assumptions are adequate, we will also explore conformal or other distribution-free risk-control methods for statistically principled abstention/coverage targets (Angelopoulos & Bates, 2021). Ensemble-style disagreement will be examined as an additional uncertainty signal, motivated by work showing that diversified predictive models can improve uncertainty estimation and sensitivity to distribution shift (Lakshminarayanan et al., 2017).
 
 The statistical objective is therefore broader than building a classifier: **we will estimate, calibrate, compare, and stress-test the full decision system, including uncertainty, error dependence, abstention, and human-review cost.**
 
-We will also distinguish **error frequency from error consequence**. Human adjudicators will assign a structured exposure-impact profile (identifiability/linkability, sensitivity, scale, vulnerability, exploitability, and persistence/irreversibility). This supports severity-aware endpoints such as a **harm-weighted false-authorization rate** and a **high-severity miss rate**:
+We will also distinguish **error frequency from error consequence**. Human adjudicators will assign the structured exposure-impact profile defined in the benchmark. A primary severity endpoint will be
 
-~~~text
-P(authorize | unsafe, high-impact)
-~~~
+$
+P(\text{authorize}\mid Y=\text{unsafe},\ H=\text{high}),
+$
 
-For dual gates, we will therefore examine not only how often both gates fail, but whether they prevent the most consequential failures. Harm labels will be assigned independently of model predictions and retained as component ratings rather than collapsed into a single opaque score.
+with a transparent, pre-specified harm-weighted analysis as a sensitivity measure,
+
+$
+\mathrm{HWFA}
+=
+\frac{\sum_i h_i I(\hat A_i=\text{allow},Y_i=\text{unsafe})}
+{\sum_i h_i I(Y_i=\text{unsafe})}.
+$
+
+Component harm ratings will remain visible rather than being hidden inside a single opaque score. For dual gates, we will examine not only how often both gates fail, but whether they prevent the most consequential failures.
 
 
 ---
@@ -521,7 +542,7 @@ Complete Which, migrate the working Jev decision path, add Laya parity, and esta
 
 ## WP2 — Privacy benchmark
 
-Formalize the agent-access outcome, construct public/synthetic scenarios, establish annotation guidance, double-annotate a high-value subset, and freeze development/calibration/test splits.
+Formalize the agent-access outcome and exposure-impact profile, construct public/synthetic scenarios, establish annotation guidance, double-annotate a high-value subset, and freeze development/calibration/test splits.
 
 ## WP3 — Statistical comparator
 
@@ -605,21 +626,19 @@ The primary scientific aims and open-source release are scheduled to complete wi
 # 18. Purpose of Claude API credits
 ## Application-field draft — maximum 500 words
 
-Claude API credits will support five complementary research functions.
+Claude API credits will support five connected research functions.
 
-**First, Claude will serve as a frontier semantic-model comparator.** Each benchmark case will contain a versioned natural-language description of a dataset, intended use, proposed AI-agent operation, and access conditions. Claude will return structured decisions under a fixed rubric. Its predictions and uncertainty behavior will be compared with an interpretable statistical model and with compact open decision models such as Laya operating on the same cases. Claude will not define ground truth.
+**First, Claude will serve as a frontier semantic comparator.** Benchmark cases will contain versioned descriptions of datasets, intended uses, proposed AI-agent operations, and access conditions. Claude will return structured decisions under a fixed rubric for comparison with deterministic safeguards, interpretable statistical models, and compact local models.
 
-**Second, Claude will support labelled-data construction and model-improvement supervision.** We will use Claude to transform public privacy, research-data, and access documentation into candidate scenarios; generate controlled counterfactual variations; identify ambiguous wording and difficult cases; propose provisional labels and rationales for human adjudication; and assist with error analysis and experiment design. Claude-generated cases and labels will remain candidate material. Human reviewers will approve benchmark content, gold labels, training-set additions, Laya tuning decisions, hosted-model recalibration decisions, and release gates. The primary untouched test set will be independently curated and will not use Claude-generated labels as its reference standard.
+**Second, Claude will support labelled-data development and training supervision.** Claude will help transform public research/privacy documentation into candidate scenarios, generate counterfactuals and hard cases, propose provisional labels and rationales for human adjudication, identify blind spots, and assist with experiment design and error analysis. Claude-generated material will not automatically become ground truth. Human reviewers will approve benchmark cases, gold labels, training-set additions, and release decisions. The primary untouched test set will be independently curated and will not use Claude-generated labels as its reference standard.
 
-**Third, Claude will support systematic robustness experiments.** We will vary access purpose, identifiability, sensitivity, wording, agent location, requested operation, and transformations while holding other factors fixed. These repeated experiments will quantify whether semantic decisions respond to relevant privacy evidence or to superficial phrasing.
+**Third, Claude will support systematic robustness experiments.** We will vary wording, identifiability, sensitivity, requested operation, access environment, and transformation status while preserving scenario-family-level split integrity.
 
-**Fourth, Claude will support development and validation of the open-source orchestration and training framework.** End-to-end agent-team workflows will be exercised under normal, ambiguous, adversarial, disagreement, and model-failure scenarios. Claude will provide an independent frontier comparator/reviewer while the orchestrator enforces minimum-necessary context, typed outputs, explicit escalation, and human gating. Claude will also assist with model-improvement supervision: surfacing hard cases, diagnosing systematic errors, proposing new challenge sets, and independently evaluating new Laya checkpoints or recalibrated hosted-model configurations before human-approved release.
+**Fourth, Claude will support validation of the open-source orchestration and model-improvement framework.** End-to-end workflows will be exercised under normal, ambiguous, adversarial, disagreement, and failure conditions. Claude can independently review selected local-model outputs and help diagnose failure patterns. Local Laya checkpoints may be tuned using local or separately funded compute; hosted Jev will be calibrated/evaluated rather than fine-tuned. Both will use the same versioned decision and evaluation framework.
 
-**Fifth, Claude will support a supervised cohort of approximately 3–5 Biostatistics/data-science trainees and a potential public-health pilot.** Trainees will use versioned API workflows for benchmark development, classifier evaluation, calibration/uncertainty analysis, blinded replication, application building, error analysis, robustness experiments, and software-release validation. Subject to organizational approval, a pilot will evaluate the framework on realistic public-health workflows without transmitting restricted source records to Claude.
+**Fifth, Claude will support a supervised cohort of approximately 3–5 Biostatistics/data-science trainees and, if feasible, a small public-health implementation pilot.** Trainees will use versioned workflows for benchmark development, classifier evaluation, calibration/uncertainty analysis, blinded review, application building, reproducibility exercises, adversarial testing, and release validation. The training objective is to prepare the next generation of statisticians to do more than prompt AI: they will learn to build with it and then evaluate its classifications, probabilities, uncertainty, failure modes, and need for human review using statistical methods. Any pilot, potentially with PHO, will be contingent on organizational approval and will use approved/public/synthetic representations rather than transmitting restricted source records.
 
-The project specifically contrasts frontier cloud models with compact local decision models. Claude will therefore provide a high-capability semantic reference point while we test whether smaller models can recover sufficient contextual information to operate locally as a privacy firewall. Training or fine-tuning Laya will use local or separately funded compute; Jev will be calibrated/evaluated as a hosted model rather than fine-tuned. Claude credits will support the surrounding scientific workload—benchmark generation, comparison, adversarial testing, calibration research, independent review, and end-to-end validation.
-
-All experiments will record model, rubric, package, orchestration-policy, and dataset versions. Training, calibration, and final held-out evaluation will remain separated. Claude predictions will never be used automatically as gold labels for Laya or the statistical model.
+All experiments will record model, rubric, package, orchestration-policy, dataset, and split versions. Claude will provide research evidence, not policy authority. Claude-derived probabilities will be treated as predictions requiring calibration and uncertainty evaluation; they will be compared using proper scoring rules, selective prediction, disagreement/joint-error analysis, and human-review burden rather than simple accuracy alone. Sonnet will carry most high-volume experimentation; Opus 5.5 will be used selectively for complex coding, independent review, and model/version re-evaluation; Fable 5.1 (or a formally released successor such as Fable 5.2) will be reserved for selected high-stakes planning and risk-evaluation tasks where added capability justifies the higher cost.
 
 ---
 
@@ -638,17 +657,19 @@ Illustrative annual usage:
 | High-stakes planning/risk adjudication | 2,000 runs | Fable 5.1 / successor | $6,000 |
 | Bulk benchmark / robustness scoring | 200,000 evaluations | Sonnet 5 Batch | $7,000 |
 | Orchestration / regression validation | 10,000 agentic runs | Sonnet 5 | $9,000 |
-| Trainee research | ~9,500 supervised runs | Sonnet 5 | $7,125 |
+| 3–5 trainee research program | ~9,500 supervised runs | Sonnet 5 | $7,125 |
 | Open-source coding / validation | ~4,000 long-context runs | Opus 5.5 | $12,000 |
 | Conditional public-health pilot | ~3,000 runs | Sonnet 5 | $3,000 |
 | Model/version re-evaluation | ~4,000 runs | Opus 5.5 | $6,000 |
 | **Planned total** |  |  | **~$52,375 USD (~$73,650 CAD)** |
 
-The remaining margin accommodates exchange-rate movement and workload variation. These are planning assumptions, not quotas. API use will be logged by experiment, model, user/workstream, token count, and purpose.
+The remaining margin accommodates exchange-rate movement and workload variation. These are planning assumptions, not quotas. The trainee workload assumes a supervised cohort of approximately 3–5 students using versioned AI workflows for both application development and statistical evaluation; credits support API use, not compensation. API use will be logged by experiment, model, user/workstream, token count, and purpose.
 
 The project is explicitly designed for classification errors. A semantic classifier cannot independently authorize sensitive-data access. Deterministic hard blockers remain authoritative; low-confidence predictions abstain; disagreement between statistical and semantic evidence escalates to human review; and consequential releases require human approval. Post-release regression tests, audit logs, and versioned rollback points allow a model or policy change to be withdrawn if error rates worsen.
 
 Local Laya tuning will use local/separately funded compute; Jev will be calibrated/evaluated as a hosted comparator. Claude credits fund labelled-data development, training supervision, frontier comparison, adversarial testing, independent evaluation, orchestration validation, and reproducible release testing.
+
+---
 
 # 20. AI safety
 ## Application-field draft — maximum 500 words
@@ -659,11 +680,11 @@ The initial benchmark will be constructed from public documentation, public data
 
 We will maintain a strict separation between **model evidence and policy authority**. Claude and other semantic models will return predictions under a versioned rubric; they will not independently authorize access to research data. Deterministic privacy safeguards and human review will remain authoritative for consequential decisions.
 
-Claude-generated scenarios or proposed labels will not automatically become ground truth. Benchmark labels will be human reviewed, provenance will be recorded, and development/calibration/test partitions will be frozen before final model comparison. We will explicitly report semantic-model disagreement, calibration, abstention, wording sensitivity, and privacy-relevant false negatives.
+Claude-generated scenarios or proposed labels will not automatically become ground truth. Benchmark labels will be human reviewed, provenance will be recorded, and development/calibration/test partitions will be frozen before final model comparison. Scenario families—including paraphrases and counterfactual variants derived from the same source case—will remain within a single partition to reduce information leakage. We will explicitly report semantic-model disagreement, calibration, abstention, wording sensitivity, and privacy-relevant false negatives.
 
 DataGangeR's existing default no-network workflow will be preserved. Future semantic integration will remain optional, with local inference preferred for sensitive applications. Raw records will not be transmitted to remote decision models. Any future model-assisted production workflow will operate on bounded and versioned summaries whose disclosure properties must be evaluated separately.
 
-The proposed local-firewall architecture is designed specifically to reduce unnecessary exposure: deterministic checks, an interpretable statistical model, and a compact local semantic model operate inside the trusted boundary before a larger external agent receives a minimum-necessary representation. A policy-controlled orchestrator will enforce component permissions, minimum-necessary context, structured outputs, disagreement escalation, and human gating; individual agents will not autonomously expand their own data access.
+The proposed local-firewall architecture is designed specifically to reduce unnecessary exposure: deterministic checks, an interpretable statistical model, and a compact local semantic model operate inside the trusted boundary before a larger external agent receives a minimum-necessary representation. A policy-controlled orchestrator will enforce component permissions, minimum-necessary context, structured outputs, disagreement escalation, and human gating; individual agents will not be free to expand their own data access.
 
 All public software, benchmark-generation procedures, model specifications, calibration artifacts, and evaluation code will be version controlled to support reproducibility and independent audit. We will avoid claims that any model score guarantees anonymity, regulatory compliance, or universal safety.
 
@@ -676,20 +697,20 @@ All public software, benchmark-generation procedures, model specifications, cali
 5. every decision records model/version, inputs, outputs, confidence, policy version, and human override;
 6. regression monitoring can suspend or roll back a model/checkpoint/policy if predefined error or calibration limits are exceeded.
 
-The primary safety endpoint will include **inappropriate authorization**—allowing direct/bounded access when the reference action requires transformation, human review, or no direct exposure—so the fallback system is evaluated directly rather than assumed to work.
+The primary safety endpoint will include **inappropriate authorization**—allowing direct/bounded access when the reference action requires transformation, human review, or no direct exposure. We will also report **harm-weighted inappropriate authorization** and high-severity miss rates so that errors with potentially serious PI/PHI consequences count more than low-impact mistakes.
 
 ---
 
 # 21. Abstract
 ## Application-field draft — maximum 200 words
 
-AI agents can increasingly perform statistical analysis, programming, and research workflows, creating a practical privacy question: **when should an AI agent be allowed to see research data, and when should those data first be transformed, restricted, or reviewed by a human?**
+Researchers increasingly use cloud AI to prototype analyses, write code, and build research applications. In medical and public-health research, those workflows may involve data containing **personal information (PI), personal health information (PHI), sensitive attributes, or identifying combinations of variables**. This creates a privacy question before the first prompt: **is the representation we are about to share—original, de-identified, synthetic, or summarized—appropriate for this AI service and this task?**
 
-We will develop and evaluate calibrated decision methods for AI data access. We will compare deterministic privacy safeguards, an interpretable access-decision model based on measurable dataset and task characteristics, and semantic models that interpret natural-language data descriptions and access requests.
+Synthetic data can reduce unnecessary exposure, but it is not automatically safe. Privacy depends on what information is preserved, how the data were generated, what the agent is asked to do, and where the computation occurs.
 
-A key question is whether compact local models such as Laya can provide useful semantic evidence inside the trusted environment, without transmitting raw records to an external service. Claude will serve as a frontier semantic comparator and support labelled-data development, robustness testing, and independent evaluation.
+We will develop and statistically evaluate calibrated decision methods for AI data access, comparing deterministic privacy safeguards, an interpretable access-decision model, and semantic classifiers. We will study calibration, uncertainty, abstention, dual-gate authorization, joint error, and human-review burden rather than relying on raw model confidence.
 
-We will build a provenance-tracked benchmark from public documentation, data dictionaries, and synthetic scenarios, with scenario-family-level train/calibration/test separation, human adjudication, and held-out statistical evaluation of calibration, privacy-relevant false negatives, selective risk, abstention, joint-error dependence, and incremental predictive value. The project builds on DataGangeR and the engine-neutral Which decision framework.
+Claude will support labelled-data development, robustness testing, independent evaluation, and supervised trainee workflows. The project will deliver an open-source privacy-gating and classifier-evaluation framework in DataGangeR/Which, together with a provenance-tracked benchmark and a path to real-world public-health implementation.
 
 # 22. Keywords
 
@@ -746,7 +767,7 @@ The project is designed to produce **research evidence, reusable infrastructure,
 
 ### Core outputs within the 12-month award
 
-1. **Primary methods manuscript:** calibration, uncertainty, selective prediction, and dual-gate safety for AI data-access decisions, including joint-error dependence and human-review burden.
+1. **Primary methods manuscript:** calibration, uncertainty, selective prediction, dual-gate safety, and consequence-aware evaluation for AI data-access decisions, including joint-error dependence and human-review burden.
 2. **Open-source release:** DataGangeR/Which privacy-gating workflow plus the reusable classifier-evaluation framework, regression tests, versioned evaluation manifests, and implementation documentation.
 3. **Open benchmark/evaluation assets:** provenance-tracked scenarios, annotation guidance, frozen evaluation splits where licensing permits, and reproducible statistical analysis code.
 4. **Trainee outputs:** supervised student analyses, reproducibility reports, presentations/posters, and documented contributions to software/evaluation modules, with a reusable training workflow for statistically evaluating AI classifiers and their uncertainty.
@@ -888,4 +909,4 @@ flowchart TB
 
 # Appendix C. One-sentence translational vision
 
-> **A small local model should be able to guard the door to a much larger AI model without requiring the sensitive data to leave the trusted environment merely to decide whether they may leave it.**
+> **A small local model should be able to guard the door to a much larger AI model without requiring PI/PHI or other sensitive research data to leave the trusted environment merely to decide whether an appropriate representation may leave it.**
