@@ -42,7 +42,7 @@ No separate long-form proposal upload is listed in the call; the application is 
 
 ### Abstract — maximum 200 words
 
-Researchers increasingly use cloud-based AI assistants and agents to prototype analyses, write code, and build research applications. This creates a practical privacy question before the first prompt is sent: **is the representation we are about to share—original, de-identified, synthetic, or summarized—appropriate for this AI service and this task?**
+Researchers increasingly use cloud-based AI assistants and agents to prototype analyses, write code, and build research applications. In medical and public-health research, those workflows may involve data containing **personal information (PI), personal health information (PHI), sensitive attributes, or identifying combinations of variables**. This creates a practical privacy question before the first prompt is sent: **is the representation we are about to share—original, de-identified, synthetic, or summarized—appropriate for this AI service and this task?**
 
 Synthetic data can reduce unnecessary exposure, but it is not automatically safe. Privacy depends on what information is preserved, how the data were generated, what the agent is asked to do, and where the computation occurs.
 
@@ -108,9 +108,9 @@ We propose to involve **3–5 Biostatistics/data-science trainees** in supervise
 
 ### B. Project Description — maximum 500 words
 
-Researchers increasingly use cloud AI systems to prototype statistical analyses, write R/Python code, debug pipelines, and build applications. These workflows often require more than a schema: an AI agent may request example rows, distributions, free text, or realistic synthetic data. The practical question therefore arises **before data are uploaded**: is this particular representation appropriate for this cloud AI system and this task?
+Researchers increasingly use cloud AI systems to prototype statistical analyses, write R/Python code, debug pipelines, and build applications. In medical and public-health settings, the underlying data may contain **PI, PHI, sensitive health characteristics, free text, dates, geography, or combinations of quasi-identifiers**. These workflows often require more than a schema: an AI agent may request example rows, distributions, free text, or realistic synthetic data. The practical question therefore arises **before data are uploaded**: is this particular representation appropriate for this cloud AI system and this task?
 
-Synthetic data is attractive because it can reduce direct exposure, but “synthetic” is not a privacy certificate. A generated dataset may preserve rare combinations, sensitive relationships, or even source-like records, while an agentic workflow may repeatedly request additional context. The relevant decision is contextual: original versus synthetic versus summarized data, task purpose, access environment, and safeguards all matter.
+Synthetic data is attractive because it can reduce direct exposure of PI/PHI and other sensitive research information, but “synthetic” is not a privacy certificate. A generated dataset may preserve rare combinations, sensitive relationships, or even source-like records, while an agentic workflow may repeatedly request additional context. The relevant decision is contextual: original versus synthetic versus summarized data, task purpose, access environment, and safeguards all matter.
 
 We will formalize this as a calibrated statistical decision problem and compare deterministic privacy safeguards, an interpretable access-decision model, and semantic classifiers. Raw probabilities will be recalibrated on held-out data; entropy, probability margin, disagreement, abstention, and risk-coverage will be studied. We will also test a **dual-gate authorization strategy** in which independently developed structured and semantic classifiers must concur before bounded access is permitted, estimating individual and joint inappropriate-authorization rates, error dependence, and human-review burden.
 
