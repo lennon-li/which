@@ -26,16 +26,49 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc texlive-xetex texlive-latex-extra texlive-fonts-recommended lmodern
+          PUPPETEER_SKIP_DOWNLOAD=true npm install -g @mermaid-js/mermaid-cli
+
+      - name: Render Mermaid diagrams
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
+        run: |
+          mkdir -p /tmp/dsi-mermaid
+          python - <<'PY'
+          from pathlib import Path
+          import re, subprocess
+
+          src_path = Path("docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.md")
+          out_path = Path("/tmp/dsi-grant-render.md")
+          asset_dir = Path("/tmp/dsi-mermaid")
+          text = src_path.read_text(encoding="utf-8")
+          pattern = re.compile(r"~~~mermaid\n(.*?)\n~~~", re.S)
+
+          parts = []
+          pos = 0
+          for idx, match in enumerate(pattern.finditer(text), start=1):
+              parts.append(text[pos:match.start()])
+              mmd = asset_dir / f"diagram-{idx}.mmd"
+              png = asset_dir / f"diagram-{idx}.png"
+              mmd.write_text(match.group(1).strip() + "\n", encoding="utf-8")
+              subprocess.run([
+                  "mmdc", "-i", str(mmd), "-o", str(png),
+                  "-b", "white", "-s", "1.5"
+              ], check=True)
+              parts.append(f"\n![Diagram {idx}]({png}){{ width=92% }}\n")
+              pos = match.end()
+          parts.append(text[pos:])
+          out_path.write_text("".join(parts), encoding="utf-8")
+          print(f"Rendered {len(list(asset_dir.glob('*.png')))} Mermaid diagrams")
+          PY
 
       - name: Render PDF
         run: |
-          INPUT="docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.md"
           OUTPUT="docs/grants/2026-09-dsi-anthropic-ai-privacy-firewall-proposal.pdf"
-          pandoc "$INPUT" \
+          pandoc /tmp/dsi-grant-render.md \
             --from=markdown \
             --pdf-engine=xelatex \
             --toc \
-            --number-sections \
+            --toc-depth=3 \
             -V geometry:margin=0.72in \
             -V fontsize=10pt \
             -V colorlinks=true \
