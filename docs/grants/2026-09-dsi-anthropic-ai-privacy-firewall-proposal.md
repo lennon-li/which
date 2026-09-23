@@ -544,27 +544,27 @@ All experiments will record model, rubric, package, orchestration-policy, and da
 
 We request **CAD $75,000 in Claude API credits over 12 months**.
 
-A bottom-up planning model supports this request. Current Claude API list prices are quoted in USD; as of September 22, 2026, Sonnet 5 is US$2/M input and US$10/M output tokens, Opus 5 is US$5/M input and US$25/M output, and batch processing is 50% of standard API pricing. Using the Bank of Canada September 22 rate of 1 USD = 1.4064 CAD, CAD $75,000 corresponds to approximately US$53,300.
+A bottom-up planning model supports this request using the current Claude lineup. As of September 22, 2026, **Claude Opus 5.5** was released at US$4/M input and US$20/M output tokens. **Claude Fable 5.1**, currently the publicly available Fable model, is US$10/M input and US$50/M output and will be reserved for selected high-stakes planning, risk review, and difficult-case adjudication. If Fable 5.2 or a successor becomes officially available during the award, it will be evaluated prospectively under the same frozen protocol rather than assumed in advance.
 
-The planned workload is approximately:
+Illustrative annual usage:
 
-| Workload | Illustrative annual scale | Approx. USD |
-|---|---:|---:|
-| Candidate-case / labelled-data research workflows (Sonnet) | 5,000 long-context runs | $2,250 |
-| High-capability adjudication/error review (Opus) | 2,000 runs | $3,000 |
-| Bulk benchmark / robustness scoring (Sonnet Batch) | 200,000 evaluations | $7,000 |
-| Orchestration and regression validation (Sonnet) | 10,000 agentic runs | $9,000 |
-| Trainee research workflows (Sonnet) | ~9,000 supervised runs | $6,750 |
-| Open-source coding/validation workflows (Sonnet) | ~7,000 long-context runs | $10,500 |
-| Conditional public-health pilot / implementation testing | ~3,000 runs | $3,000 |
-| Model/version re-evaluation (Opus-class) | ~6,000 runs | $11,250 |
-| **Planned total** |  | **~$52,750 USD (~$74,200 CAD)** |
+| Workload | Scale | Model | Approx. USD |
+|---|---:|---|---:|
+| Candidate-case / labelled-data workflows | 5,000 long-context runs | Sonnet 5 | $2,250 |
+| High-stakes planning/risk adjudication | 2,000 runs | Fable 5.1 / successor | $6,000 |
+| Bulk benchmark / robustness scoring | 200,000 evaluations | Sonnet 5 Batch | $7,000 |
+| Orchestration / regression validation | 10,000 agentic runs | Sonnet 5 | $9,000 |
+| Trainee research | ~9,500 supervised runs | Sonnet 5 | $7,125 |
+| Open-source coding / validation | ~4,000 long-context runs | Opus 5.5 | $12,000 |
+| Conditional public-health pilot | ~3,000 runs | Sonnet 5 | $3,000 |
+| Model/version re-evaluation | ~4,000 runs | Opus 5.5 | $6,000 |
+| **Planned total** |  |  | **~$52,375 USD (~$73,650 CAD)** |
 
-These are planning assumptions, not quotas. Long-context agentic workflows include iterative tool use, code/repository context, research documents, and validation traces; bulk benchmark scoring will use batch processing where appropriate. Prompt caching or future price reductions could lower actual spend, while new models or more expensive high-capability evaluations could increase it. We will monitor usage monthly and redirect savings to pre-specified replication, robustness, and model-version comparisons rather than expanding the scientific claims.
+The remaining margin accommodates exchange-rate movement and workload variation. These are planning assumptions, not quotas. API use will be logged by experiment, model, user/workstream, token count, and purpose.
 
-Students/trainees will use supervised, versioned workflows for benchmark development, blinded review, error analysis, reproducibility exercises, and package validation. The PHO/public-health pilot is optional and will only proceed with organizational approval; unused pilot capacity can be reassigned to benchmark replication and open-source regression testing.
+The project is explicitly designed for classification errors. A semantic classifier cannot independently authorize sensitive-data access. Deterministic hard blockers remain authoritative; low-confidence predictions abstain; disagreement between statistical and semantic evidence escalates to human review; and consequential releases require human approval. Post-release regression tests, audit logs, and versioned rollback points allow a model or policy change to be withdrawn if error rates worsen.
 
-Local Laya tuning will use local/separately funded compute; Jev will be calibrated/evaluated as a hosted comparator. Claude credits fund the surrounding research: labelled-data development, frontier comparison, training supervision, adversarial testing, independent evaluation, orchestration validation, and reproducible release testing.
+Local Laya tuning will use local/separately funded compute; Jev will be calibrated/evaluated as a hosted comparator. Claude credits fund labelled-data development, training supervision, frontier comparison, adversarial testing, independent evaluation, orchestration validation, and reproducible release testing.
 
 # 20. AI safety
 ## Application-field draft — maximum 500 words
@@ -582,6 +582,17 @@ DataGangeR's existing default no-network workflow will be preserved. Future sema
 The proposed local-firewall architecture is designed specifically to reduce unnecessary exposure: deterministic checks, an interpretable statistical model, and a compact local semantic model operate inside the trusted boundary before a larger external agent receives a minimum-necessary representation. A policy-controlled orchestrator will enforce component permissions, minimum-necessary context, structured outputs, disagreement escalation, and human gating; individual agents will not autonomously expand their own data access.
 
 All public software, benchmark-generation procedures, model specifications, calibration artifacts, and evaluation code will be version controlled to support reproducibility and independent audit. We will avoid claims that any model score guarantees anonymity, regulatory compliance, or universal safety.
+
+**Classification-error fallback.** Model classifications are advisory evidence, not autonomous authorization. The operational fallback is conservative and layered:
+
+1. deterministic hard blockers cannot be overridden by a favorable model prediction;
+2. calibrated confidence below a pre-specified threshold produces **abstention**, not access;
+3. material disagreement among deterministic, statistical, and semantic evidence triggers **human review**;
+4. ambiguous or out-of-distribution cases default to the more restrictive representation or no direct exposure;
+5. every decision records model/version, inputs, outputs, confidence, policy version, and human override;
+6. regression monitoring can suspend or roll back a model/checkpoint/policy if predefined error or calibration limits are exceeded.
+
+The primary safety endpoint will include **inappropriate authorization**—allowing direct/bounded access when the reference action requires transformation, human review, or no direct exposure—so the fallback system is evaluated directly rather than assumed to work.
 
 ---
 
