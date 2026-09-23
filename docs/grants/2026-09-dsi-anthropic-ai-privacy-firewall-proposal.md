@@ -21,7 +21,7 @@ Existing privacy controls answer related but narrower questions. They can detect
 This project will develop and evaluate an auditable **AI privacy firewall** for research data. The firewall will combine three distinct sources of evidence:
 
 1. **Deterministic privacy safeguards** that identify facts that should not be guessed by a model.
-2. **An interpretable statistical risk model** based on measurable properties of the data and proposed use.
+2. **An interpretable statistical access-decision model** based on measurable properties of the data and proposed use.
 3. **A compact local semantic model**, such as Laya, that can interpret natural-language descriptions, data dictionaries, and access requests without sending raw data to an external service.
 
 Claude will be used as a frontier semantic comparator, a controlled research instrument for benchmark construction and robustness experiments, and a downstream example of the class of capable external agents whose access must be mediated.
@@ -38,11 +38,11 @@ The project builds on two pieces of existing work. **DataGangeR** is an open-sou
 
 The project will deliver an **open-source, policy-controlled orchestration layer** that governs how deterministic privacy checks, statistical models, compact local models, frontier models, and human reviewers work together. The orchestrator will enforce minimum-necessary context, structured outputs, explicit escalation, and auditable human gating rather than allowing an unconstrained agent team to decide its own access.
 
-It will also deliver a reusable **training and continuous-improvement framework** for compact decision models such as Jev and Laya. The framework will prospectively collect labelled decisions, preserve human adjudication, maintain versioned train/calibration/test splits, detect failure patterns, trigger retraining when justified, recalibrate outputs, and gate releases through regression testing. Claude can support candidate-case generation, provisional labelling, hard-case discovery, experiment design, training supervision, and independent evaluation without being treated as ground truth.
+It will also deliver a reusable **human-governed evidence-collection and model-improvement framework**. The framework will prospectively collect labelled decisions, preserve human adjudication, maintain versioned train/calibration/test splits, support periodic Laya tuning when justified, calibrate/evaluate hosted models such as Jev, and gate releases through regression testing. Claude can support candidate-case generation, provisional labelling, hard-case discovery, experiment design, error analysis, and independent evaluation without being treated as ground truth.
 
-Privacy-aware AI access will be the first high-stakes application, but the underlying framework is intentionally general. The same typed-decision and calibration machinery can support other public-health decisions such as aberration detection, escalation, intervention/action selection, and abstention when evidence is insufficient.
+Privacy-aware AI access is the primary 12-month application. The underlying typed-decision and calibration infrastructure will be designed for later reuse in other public-health tasks, such as aberration triage and escalation, but those secondary applications are not required deliverables of this project.
 
-Students and trainees will participate in benchmark construction, blinded annotation/review, robustness experiments, replication, and release validation. Subject to organizational approval, we will also seek a **real-world public-health pilot**, potentially with Public Health Ontario (PHO), to evaluate the framework in realistic research workflows using approved/public/synthetic representations.
+Students and trainees will participate in benchmark construction, blinded annotation/review, robustness experiments, replication, and release validation. If organizational approvals and timing permit, we will conduct a **small public-health implementation pilot**, potentially with Public Health Ontario (PHO), using approved/public/synthetic representations. The pilot is an external-validity and knowledge-translation activity and is not required for completion of the primary scientific aims.
 
 ---
 
@@ -79,7 +79,7 @@ For privacy-sensitive applications, a semantically capable model should therefor
 
 A central hypothesis of this project is that small typed-decision models can occupy a useful middle layer between hard privacy rules and powerful external AI systems.
 
-The recent release of compact open decision models such as **Laya** fills an important technical gap in this architecture. A semantic privacy gate can now plausibly run inside the trusted environment, return typed probabilistic decisions, and be calibrated for a narrow task without first sending sensitive context to a remote service.
+The recent release of compact typed-decision models such as **Laya** makes this architecture newly testable. A semantic gate can plausibly run inside the trusted environment and return structured probabilistic decisions without first sending sensitive context to a remote service. Whether such models are sufficiently accurate, calibrated, robust, and efficient for privacy-sensitive use remains an empirical question that this project will evaluate.
 
 The proposed architecture treats such a model as a **local AI privacy firewall**: a semantic gate that interprets bounded metadata, data dictionaries, column summaries, and requested agent actions before deciding whether information should be exposed, transformed, or escalated for human review.
 
@@ -95,7 +95,7 @@ flowchart TB
     A --> C["Bounded local summary / data dictionary"]
     B --> D["Structured privacy features"]
     C --> E["Compact local semantic model<br/>(e.g. Laya)"]
-    D --> F["Interpretable statistical risk model<br/>(logistic / ordinal / GAM)"]
+    D --> F["Interpretable statistical access-decision model<br/>(logistic / ordinal / GAM)"]
     E --> G["Calibrated semantic evidence"]
     F --> H["Calibrated statistical evidence"]
     B --> I["Hard blockers / known facts"]
@@ -110,7 +110,7 @@ flowchart TB
     M --> L
 ~~~
 
-**Figure 1. Proposed AI privacy firewall.** Deterministic safeguards, statistical risk modelling, and compact semantic inference are kept separate until the policy layer. A favorable model score cannot override a deterministic hard blocker.
+**Figure 1. Proposed AI privacy firewall.** Deterministic safeguards, statistical access-decision modelling, and compact semantic inference are kept separate until the policy layer. A favorable model score cannot override a deterministic hard blocker.
 
 ---
 
@@ -191,7 +191,7 @@ No confidential research records are required for the initial benchmark.
 
 ## 5.3 Proposed target size
 
-The initial benchmark will target approximately **2,000–5,000 curated scenarios**, with a smaller high-quality subset receiving independent double annotation.
+The project will generate approximately **2,000–5,000 candidate scenarios** from public documentation, synthetic cases, and controlled counterfactuals. A smaller rigorously curated core benchmark will receive human adjudication, with an independently double-annotated high-value subset. This keeps expert-review burden feasible while preserving a large candidate pool for development and stress testing.
 
 The benchmark will intentionally oversample difficult boundaries, including direct versus non-person identifiers; sensitive versus merely technical fields; individual identifiers versus combination risks; free text with and without sensitive content; fine versus coarse geography; fine versus coarse dates; local versus external agent execution; schema-only versus row-level access; and original versus transformed/synthetic data.
 
@@ -199,18 +199,20 @@ The benchmark will intentionally oversample difficult boundaries, including dire
 
 The primary outcome will not be labelled simply "safe."
 
-A more defensible ordinal action target is:
+The primary reference target will be a **multiclass recommended action**, rather than assuming these actions lie on a single ordinal severity scale:
 
 1. **bounded access acceptable;**
 2. **transform, redact, aggregate, or synthesize first;**
 3. **human review required;**
 4. **direct exposure inappropriate under the stated conditions.**
 
+For safety-oriented evaluation, we will also pre-specify derived binary endpoints, including **inappropriate authorization**: a model permits direct/bounded access when the reference action requires transformation, human review, or no direct exposure. This provides a clear interpretation for privacy-relevant false-negative rates and selective-risk analyses.
+
 ## 5.5 Annotation
 
 Each case will include case identifier, source/provenance, natural-language scenario, structured feature representation, expert action label, annotator certainty, brief rationale, difficulty/adversarial flag, and split assignment.
 
-For a subset, two independent reviewers will label the case before reconciliation. Human disagreement will be reported rather than hidden.
+For a subset, two independent reviewers will label the case before reconciliation. Human disagreement will be reported rather than hidden. Train, calibration, and test assignment will occur at the **scenario-family/source level** so that paraphrases, counterfactuals, or variants derived from the same source case cannot leak across partitions.
 
 ---
 
@@ -267,7 +269,7 @@ Its role is to establish how much signal a capable frontier model can extract fr
 
 Laya is particularly relevant because it represents the deployment direction of interest: a compact, open, locally executable decision model.
 
-The study will evaluate stock Laya, calibrated stock Laya, domain-adapted Laya only if the calibrated stock model adds residual value, and a frontier Claude comparator on the same cases.
+The study will evaluate stock Laya, calibrated stock Laya, domain-adapted Laya only if the calibrated stock model adds residual value, and a frontier Claude comparator on the same cases. Jev will be treated as a hosted typed-decision comparator that can be calibrated and evaluated through the same interface, not as a locally fine-tuned model.
 
 The final goal is not to prove that one named model is universally best. It is to determine whether the **compact local decision-model class** is useful as a privacy boundary.
 
@@ -352,6 +354,8 @@ Claude API credits make systematic repeated experiments at this scale feasible.
 
 # 13. Existing work and investigator preparation
 
+**Team roles.** Laura C. Rosella will serve as Principal Investigator, providing scientific oversight and public-health/implementation leadership. Lennon Li will serve as project lead and software/methods lead, with responsibility for DataGangeR/Which development, statistical evaluation, experiment orchestration, and reproducibility infrastructure.
+
 ## 13.1 DataGangeR
 
 I developed **DataGangeR**, an open-source R package for creating reviewable synthetic stand-ins for research data so coding agents, collaborators, and application developers can work without unnecessary access to original records.
@@ -422,7 +426,7 @@ That perspective motivates a central principle:
 - bounded column/dataset summary construction;
 - privacy annotation taxonomy;
 - definition of agent_exposure_risk;
-- statistical privacy model;
+- statistical access-decision model;
 - DataGangeR benchmark case construction;
 - reconciliation of deterministic/statistical/semantic evidence;
 - transformation/synthesis policy;
@@ -451,13 +455,13 @@ Engineer interpretable privacy features, fit conventional statistical models, ev
 
 Evaluate Claude under a fixed rubric, evaluate stock/calibrated Laya, fine-tune Laya only if justified, and conduct robustness experiments.
 
-## WP5 — Orchestration, continuous training, and open-source package
+## WP5 — Orchestration, model improvement, and open-source package
 
-Test incremental semantic value, evaluate transparent fusion, and build a policy-controlled orchestration layer that governs when deterministic rules, statistical models, Laya/Jev, Claude, and human reviewers are invoked. Add a reusable training/continuous-improvement framework for prospective labelled-data collection, human adjudication, calibration, retraining triggers, model/version manifests, and release regression tests. Package these capabilities as reusable open-source infrastructure (including skill/plugin-style interfaces where appropriate) so the framework can be applied beyond privacy to other public-health decision tasks.
+Test incremental semantic value, evaluate transparent fusion, and build a policy-controlled orchestration layer governing when deterministic rules, statistical models, Laya, hosted comparators such as Jev/Claude, and human reviewers are invoked. Add a human-governed framework for prospective labelled-data collection, adjudication, Laya tuning when justified, hosted-model calibration/evaluation, model/version manifests, and regression-gated releases.
 
-## WP6 — Trainee replication and real-world pilot
+## WP6 — Trainee replication and optional implementation pilot
 
-Train students/trainees in privacy-aware AI evaluation through blinded annotation, independent replication, robustness testing, and release validation. Subject to organizational approval, conduct a public-health pilot, potentially with PHO, using realistic research workflows and approved/public/synthetic representations. Re-run the validation suite after pilot-driven software or policy changes.
+Train students/trainees in privacy-aware AI evaluation through blinded annotation, independent replication, robustness testing, and release validation. If approvals and timing permit, conduct a small public-health implementation pilot, potentially with PHO, using approved/public/synthetic representations. The pilot is optional and not required for completion of the primary aims.
 
 ---
 
@@ -470,7 +474,7 @@ flowchart TB
     G3 --> Q1{"Does calibrated Laya add<br/>value beyond deterministic rules?"}
     Q1 -->|No| S1["Stop semantic adaptation<br/>retain simpler system"]
     Q1 -->|Yes| G4["Gate 4<br/>Optional Laya fine-tuning"]
-    G3 --> G5["Gate 5<br/>Define and fit interpretable<br/>statistical exposure-risk model"]
+    G3 --> G5["Gate 5<br/>Define and fit interpretable<br/>statistical access-decision model"]
     G4 --> Q2{"Do both semantic and statistical<br/>models independently add value?"}
     G5 --> Q2
     Q2 -->|No| S2["Use best simpler model"]
@@ -490,25 +494,27 @@ gantt
     dateFormat  YYYY-MM-DD
     axisFormat  %b %Y
 
-    section Which
-    Jev migration and prospective testing :a1, 2026-11-01, 60d
-    Laya parity and calibration            :a2, after a1, 45d
+    section Foundations
+    Which/Jev migration and protocol freeze     :a1, 2026-11-01, 60d
+    Laya adapter and calibration                :a2, 2026-12-01, 60d
 
     section Benchmark
-    Outcome definition and annotation guide :b1, 2026-11-15, 45d
-    Public/synthetic case construction       :b2, after b1, 90d
-    Double annotation and split freeze       :b3, after b2, 45d
+    Outcome/annotation guide                    :b1, 2026-11-15, 45d
+    Candidate scenario construction             :b2, 2026-12-01, 120d
+    Core adjudication and family-level split    :b3, 2027-02-01, 90d
 
     section Models
-    Statistical comparator                 :c1, after b3, 60d
-    Claude and Laya semantic evaluation    :c2, after b3, 60d
-    Robustness experiments                 :c3, after c2, 45d
+    Statistical access-decision comparator      :c1, 2027-03-01, 75d
+    Claude/Laya/Jev evaluation                  :c2, 2027-03-15, 90d
+    Robustness and calibration                  :c3, 2027-05-15, 75d
 
     section Integration
-    Incremental-value and ensemble analysis :d1, after c3, 45d
-    DataGangeR research prototype           :d2, after d1, 45d
-    Manuscript and open release             :d3, after d2, 45d
+    Incremental-value analysis                  :d1, 2027-06-15, 60d
+    Open-source integration/regression suite    :d2, 2027-07-01, 75d
+    Replication, manuscript, release            :d3, 2027-08-15, 60d
 ~~~
+
+The primary scientific aims and open-source release are scheduled to complete within 12 months. Work packages intentionally overlap. A public-health implementation pilot, if feasible, will run within existing work packages and will not delay the primary deliverables.
 
 ---
 
@@ -519,15 +525,15 @@ Claude API credits will support five complementary research functions.
 
 **First, Claude will serve as a frontier semantic-model comparator.** Each benchmark case will contain a versioned natural-language description of a dataset, intended use, proposed AI-agent operation, and access conditions. Claude will return structured decisions under a fixed rubric. Its predictions and uncertainty behavior will be compared with an interpretable statistical model and with compact open decision models such as Laya operating on the same cases. Claude will not define ground truth.
 
-**Second, Claude will support labelled-data construction and training supervision.** We will use Claude to transform public privacy, research-data, and access documentation into candidate scenarios; generate controlled counterfactual variations; identify ambiguous wording and difficult cases; propose provisional labels and rationales for human adjudication; and assist with error analysis and experiment design during Jev/Laya tuning. Claude-generated cases and labels will remain candidate material. Human reviewers will approve benchmark content, gold labels, training-set additions, retraining decisions, and release gates, and provenance will be retained.
+**Second, Claude will support labelled-data construction and model-improvement supervision.** We will use Claude to transform public privacy, research-data, and access documentation into candidate scenarios; generate controlled counterfactual variations; identify ambiguous wording and difficult cases; propose provisional labels and rationales for human adjudication; and assist with error analysis and experiment design. Claude-generated cases and labels will remain candidate material. Human reviewers will approve benchmark content, gold labels, training-set additions, Laya tuning decisions, hosted-model recalibration decisions, and release gates. The primary untouched test set will be independently curated and will not use Claude-generated labels as its reference standard.
 
 **Third, Claude will support systematic robustness experiments.** We will vary access purpose, identifiability, sensitivity, wording, agent location, requested operation, and transformations while holding other factors fixed. These repeated experiments will quantify whether semantic decisions respond to relevant privacy evidence or to superficial phrasing.
 
-**Fourth, Claude will support development and validation of the open-source orchestration and training framework.** End-to-end agent-team workflows will be exercised under normal, ambiguous, adversarial, disagreement, and model-failure scenarios. Claude will provide an independent frontier comparator/reviewer while the orchestrator enforces minimum-necessary context, typed outputs, explicit escalation, and human gating. Claude will also assist with iterative training supervision: surfacing hard cases, diagnosing systematic errors, proposing new challenge sets, and independently evaluating new Jev/Laya checkpoints before human-approved release.
+**Fourth, Claude will support development and validation of the open-source orchestration and training framework.** End-to-end agent-team workflows will be exercised under normal, ambiguous, adversarial, disagreement, and model-failure scenarios. Claude will provide an independent frontier comparator/reviewer while the orchestrator enforces minimum-necessary context, typed outputs, explicit escalation, and human gating. Claude will also assist with model-improvement supervision: surfacing hard cases, diagnosing systematic errors, proposing new challenge sets, and independently evaluating new Laya checkpoints or recalibrated hosted-model configurations before human-approved release.
 
 **Fifth, Claude will support trainee-led replication and a potential public-health pilot.** Students and trainees will use versioned API workflows for benchmark development, blinded replication, error analysis, robustness experiments, and software-release validation. Subject to organizational approval, a pilot will evaluate the framework on realistic public-health workflows without transmitting restricted source records to Claude.
 
-The project specifically contrasts frontier cloud models with compact local decision models. Claude will therefore provide a high-capability semantic reference point while we test whether smaller models can recover sufficient contextual information to operate locally as a privacy firewall. Training or fine-tuning Laya/Jev itself will use local or separately funded compute; Claude credits will support the surrounding scientific workload—benchmark generation, comparison, adversarial testing, calibration research, independent review, and end-to-end validation.
+The project specifically contrasts frontier cloud models with compact local decision models. Claude will therefore provide a high-capability semantic reference point while we test whether smaller models can recover sufficient contextual information to operate locally as a privacy firewall. Training or fine-tuning Laya will use local or separately funded compute; Jev will be calibrated/evaluated as a hosted model rather than fine-tuned. Claude credits will support the surrounding scientific workload—benchmark generation, comparison, adversarial testing, calibration research, independent review, and end-to-end validation.
 
 All experiments will record model, rubric, package, orchestration-policy, and dataset versions. Training, calibration, and final held-out evaluation will remain separated. Claude predictions will never be used automatically as gold labels for Laya or the statistical model.
 
@@ -549,11 +555,11 @@ The award will support a replicated research program, trainee participation, ope
 | Potential public-health pilot and post-pilot validation | 10% | $7,500 |
 | Model/version and pricing contingency | 10% | $7,500 |
 
-The open-source deliverable creates continuing validation requirements. In addition to the privacy firewall, the project will produce a reusable training and continuous-labelled-data framework for compact decision models such as Jev and Laya. It will support prospective data collection, human adjudication, tuning, calibration, retraining triggers, and regression-gated releases. Privacy will be the first application, with the same framework designed to generalize to public-health decision tasks such as aberration detection, escalation, and action selection. Because these systems may mediate consequential decisions, meaningful changes to statistical models, local semantic models, training data, orchestration policy, or package code will trigger human-gated regression testing rather than relying on a single initial benchmark result.
+The open-source deliverable creates continuing validation requirements. In addition to the privacy firewall, the project will produce a reusable human-governed labelled-data and model-improvement framework. It will support prospective data collection, adjudication, periodic Laya tuning when justified, hosted-model calibration/evaluation, and regression-gated releases. Privacy remains the primary application; broader public-health reuse is a future extension rather than a 12-month completion requirement. Because these systems may mediate consequential decisions, meaningful changes to models, labelled data, orchestration policy, or package code will trigger human-gated regression testing rather than reliance on a single initial benchmark result.
 
 Student and trainee usage will be structured as supervised research: benchmark construction, blinded annotation/review, robustness experiments, independent replication, error analysis, and validation of successive releases. A potential public-health pilot, subject to organizational approval, will generate additional realistic workflow testing and post-pilot regression cycles.
 
-Local training or fine-tuning of Laya/Jev will not consume Claude credits directly. Claude credits will support benchmark construction, frontier comparison, adversarial testing, calibration research, independent review, and end-to-end validation around those models.
+Local training or fine-tuning of Laya will not consume Claude credits directly, and Jev will be treated as a hosted comparator rather than a locally fine-tuned model. Claude credits will support benchmark construction, frontier comparison, adversarial testing, calibration research, independent review, and end-to-end validation around those models.
 
 AI model capabilities, context limits, and inference prices are changing rapidly. We will maintain a frozen benchmark and versioned evaluation protocol so that newly released models can be prospectively tested during the award period. API usage will be logged by model, experiment, user/workstream, token count, and purpose, with monthly spend review.
 
@@ -583,15 +589,13 @@ All public software, benchmark-generation procedures, model specifications, cali
 # 21. Abstract
 ## Application-field draft — maximum 200 words
 
-AI agents can increasingly perform statistical analysis, programming, and research workflows, but their usefulness creates a practical privacy question that remains poorly formalized: **when should an AI agent be allowed to see research data, and when should those data first be transformed, restricted, or reviewed by a human?**
+AI agents can increasingly perform statistical analysis, programming, and research workflows, creating a practical privacy question: **when should an AI agent be allowed to see research data, and when should those data first be transformed, restricted, or reviewed by a human?**
 
-We propose to develop and evaluate calibrated decision methods for AI data access. Rather than treating "safe" as a binary model-generated judgment, we will compare three complementary approaches: deterministic privacy safeguards; an interpretable statistical risk model based on measurable characteristics of a dataset and proposed use; and semantic decision models that interpret natural-language data descriptions and access requests.
+We will develop and evaluate calibrated decision methods for AI data access. We will compare deterministic privacy safeguards, an interpretable access-decision model based on measurable dataset and task characteristics, and semantic models that interpret natural-language data descriptions and access requests.
 
-A distinctive focus is whether compact open models such as Laya can operate locally as an **AI privacy firewall**, providing contextual semantic assessment without transmitting raw records to external services. Claude will provide a frontier semantic comparator and support large-scale controlled robustness experiments.
+A key question is whether compact local models such as Laya can provide useful semantic evidence inside the trusted environment, without transmitting raw records to an external service. Claude will serve as a frontier semantic comparator and support labelled-data development, robustness testing, and independent evaluation.
 
-We will create an expert-reviewed benchmark from public documentation, data dictionaries, and synthetic scenarios, with held-out evaluation of calibration, privacy-relevant false negatives, abstention, and incremental predictive value. The project builds on our existing DataGangeR privacy framework and the new engine-neutral Which decision framework.
-
----
+We will build a provenance-tracked benchmark from public documentation, data dictionaries, and synthetic scenarios, with scenario-family-level train/calibration/test separation, human adjudication, and held-out evaluation of calibration, privacy-relevant false negatives, abstention, and incremental predictive value. The project builds on DataGangeR and the engine-neutral Which decision framework.
 
 # 22. Keywords
 
@@ -619,7 +623,7 @@ We will create an expert-reviewed benchmark from public documentation, data dict
 
 - an open-source, human-gated AI privacy-firewall framework spanning DataGangeR and Which;
 - a policy-controlled orchestration layer for deterministic tools, statistical models, Laya/Jev, Claude, and human review;
-- a reusable continuous labelled-data / training framework for Jev/Laya, exposed through open-source skill/plugin-style interfaces where useful;
+- a reusable, human-governed prospective labelled-data and model-improvement framework, with Laya tuning and hosted-model calibration/evaluation exposed through open-source interfaces where useful;
 - engine-neutral decision/calibration infrastructure in Which;
 - Jev and Laya adapters;
 - statistical and semantic evaluation tooling;
@@ -633,21 +637,18 @@ We will create an expert-reviewed benchmark from public documentation, data dict
 - evidence for when human review remains necessary;
 - supervised trainee experience in privacy-aware AI evaluation and reproducible model testing;
 - a potential public-health pilot, subject to organizational approval;
-- reusable decision infrastructure for later public-health applications such as aberration detection, escalation, and action selection;
+- reusable decision infrastructure designed for later public-health applications such as aberration triage and escalation;
 - a path for institutions to reduce unnecessary disclosure while retaining AI utility.
 
 ---
 
 # 24. Expected publications and outputs
 
-Potential manuscripts include:
+The primary scholarly output will be one manuscript focused on **semantic versus statistical evidence for calibrated AI data-access decisions**, accompanied by the open benchmark, reproducible evaluation code, and open-source software release.
 
-1. **Semantic versus statistical evidence for AI data-access decisions: a calibrated benchmark study.**
-2. **Selective prediction and abstention for privacy-preserving AI access gates.**
-3. **Compact local decision models as privacy firewalls for research AI workflows.**
-4. **DataGangeR + Which: an open reference architecture for privacy-aware agent access.**
+Depending on results, follow-on manuscripts may address selective prediction/abstention, compact local decision models, or the DataGangeR/Which reference architecture. These are potential extensions rather than required outputs within the 12-month award period.
 
-Additional outputs include conference/poster presentations, the open benchmark, software releases, and documentation suitable for reuse by other research groups.
+Additional outputs may include conference/poster presentations, trainee projects, documentation, and implementation guidance.
 
 ---
 
@@ -664,6 +665,10 @@ Additional outputs include conference/poster presentations, the open benchmark, 
 | Remote inference creates privacy exposure | Public/synthetic research phase; local model for eventual sensitive deployment |
 | Model/version drift | Versioned manifests, frozen test sets, regression evaluation |
 | "Safe" is overinterpreted | Use action/risk terminology, explicit threat model, no compliance/anonymity claims |
+| Candidate benchmark is too large for expert review | Maintain a large candidate pool but rigorously adjudicate a smaller core benchmark |
+| Counterfactual variants leak across data splits | Split by source/scenario family, not individual generated case |
+| Laya/Jev capabilities differ from assumptions | Treat Laya tuning and Jev calibration/evaluation separately; retain engine-neutral interfaces |
+| Pilot approvals/timing are unavailable | Pilot remains optional and does not affect completion of primary aims |
 
 ---
 
