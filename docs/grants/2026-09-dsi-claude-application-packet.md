@@ -143,26 +143,29 @@ All experiments will record model, rubric, package, orchestration-policy, datase
 
 ### E. Budget Justification — maximum 500 words
 
-We request **CAD $75,000 in Claude API credits over 12 months**, subject to confirmation by the final bottom-up usage calculation.
+We request **CAD $75,000 in Claude API credits over 12 months**.
 
-The award will support a replicated research program, trainee participation, open-source validation, and prospective model/version re-evaluation rather than one-off interactive use. The study will begin with approximately 2,000–5,000 candidate scenarios and a smaller rigorously adjudicated core benchmark. Candidate cases may generate controlled counterfactuals, repeated model comparisons, robustness runs, and regression tests after package, model, or policy changes.
+A bottom-up planning model supports this request. Current Claude API list prices are quoted in USD; as of September 22, 2026, Sonnet 5 is US$2/M input and US$10/M output tokens, Opus 5 is US$5/M input and US$25/M output, and batch processing is 50% of standard API pricing. Using the Bank of Canada September 22 rate of 1 USD = 1.4064 CAD, CAD $75,000 corresponds to approximately US$53,300.
 
-Planned use is:
+The planned workload is approximately:
 
-- **25% — labelled-data development and frontier-model experiments:** candidate-case generation, provisional labelling for human adjudication, hard-case discovery, and structured Claude comparisons;
-- **20% — open-source orchestration and model-improvement validation:** agent-workflow testing, prospective labelled-data collection, Laya tuning support, Jev calibration/evaluation, disagreement handling, and regression suites;
-- **20% — robustness, calibration, and replication:** counterfactual perturbations, selective-prediction experiments, repeated runs, and independent frozen-set replication;
-- **15% — trainee research and training:** supervised benchmark construction, blinded review, error analysis, reproducibility exercises, and release validation;
-- **10% — conditional implementation/pilot testing:** realistic workflow and post-change regression testing if organizational approvals and timing permit;
-- **10% — model/version and pricing contingency:** prospective re-evaluation as models, context limits, and API pricing change during the award period.
+| Workload | Illustrative annual scale | Approx. USD |
+|---|---:|---:|
+| Candidate-case / labelled-data research workflows (Sonnet) | 5,000 long-context runs | $2,250 |
+| High-capability adjudication/error review (Opus) | 2,000 runs | $3,000 |
+| Bulk benchmark / robustness scoring (Sonnet Batch) | 200,000 evaluations | $7,000 |
+| Orchestration and regression validation (Sonnet) | 10,000 agentic runs | $9,000 |
+| Trainee research workflows (Sonnet) | ~9,000 supervised runs | $6,750 |
+| Open-source coding/validation workflows (Sonnet) | ~7,000 long-context runs | $10,500 |
+| Conditional public-health pilot / implementation testing | ~3,000 runs | $3,000 |
+| Model/version re-evaluation (Opus-class) | ~6,000 runs | $11,250 |
+| **Planned total** |  | **~$52,750 USD (~$74,200 CAD)** |
 
-The project will deliver reusable open-source software and a **human-governed evidence-collection and model-improvement framework**, not autonomous continuous learning. New labelled data can be accumulated prospectively, but tuning, recalibration, and release will occur periodically under explicit human approval and version control.
+These are planning assumptions, not quotas. Long-context agentic workflows include iterative tool use, code/repository context, research documents, and validation traces; bulk benchmark scoring will use batch processing where appropriate. Prompt caching or future price reductions could lower actual spend, while new models or more expensive high-capability evaluations could increase it. We will monitor usage monthly and redirect savings to pre-specified replication, robustness, and model-version comparisons rather than expanding the scientific claims.
 
-Local Laya tuning will not consume Claude credits directly, and hosted Jev is not treated as a fine-tunable local model. Claude credits will support the surrounding scientific work: labelled-data development, experiment design, frontier comparison, adversarial testing, independent review, calibration research, and end-to-end validation.
+Students/trainees will use supervised, versioned workflows for benchmark development, blinded review, error analysis, reproducibility exercises, and package validation. The PHO/public-health pilot is optional and will only proceed with organizational approval; unused pilot capacity can be reassigned to benchmark replication and open-source regression testing.
 
-API use will be logged by experiment, model, user/workstream, token count, and purpose. Monthly spend review will allow replication intensity to adapt to model and price changes while preserving the pre-specified scientific objectives.
-
-**Before submission:** replace this working allocation with a bottom-up token/cost table using current prices, expected tokens per call, variant counts, repetitions, trainee workflows, and release-validation runs.
+Local Laya tuning will use local/separately funded compute; Jev will be calibrated/evaluated as a hosted comparator. Claude credits fund the surrounding research: labelled-data development, frontier comparison, training supervision, adversarial testing, independent evaluation, orchestration validation, and reproducible release testing.
 
 ### F. AI Safety — maximum 500 words
 
