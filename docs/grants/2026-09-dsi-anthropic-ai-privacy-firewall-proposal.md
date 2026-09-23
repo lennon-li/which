@@ -542,30 +542,29 @@ All experiments will record model, rubric, package, orchestration-policy, and da
 # 19. Budget justification
 ## Application-field draft — maximum 500 words
 
-We request **CAD $75,000 in Claude API credits for 12 months**.
+We request **CAD $75,000 in Claude API credits over 12 months**.
 
-The award will support a replicated research program, trainee participation, open-source package validation, and a potential public-health pilot rather than one-off interactive use. The base benchmark will contain approximately 2,000–5,000 expert-reviewed scenarios, but each scenario can generate multiple controlled variants, model/configuration comparisons, replications, and regression runs after package or policy changes.
+A bottom-up planning model supports this request. Current Claude API list prices are quoted in USD; as of September 22, 2026, Sonnet 5 is US$2/M input and US$10/M output tokens, Opus 5 is US$5/M input and US$25/M output, and batch processing is 50% of standard API pricing. Using the Bank of Canada September 22 rate of 1 USD = 1.4064 CAD, CAD $75,000 corresponds to approximately US$53,300.
 
-| Activity | Share | Approx. value |
+The planned workload is approximately:
+
+| Workload | Illustrative annual scale | Approx. USD |
 |---|---:|---:|
-| Labelled-data construction and frontier-model experiments | 25% | $18,750 |
-| Open-source orchestration and training-framework validation | 20% | $15,000 |
-| Robustness, calibration, and independent replication | 20% | $15,000 |
-| Student/trainee research and training | 15% | $11,250 |
-| Potential public-health pilot and post-pilot validation | 10% | $7,500 |
-| Model/version and pricing contingency | 10% | $7,500 |
+| Candidate-case / labelled-data research workflows (Sonnet) | 5,000 long-context runs | $2,250 |
+| High-capability adjudication/error review (Opus) | 2,000 runs | $3,000 |
+| Bulk benchmark / robustness scoring (Sonnet Batch) | 200,000 evaluations | $7,000 |
+| Orchestration and regression validation (Sonnet) | 10,000 agentic runs | $9,000 |
+| Trainee research workflows (Sonnet) | ~9,000 supervised runs | $6,750 |
+| Open-source coding/validation workflows (Sonnet) | ~7,000 long-context runs | $10,500 |
+| Conditional public-health pilot / implementation testing | ~3,000 runs | $3,000 |
+| Model/version re-evaluation (Opus-class) | ~6,000 runs | $11,250 |
+| **Planned total** |  | **~$52,750 USD (~$74,200 CAD)** |
 
-The open-source deliverable creates continuing validation requirements. In addition to the privacy firewall, the project will produce a reusable human-governed labelled-data and model-improvement framework. It will support prospective data collection, adjudication, periodic Laya tuning when justified, hosted-model calibration/evaluation, and regression-gated releases. Privacy remains the primary application; broader public-health reuse is a future extension rather than a 12-month completion requirement. Because these systems may mediate consequential decisions, meaningful changes to models, labelled data, orchestration policy, or package code will trigger human-gated regression testing rather than reliance on a single initial benchmark result.
+These are planning assumptions, not quotas. Long-context agentic workflows include iterative tool use, code/repository context, research documents, and validation traces; bulk benchmark scoring will use batch processing where appropriate. Prompt caching or future price reductions could lower actual spend, while new models or more expensive high-capability evaluations could increase it. We will monitor usage monthly and redirect savings to pre-specified replication, robustness, and model-version comparisons rather than expanding the scientific claims.
 
-Student and trainee usage will be structured as supervised research: benchmark construction, blinded annotation/review, robustness experiments, independent replication, error analysis, and validation of successive releases. A potential public-health pilot, subject to organizational approval, will generate additional realistic workflow testing and post-pilot regression cycles.
+Students/trainees will use supervised, versioned workflows for benchmark development, blinded review, error analysis, reproducibility exercises, and package validation. The PHO/public-health pilot is optional and will only proceed with organizational approval; unused pilot capacity can be reassigned to benchmark replication and open-source regression testing.
 
-Local training or fine-tuning of Laya will not consume Claude credits directly, and Jev will be treated as a hosted comparator rather than a locally fine-tuned model. Claude credits will support benchmark construction, frontier comparison, adversarial testing, calibration research, independent review, and end-to-end validation around those models.
-
-AI model capabilities, context limits, and inference prices are changing rapidly. We will maintain a frozen benchmark and versioned evaluation protocol so that newly released models can be prospectively tested during the award period. API usage will be logged by model, experiment, user/workstream, token count, and purpose, with monthly spend review.
-
-A final bottom-up token/cost model will accompany submission, using current API prices and explicit assumptions about tokens per evaluation, benchmark variants, repetitions, trainee workflows, and pilot/regression runs.
-
----
+Local Laya tuning will use local/separately funded compute; Jev will be calibrated/evaluated as a hosted comparator. Claude credits fund the surrounding research: labelled-data development, frontier comparison, training supervision, adversarial testing, independent evaluation, orchestration validation, and reproducible release testing.
 
 # 20. AI safety
 ## Application-field draft — maximum 500 words
@@ -699,6 +698,12 @@ Anthropic's Canadian research initiative emphasizes beneficial and responsible a
 
 - Anthropic. **Anthropic commits $10 million to Canadian AI research.** 2026.  
   https://www.anthropic.com/news/canadian-ai-research
+
+- Anthropic. **Claude Platform pricing.** Accessed 2026-09-22.  
+  https://platform.claude.com/docs/en/about-claude/pricing
+
+- Bank of Canada. **Daily Digest — exchange rates.** 2026-09-22.  
+  https://www.bankofcanada.ca/rates/daily-digest/
 
 - DataGangeR source repository.  
   https://github.com/lennon-li/dataganger
