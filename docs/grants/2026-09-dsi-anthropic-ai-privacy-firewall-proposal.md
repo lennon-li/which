@@ -38,6 +38,10 @@ The project builds on two pieces of existing work. **DataGangeR** is an open-sou
 
 The project will deliver an **open-source, policy-controlled orchestration layer** that governs how deterministic privacy checks, statistical models, compact local models, frontier models, and human reviewers work together. The orchestrator will enforce minimum-necessary context, structured outputs, explicit escalation, and auditable human gating rather than allowing an unconstrained agent team to decide its own access.
 
+It will also deliver a reusable **training and continuous-improvement framework** for compact decision models such as Jev and Laya. The framework will prospectively collect labelled decisions, preserve human adjudication, maintain versioned train/calibration/test splits, detect failure patterns, trigger retraining when justified, recalibrate outputs, and gate releases through regression testing. Claude can support candidate-case generation, provisional labelling, hard-case discovery, experiment design, training supervision, and independent evaluation without being treated as ground truth.
+
+Privacy-aware AI access will be the first high-stakes application, but the underlying framework is intentionally general. The same typed-decision and calibration machinery can support other public-health decisions such as aberration detection, escalation, intervention/action selection, and abstention when evidence is insufficient.
+
 Students and trainees will participate in benchmark construction, blinded annotation/review, robustness experiments, replication, and release validation. Subject to organizational approval, we will also seek a **real-world public-health pilot**, potentially with Public Health Ontario (PHO), to evaluate the framework in realistic research workflows using approved/public/synthetic representations.
 
 ---
@@ -447,9 +451,9 @@ Engineer interpretable privacy features, fit conventional statistical models, ev
 
 Evaluate Claude under a fixed rubric, evaluate stock/calibrated Laya, fine-tune Laya only if justified, and conduct robustness experiments.
 
-## WP5 — Orchestration, evidence fusion, and open-source package
+## WP5 — Orchestration, continuous training, and open-source package
 
-Test incremental semantic value, evaluate transparent fusion, and build a policy-controlled orchestration layer that governs when deterministic rules, statistical models, Laya/Jev, Claude, and human reviewers are invoked. Integrate the validated components into DataGangeR/Which as an open-source, human-gated privacy-firewall framework with complete audit logging and regression tests.
+Test incremental semantic value, evaluate transparent fusion, and build a policy-controlled orchestration layer that governs when deterministic rules, statistical models, Laya/Jev, Claude, and human reviewers are invoked. Add a reusable training/continuous-improvement framework for prospective labelled-data collection, human adjudication, calibration, retraining triggers, model/version manifests, and release regression tests. Package these capabilities as reusable open-source infrastructure (including skill/plugin-style interfaces where appropriate) so the framework can be applied beyond privacy to other public-health decision tasks.
 
 ## WP6 — Trainee replication and real-world pilot
 
@@ -515,11 +519,11 @@ Claude API credits will support five complementary research functions.
 
 **First, Claude will serve as a frontier semantic-model comparator.** Each benchmark case will contain a versioned natural-language description of a dataset, intended use, proposed AI-agent operation, and access conditions. Claude will return structured decisions under a fixed rubric. Its predictions and uncertainty behavior will be compared with an interpretable statistical model and with compact open decision models such as Laya operating on the same cases. Claude will not define ground truth.
 
-**Second, Claude will support benchmark construction and stress testing.** We will use Claude to help transform public privacy, research-data, and access documentation into candidate scenarios; generate controlled counterfactual variations; identify ambiguous wording; and propose difficult cases for expert review. Claude-generated cases and labels will remain candidate material. Human reviewers will approve benchmark content and gold labels, and provenance will be retained.
+**Second, Claude will support labelled-data construction and training supervision.** We will use Claude to transform public privacy, research-data, and access documentation into candidate scenarios; generate controlled counterfactual variations; identify ambiguous wording and difficult cases; propose provisional labels and rationales for human adjudication; and assist with error analysis and experiment design during Jev/Laya tuning. Claude-generated cases and labels will remain candidate material. Human reviewers will approve benchmark content, gold labels, training-set additions, retraining decisions, and release gates, and provenance will be retained.
 
 **Third, Claude will support systematic robustness experiments.** We will vary access purpose, identifiability, sensitivity, wording, agent location, requested operation, and transformations while holding other factors fixed. These repeated experiments will quantify whether semantic decisions respond to relevant privacy evidence or to superficial phrasing.
 
-**Fourth, Claude will support development and validation of the open-source orchestration layer.** End-to-end agent-team workflows will be exercised under normal, ambiguous, adversarial, disagreement, and model-failure scenarios. Claude will provide an independent frontier comparator/reviewer while the orchestrator enforces minimum-necessary context, typed outputs, explicit escalation, and human gating.
+**Fourth, Claude will support development and validation of the open-source orchestration and training framework.** End-to-end agent-team workflows will be exercised under normal, ambiguous, adversarial, disagreement, and model-failure scenarios. Claude will provide an independent frontier comparator/reviewer while the orchestrator enforces minimum-necessary context, typed outputs, explicit escalation, and human gating. Claude will also assist with iterative training supervision: surfacing hard cases, diagnosing systematic errors, proposing new challenge sets, and independently evaluating new Jev/Laya checkpoints before human-approved release.
 
 **Fifth, Claude will support trainee-led replication and a potential public-health pilot.** Students and trainees will use versioned API workflows for benchmark development, blinded replication, error analysis, robustness experiments, and software-release validation. Subject to organizational approval, a pilot will evaluate the framework on realistic public-health workflows without transmitting restricted source records to Claude.
 
@@ -538,14 +542,14 @@ The award will support a replicated research program, trainee participation, ope
 
 | Activity | Share | Approx. value |
 |---|---:|---:|
-| Benchmark and frontier-model experiments | 25% | $18,750 |
-| Open-source package and orchestration validation | 20% | $15,000 |
+| Labelled-data construction and frontier-model experiments | 25% | $18,750 |
+| Open-source orchestration and training-framework validation | 20% | $15,000 |
 | Robustness, calibration, and independent replication | 20% | $15,000 |
 | Student/trainee research and training | 15% | $11,250 |
 | Potential public-health pilot and post-pilot validation | 10% | $7,500 |
 | Model/version and pricing contingency | 10% | $7,500 |
 
-The open-source deliverable creates continuing validation requirements. Because the software may mediate consequential decisions about AI access to research data, meaningful changes to statistical models, local semantic models, orchestration policy, or package code will trigger human-gated regression testing rather than relying on a single initial benchmark result.
+The open-source deliverable creates continuing validation requirements. In addition to the privacy firewall, the project will produce a reusable training and continuous-labelled-data framework for compact decision models such as Jev and Laya. It will support prospective data collection, human adjudication, tuning, calibration, retraining triggers, and regression-gated releases. Privacy will be the first application, with the same framework designed to generalize to public-health decision tasks such as aberration detection, escalation, and action selection. Because these systems may mediate consequential decisions, meaningful changes to statistical models, local semantic models, training data, orchestration policy, or package code will trigger human-gated regression testing rather than relying on a single initial benchmark result.
 
 Student and trainee usage will be structured as supervised research: benchmark construction, blinded annotation/review, robustness experiments, independent replication, error analysis, and validation of successive releases. A potential public-health pilot, subject to organizational approval, will generate additional realistic workflow testing and post-pilot regression cycles.
 
@@ -615,6 +619,7 @@ We will create an expert-reviewed benchmark from public documentation, data dict
 
 - an open-source, human-gated AI privacy-firewall framework spanning DataGangeR and Which;
 - a policy-controlled orchestration layer for deterministic tools, statistical models, Laya/Jev, Claude, and human review;
+- a reusable continuous labelled-data / training framework for Jev/Laya, exposed through open-source skill/plugin-style interfaces where useful;
 - engine-neutral decision/calibration infrastructure in Which;
 - Jev and Laya adapters;
 - statistical and semantic evaluation tooling;
@@ -628,6 +633,7 @@ We will create an expert-reviewed benchmark from public documentation, data dict
 - evidence for when human review remains necessary;
 - supervised trainee experience in privacy-aware AI evaluation and reproducible model testing;
 - a potential public-health pilot, subject to organizational approval;
+- reusable decision infrastructure for later public-health applications such as aberration detection, escalation, and action selection;
 - a path for institutions to reduce unnecessary disclosure while retaining AI utility.
 
 ---
