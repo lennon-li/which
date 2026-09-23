@@ -40,9 +40,9 @@ The project will deliver an **open-source, policy-controlled orchestration layer
 
 It will also deliver a reusable **human-governed evidence-collection and model-improvement framework**. The framework will prospectively collect labelled decisions, preserve human adjudication, maintain versioned train/calibration/test splits, support periodic Laya tuning when justified, calibrate/evaluate hosted models such as Jev, and gate releases through regression testing. Claude can support candidate-case generation, provisional labelling, hard-case discovery, experiment design, error analysis, and independent evaluation without being treated as ground truth.
 
-Privacy-aware AI access is the primary 12-month application. The underlying typed-decision and calibration infrastructure will be designed for later reuse in other public-health tasks, such as aberration triage and escalation, but those secondary applications are not required deliverables of this project.
+Privacy-aware AI access is the primary 12-month application. A central reusable output will be a **classifier-evaluation framework** in Which that standardizes calibration, uncertainty, selective prediction, dual-gate error analysis, model/version drift, and regression release criteria across statistical and AI decision models. The underlying infrastructure will be designed for later reuse in other public-health tasks, such as aberration triage and escalation, but those secondary applications are not required deliverables of this project.
 
-Students and trainees will participate in benchmark construction, blinded annotation/review, robustness experiments, replication, and release validation. If organizational approvals and timing permit, we will conduct a **small public-health implementation pilot**, potentially with Public Health Ontario (PHO), using approved/public/synthetic representations. The pilot is an external-validity and knowledge-translation activity and is not required for completion of the primary scientific aims.
+A supervised cohort of approximately **3–5 Biostatistics/data-science trainees** will participate in benchmark construction, blinded annotation/review, classifier evaluation, calibration/uncertainty analysis, application building, robustness experiments, replication, and release validation. The educational objective is to train statisticians to use AI efficiently while preserving statistical validation, reproducibility, and human oversight. If organizational approvals and timing permit, we will conduct a **small public-health implementation pilot**, potentially with Public Health Ontario (PHO), using approved/public/synthetic representations. The pilot is an external-validity and knowledge-translation activity and is not required for completion of the primary scientific aims.
 
 ---
 
@@ -390,7 +390,7 @@ Claude API credits make systematic repeated experiments at this scale feasible.
 
 # 13. Existing work and investigator preparation
 
-**Team roles.** Laura C. Rosella will serve as Principal Investigator, providing scientific oversight and public-health/implementation leadership. Lennon Li will serve as project lead and software/methods lead, with responsibility for DataGangeR/Which development, statistical evaluation, experiment orchestration, and reproducibility infrastructure.
+**Team roles.** Laura C. Rosella will serve as Principal Investigator, providing scientific oversight and public-health/implementation leadership. Lennon Li will serve as project lead and software/methods lead, with responsibility for DataGangeR/Which development, statistical evaluation, experiment orchestration, and reproducibility infrastructure. We will seek to involve approximately **3–5 Biostatistics/data-science trainees**, potentially through practicum or supervised research-project mechanisms subject to program approval. Trainees will work in a shared protocol with distinct responsibilities for benchmark curation, classifier evaluation, replication, software validation, and implementation testing.
 
 ## 13.1 DataGangeR
 
@@ -451,9 +451,10 @@ That perspective motivates a central principle:
 - abstention and threshold utilities;
 - train/calibration/test split support;
 - benchmark formats;
-- evaluation metrics;
+- a reusable classifier-evaluation framework covering calibration, uncertainty, selective prediction, dual-gate/joint-error analysis, subgroup robustness, model/version drift, and regression release gates;
+- evaluation metrics and confidence intervals;
 - engine comparison;
-- model/spec/calibration manifests.
+- model/spec/calibration/evaluation manifests.
 
 ## DataGangeR owns
 
@@ -475,9 +476,9 @@ That perspective motivates a central principle:
 
 # 15. Work packages
 
-## WP1 — Decision infrastructure and prospective validation
+## WP1 — Decision and classifier-evaluation infrastructure
 
-Complete Which, migrate the working Jev decision path, add Laya parity, establish calibration/abstention/benchmark tooling, and validate prospectively using real model-delegation decisions.
+Complete Which, migrate the working Jev decision path, add Laya parity, and establish a reusable classifier-evaluation layer for probability calibration, uncertainty, abstention/risk-coverage, dual-gate joint-error analysis, model/version comparison, confidence intervals, and regression release criteria. Validate the infrastructure prospectively using real typed-decision tasks.
 
 ## WP2 — Privacy benchmark
 
@@ -495,9 +496,11 @@ Evaluate Claude under a fixed rubric, evaluate stock/calibrated Laya and hosted 
 
 Test incremental semantic value, evaluate transparent fusion and dual-gate authorization, estimate joint error dependence and risk-coverage trade-offs, and build a policy-controlled orchestration layer governing when deterministic rules, statistical models, Laya, hosted comparators such as Jev/Claude, and human reviewers are invoked. Add a human-governed framework for prospective labelled-data collection, adjudication, Laya tuning when justified, hosted-model calibration/evaluation, model/version manifests, and regression-gated releases.
 
-## WP6 — Trainee replication and optional implementation pilot
+## WP6 — Trainee research, dissemination, and implementation pilot
 
-Train students/trainees in privacy-aware AI evaluation through blinded annotation, independent replication, robustness testing, and release validation. If approvals and timing permit, conduct a small public-health implementation pilot, potentially with PHO, using approved/public/synthetic representations. The pilot is optional and not required for completion of the primary aims.
+Recruit and supervise approximately 3–5 Biostatistics/data-science trainees, potentially through practicum or supervised project mechanisms. Trainees will contribute to benchmark curation, classifier evaluation, calibration/uncertainty analysis, open-source application development, independent replication, robustness testing, and release validation.
+
+The project will not stop at a manuscript. We will release the software, benchmark/evaluation assets, and implementation guidance. If approvals and timing permit, we will conduct a small public-health implementation pilot, potentially with PHO, using approved/public/synthetic representations. The pilot will assess usability, workflow fit, failure modes, and external validity, and may support a subsequent implementation/public-health methods publication. The pilot remains approval-dependent and is not required to complete the primary statistical aims.
 
 ---
 
@@ -544,6 +547,12 @@ gantt
     Claude/Laya/Jev evaluation                  :c2, 2027-03-15, 90d
     Robustness and calibration                  :c3, 2027-05-15, 75d
 
+    section Training and translation
+    Trainee onboarding / protocol training      :e1, 2026-11-15, 60d
+    Trainee research / independent replication  :e2, 2027-01-15, 210d
+    Pilot planning / partner approvals          :e3, 2027-03-01, 120d
+    Optional implementation pilot               :e4, 2027-07-01, 75d
+
     section Integration
     Incremental-value analysis                  :d1, 2027-06-15, 60d
     Open-source integration/regression suite    :d2, 2027-07-01, 75d
@@ -567,7 +576,7 @@ Claude API credits will support five complementary research functions.
 
 **Fourth, Claude will support development and validation of the open-source orchestration and training framework.** End-to-end agent-team workflows will be exercised under normal, ambiguous, adversarial, disagreement, and model-failure scenarios. Claude will provide an independent frontier comparator/reviewer while the orchestrator enforces minimum-necessary context, typed outputs, explicit escalation, and human gating. Claude will also assist with model-improvement supervision: surfacing hard cases, diagnosing systematic errors, proposing new challenge sets, and independently evaluating new Laya checkpoints or recalibrated hosted-model configurations before human-approved release.
 
-**Fifth, Claude will support trainee-led replication and a potential public-health pilot.** Students and trainees will use versioned API workflows for benchmark development, blinded replication, error analysis, robustness experiments, and software-release validation. Subject to organizational approval, a pilot will evaluate the framework on realistic public-health workflows without transmitting restricted source records to Claude.
+**Fifth, Claude will support a supervised cohort of approximately 3–5 Biostatistics/data-science trainees and a potential public-health pilot.** Trainees will use versioned API workflows for benchmark development, classifier evaluation, calibration/uncertainty analysis, blinded replication, application building, error analysis, robustness experiments, and software-release validation. Subject to organizational approval, a pilot will evaluate the framework on realistic public-health workflows without transmitting restricted source records to Claude.
 
 The project specifically contrasts frontier cloud models with compact local decision models. Claude will therefore provide a high-capability semantic reference point while we test whether smaller models can recover sufficient contextual information to operate locally as a privacy firewall. Training or fine-tuning Laya will use local or separately funded compute; Jev will be calibrated/evaluated as a hosted model rather than fine-tuned. Claude credits will support the surrounding scientific workload—benchmark generation, comparison, adversarial testing, calibration research, independent review, and end-to-end validation.
 
@@ -667,9 +676,10 @@ We will build a provenance-tracked benchmark from public documentation, data dic
 - expert annotation guidance;
 - controlled robustness and adversarial subsets.
 
-## Software
+## Software and evaluation infrastructure
 
 - an open-source, human-gated AI privacy-firewall framework spanning DataGangeR and Which;
+- a reusable classifier-evaluation framework in Which for calibration, uncertainty, selective prediction, dual-gate/joint-error analysis, subgroup robustness, model/version drift, and regression release gates;
 - a policy-controlled orchestration layer for deterministic tools, statistical models, Laya/Jev, Claude, and human review;
 - a reusable, human-governed prospective labelled-data and model-improvement framework, with Laya tuning and hosted-model calibration/evaluation exposed through open-source interfaces where useful;
 - engine-neutral decision/calibration infrastructure in Which;
@@ -678,8 +688,9 @@ We will build a provenance-tracked benchmark from public documentation, data dic
 - reusable adversarial and regression-validation suites;
 - reproducible model/spec/calibration/orchestration manifests.
 
-## Translational
+## Training and translational impact
 
+- a supervised 3–5 trainee program in statistically grounded AI application development and evaluation;
 - a practical reference architecture for local AI privacy firewalls;
 - guidance on when compact local models are sufficient;
 - evidence for when human review remains necessary;
@@ -690,13 +701,26 @@ We will build a provenance-tracked benchmark from public documentation, data dic
 
 ---
 
-# 24. Expected publications and outputs
+# 24. Publication, open-source, and translation pathway
 
-The primary scholarly output will be one manuscript focused on **semantic versus statistical evidence for calibrated AI data-access decisions**, accompanied by the open benchmark, reproducible evaluation code, and open-source software release.
+The project is designed to produce **research evidence, reusable infrastructure, and real-world implementation experience** rather than ending with a manuscript.
 
-Depending on results, follow-on manuscripts may address selective prediction/abstention, compact local decision models, or the DataGangeR/Which reference architecture. These are potential extensions rather than required outputs within the 12-month award period.
+### Core outputs within the 12-month award
 
-Additional outputs may include conference/poster presentations, trainee projects, documentation, and implementation guidance.
+1. **Primary methods manuscript:** calibration, uncertainty, selective prediction, and dual-gate safety for AI data-access decisions, including joint-error dependence and human-review burden.
+2. **Open-source release:** DataGangeR/Which privacy-gating workflow plus the reusable classifier-evaluation framework, regression tests, versioned evaluation manifests, and implementation documentation.
+3. **Open benchmark/evaluation assets:** provenance-tracked scenarios, annotation guidance, frozen evaluation splits where licensing permits, and reproducible statistical analysis code.
+4. **Trainee outputs:** supervised student analyses, reproducibility reports, presentations/posters, and documented contributions to software/evaluation modules.
+
+### Follow-on publication opportunities
+
+If the software/evaluation framework reaches sufficient maturity, we will target a second software/methodology paper describing the reusable classifier-evaluation and model-improvement infrastructure. If a partner implementation pilot proceeds and produces sufficient evidence, we will develop an implementation/public-health methods report or manuscript focused on workflow fit, failure modes, human oversight, and external validity.
+
+These follow-on papers are **opportunities rather than dependencies**: failure to secure a partner approval or a second publication does not compromise the primary study.
+
+### Partner translation
+
+A public-health pilot is important because the project is intended for use, not only publication. Subject to organizational approval, a partner such as PHO would test the released framework on realistic approved/public/synthetic workflows. Pilot feedback will be treated as implementation evidence, used to identify usability and safety failures, and fed back into regression tests and documentation before broader dissemination.
 
 ---
 
@@ -736,7 +760,7 @@ The practical opportunity is to create a local decision boundary that lets resea
 
 # 27. Program alignment
 
-The University of Toronto Data Sciences Institute Claude API Credit Award provides up to CAD $100,000 in Claude API credits for research projects over a maximum of 12 months. The proposed project uses Claude as a research instrument and frontier comparator while directly addressing responsible AI deployment, privacy, statistical methodology, reproducibility, and open research software.
+The University of Toronto Data Sciences Institute Claude API Credit Award provides up to CAD $100,000 in Claude API credits for research projects over a maximum of 12 months. The proposed project uses Claude as a research instrument and frontier comparator while directly addressing responsible AI deployment, privacy, statistical methodology, reproducibility, open research software, and hands-on training of 3–5 Biostatistics/data-science trainees in statistically grounded AI evaluation.
 
 Anthropic's Canadian research initiative emphasizes beneficial and responsible applications of AI, including trust and safety and health/science research. This project connects those themes through a concrete methodological problem: determining the minimum information an AI system should receive to contribute productively to scientific work.
 
