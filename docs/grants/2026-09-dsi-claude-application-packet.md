@@ -108,7 +108,7 @@ We propose to involve **3–5 Biostatistics/data-science trainees** in supervise
 
 ### B. Project Description — maximum 500 words
 
-Researchers increasingly use cloud AI systems to prototype statistical analyses, write R/Python code, debug pipelines, and build applications. In medical and public-health settings, the underlying data may contain **PI, PHI, sensitive health characteristics, free text, dates, geography, or combinations of quasi-identifiers**. These workflows often require more than a schema: an AI agent may request example rows, distributions, free text, or realistic synthetic data. The practical question therefore arises **before data are uploaded**: is this particular representation appropriate for this cloud AI system and this task?
+Researchers increasingly use cloud AI systems to prototype statistical analyses, write R/Python code, debug pipelines, and build applications. In medical and public-health settings, the underlying data may contain **PI, PHI, sensitive health characteristics, free text, dates, geography, or combinations of quasi-identifiers**. These workflows may require example rows, distributions, free text, or realistic synthetic data. The question arises **before upload**: is this representation appropriate for this AI system and task?
 
 Synthetic data can reduce direct exposure of PI/PHI, but “synthetic” is not a privacy certificate. A generated dataset may preserve rare combinations, sensitive relationships, or source-like records, while an agentic workflow may repeatedly request additional context.
 
@@ -116,7 +116,7 @@ We will formalize this as a calibrated statistical decision problem and compare 
 
 A central methodological idea is to convert an otherwise difficult-to-evaluate natural-language AI judgment into a **typed classification problem with explicit outcomes and probabilities**. This creates a natural role for biostatistics: proper scoring rules, calibration, uncertainty quantification, selective prediction, confidence intervals, subgroup analysis, and reproducible held-out validation.
 
-This also targets an emerging AI design direction: specialized decision models that consume semantic context but return standardized choices and probabilities rather than prose. Such outputs are easier to integrate, reproduce, calibrate, and audit than free-form language. Privacy is our primary testbed; the training and evaluation tools are deliberately reusable.
+This also targets an emerging AI design direction: specialized decision models that consume semantic context but return standardized choices and probabilities rather than prose. Such outputs are easier to integrate, calibrate, and audit than free-form language. Privacy is our primary testbed; the training and evaluation tools are deliberately reusable.
 
 We will generate approximately **2,000–5,000 candidate scenarios** from public RDM/privacy guidance, public data dictionaries and repositories, synthetic counterfactuals, and—if agreements permit—de-identified or abstracted decision cases contributed by privacy/data-access partners. A smaller rigorously human-adjudicated core benchmark will use scenario-family-level train/calibration/test separation. Expert annotation will also record **potential harm if exposure occurs**, enabling harm-weighted false-authorization and high-severity miss rates.
 
