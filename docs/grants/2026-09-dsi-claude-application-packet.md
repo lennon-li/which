@@ -7,7 +7,7 @@
 **Working request:** CAD $75,000 in Claude API credits over 12 months  
 **PI:** Laura C. Rosella, PhD, MHSc  
 **Project lead / collaborator:** Lennon Li  
-**Status:** Application-ready draft; PI-specific items marked **LAURA TO CONFIRM**
+**Status:** Application-ready. Canonical copy-paste text: `docs/grants/2026-09-dsi-claude-portal-ready.md`. PI-specific items remain marked **LAURA TO CONFIRM**
 
 ---
 
