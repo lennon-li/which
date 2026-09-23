@@ -12,7 +12,7 @@
 
 ## Executive summary
 
-AI agents can increasingly perform statistical analysis, programming, data cleaning, visualization, and research workflows. Researchers are therefore beginning to use cloud AI not only for writing but for **prototyping analyses and applications against data**. That creates a decision point before the first prompt or tool call: should the agent see the original data, a de-identified extract, synthetic data, summaries, or nothing at all?
+AI agents can increasingly perform statistical analysis, programming, data cleaning, visualization, and research workflows. Researchers are therefore beginning to use cloud AI not only for writing but for **prototyping analyses and applications against data**. In medical and public-health research, those data may include **personal information (PI), personal health information (PHI), sensitive clinical or sociodemographic attributes, free text, dates, geography, or identifying combinations of variables**. That creates a decision point before the first prompt or tool call: should the agent see the original data, a de-identified extract, synthetic data, summaries, or nothing at all?
 
 > **Is the representation we are about to share appropriate for this AI service and this task, and what evidence should justify that decision?**
 
@@ -64,7 +64,7 @@ Possible representations include schema only, aggregate summaries, bounded examp
 
 ## 1.2 Synthetic data can reduce exposure, but does not establish safety
 
-Synthetic data are especially attractive for AI prototyping because they can preserve enough structure to build and test code without routinely exposing original participant records. This is a central motivation for DataGangeR.
+Synthetic data are especially attractive for AI prototyping because they can preserve enough structure to build and test code without routinely exposing original medical or public-health records containing PI/PHI. This is a central motivation for DataGangeR.
 
 However, synthetic data are not automatically anonymous or safe for unrestricted cloud use. NIST SP 800-226 notes that synthetic-data methods without differential privacy generally offer informal rather than robust privacy guarantees and may remain susceptible to privacy attacks. Stadler, Oprisanu and Troncoso (USENIX Security 2022) empirically demonstrated that synthetic data can retain privacy-relevant signals and that the privacy–utility trade-off may be difficult to predict.
 
@@ -90,7 +90,7 @@ The firewall is not a guarantee of anonymity or regulatory compliance. It is a c
 
 ## 1.5 Motivating workflow
 
-A biostatistics trainee is building a prototype analysis application with a cloud coding agent. The agent can work from variable names alone, but development is faster if it can see realistic distributions, edge cases, and example records. The researcher generates a synthetic dataset and is tempted to upload it.
+A biostatistics trainee is building a prototype application from medical or public-health data with a cloud coding agent. The agent can work from variable names alone, but development is faster if it can see realistic distributions, edge cases, and example records. The researcher generates a synthetic dataset and is tempted to upload it.
 
 The proposed system asks a different question from a PII detector:
 
@@ -101,7 +101,7 @@ The proposed system asks a different question from a PII detector:
 5. Can the task be completed with a less revealing representation?
 6. If uncertainty or disagreement remains, should a human reviewer decide?
 
-The output is not a declaration that the dataset is “safe.” It is an auditable recommendation to **allow a minimum necessary view, transform first, request human review, or do not expose**.
+The output is not a declaration that PI/PHI or a dataset is “safe,” nor a determination of legal compliance. It is an auditable recommendation to **allow a minimum necessary view, transform first, request human review, or do not expose**.
 
 ---
 
@@ -862,7 +862,7 @@ flowchart TB
 
 # Appendix B. One-sentence project framing
 
-> **Can calibrated statistical and semantic evidence determine whether an original, transformed, synthetic, or summarized representation is appropriate to expose to a cloud AI agent for a specific research task?**
+> **Can calibrated statistical and semantic evidence determine whether an original, transformed, synthetic, or summarized representation of medical or public-health data—including data derived from PI/PHI—is appropriate to expose to a cloud AI agent for a specific research task?**
 
 # Appendix C. One-sentence translational vision
 
