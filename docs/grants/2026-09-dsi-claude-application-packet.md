@@ -103,21 +103,23 @@ If the portal only records PIs and trainees and has no collaborator category, co
 
 AI agents are increasingly capable of performing statistical analysis, programming, data cleaning, and other research tasks. Their usefulness creates a practical privacy problem: **what information does an AI agent need to see, and when should that information first be transformed, restricted, or reviewed by a human?**
 
-We will formalize this as a calibrated decision problem and compare three sources of evidence:
+We will formalize this as a calibrated statistical decision problem and compare three sources of evidence:
 
 1. **Deterministic privacy safeguards** for known facts such as direct identifiers, quasi-identifiers, free text, and exact-match concerns.
 2. **An interpretable access-decision model** based on measurable properties of the data, proposed task, access boundary, and existing transformations.
 3. **Semantic models** that interpret natural-language dataset descriptions, data dictionaries, intended uses, and requested AI operations.
 
-The primary research question is whether semantic information provides incremental, calibrated predictive value beyond deterministic and structured statistical evidence. A second question is whether compact, locally deployable models such as Laya can provide useful semantic evidence inside the trusted environment. The recent availability of compact typed-decision models makes this architecture newly testable; their suitability for privacy-sensitive decisions remains an empirical question.
+The primary research question is whether semantic information adds calibrated predictive value beyond deterministic and structured statistical evidence. A second question is whether compact local models such as Laya can provide useful semantic evidence inside the trusted environment.
 
-We will construct a provenance-tracked pool of approximately **2,000–5,000 candidate scenarios**, with a smaller rigorously human-adjudicated core benchmark. Reference actions will distinguish bounded access, transform/redact/synthesize first, human review, and no direct exposure. Counterfactual or paraphrased variants derived from the same scenario will remain in the same train, calibration, or test partition to prevent information leakage.
+The project will explicitly evaluate uncertainty rather than treating model confidence as truth. Raw model probabilities will be recalibrated on held-out data; entropy, probability margin, disagreement, abstention, and risk-coverage will be studied. We will also evaluate a **dual-gate authorization strategy** in which independently developed structured and semantic classifiers must concur before bounded access is permitted. We will estimate each gate's error rate, their joint inappropriate-authorization rate, error dependence, and the resulting human-review burden.
 
-Evaluation will focus on privacy-relevant false negatives, probabilistic calibration, proper scoring rules, selective risk, abstention/coverage, robustness, and human-review burden. More complex hybrid models will be retained only if they add value over simpler alternatives on the untouched test set.
+We will generate approximately **2,000–5,000 candidate scenarios**, with a smaller rigorously human-adjudicated core benchmark. Scenario families will remain within one train/calibration/test partition to prevent leakage. Reference actions will distinguish bounded access, transform/redact/synthesize first, human review, and no direct exposure.
 
-The main software deliverable will be an **open-source, human-gated AI privacy-firewall framework** spanning DataGangeR and Which. It will include policy-controlled orchestration, audit logging, model calibration, and a prospective labelled-data pipeline. Local models such as Laya may be tuned when justified; hosted models such as Jev will be calibrated and evaluated through the same interface. Human reviewers will approve gold labels, tuning/recalibration decisions, and releases.
+Evaluation will use proper scoring rules, calibration curves, Brier/log loss, privacy-relevant false negatives, selective risk, abstention/coverage, joint-error analysis, and bootstrap confidence intervals. Distribution-free or conformal risk-control methods will be explored where assumptions and sample size support them.
 
-The primary 12-month study is privacy-focused. The underlying decision framework will be designed for later reuse in other public-health decision tasks, such as aberration triage and escalation, without making those secondary applications completion requirements. A small public-health implementation pilot, potentially with PHO and subject to approval, will be pursued only if timing and governance permit.
+The main software deliverable will be an **open-source, human-gated AI privacy-firewall framework** spanning DataGangeR and Which, with policy-controlled orchestration, audit logging, calibration, prospective labelled-data collection, and regression testing. Local Laya models may be tuned when justified; hosted models such as Jev will be calibrated/evaluated through the same interface. Human reviewers will approve gold labels, tuning/recalibration decisions, and releases.
+
+The primary 12-month study remains privacy-focused. Broader public-health applications and a small implementation pilot are extensions, not prerequisites for completing the primary aims.
 
 ### C. Purpose of Claude Credits — maximum 500 words
 
@@ -133,7 +135,7 @@ Claude API credits will support five connected research functions.
 
 **Fifth, Claude will support trainee-led replication and, if feasible, a small public-health implementation pilot.** Students and trainees will use versioned workflows for benchmark development, blinded review, error analysis, reproducibility exercises, and release validation. Any pilot, potentially with PHO, will be contingent on organizational approval and will use approved/public/synthetic representations rather than transmitting restricted source records.
 
-All experiments will record model, rubric, package, orchestration-policy, dataset, and split versions. Claude will provide research evidence, not policy authority. Sonnet will carry most high-volume experimentation; Opus 5.5 will be used selectively for complex coding, independent review, and model/version re-evaluation; Fable 5.1 (or a formally released successor such as Fable 5.2) will be reserved for selected high-stakes planning and risk-evaluation tasks where added capability justifies the higher cost.
+All experiments will record model, rubric, package, orchestration-policy, dataset, and split versions. Claude will provide research evidence, not policy authority. Claude-derived probabilities will be treated as predictions requiring calibration and uncertainty evaluation; they will be compared using proper scoring rules, selective prediction, disagreement/joint-error analysis, and human-review burden rather than simple accuracy alone. Sonnet will carry most high-volume experimentation; Opus 5.5 will be used selectively for complex coding, independent review, and model/version re-evaluation; Fable 5.1 (or a formally released successor such as Fable 5.2) will be reserved for selected high-stakes planning and risk-evaluation tasks where added capability justifies the higher cost.
 
 ### D. Amount Requested
 
