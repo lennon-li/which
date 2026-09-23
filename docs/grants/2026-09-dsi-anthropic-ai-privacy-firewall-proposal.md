@@ -12,9 +12,11 @@
 
 ## Executive summary
 
-AI agents can increasingly perform statistical analysis, programming, data cleaning, visualization, and research workflows. Their usefulness creates a practical privacy problem that is still poorly formalized:
+AI agents can increasingly perform statistical analysis, programming, data cleaning, visualization, and research workflows. Researchers are therefore beginning to use cloud AI not only for writing but for **prototyping analyses and applications against data**. That creates a decision point before the first prompt or tool call: should the agent see the original data, a de-identified extract, synthetic data, summaries, or nothing at all?
 
-> **What information does an AI agent need to see to perform a task, and when should that information first be transformed, restricted, or reviewed by a human?**
+> **Is the representation we are about to share appropriate for this AI service and this task, and what evidence should justify that decision?**
+
+This question matters because “synthetic” or “de-identified” does not automatically mean safe for cloud exposure. NIST notes that non-differentially-private synthetic data generally provide only informal privacy guarantees and may remain vulnerable to privacy attacks, while empirical work has shown that synthetic data can have unpredictable privacy–utility trade-offs (NIST SP 800-226, 2025; Stadler, Oprisanu & Troncoso, 2022). The problem is therefore not simply whether a dataset has been transformed, but whether a particular representation is appropriate for a particular AI task and access boundary.
 
 Existing privacy controls answer related but narrower questions. They can detect identifiers, measure uniqueness, estimate disclosure risk, synthesize data, or enforce access rules. They do not generally provide a calibrated decision about whether a particular AI agent should see a particular representation of a dataset for a particular purpose.
 
@@ -48,26 +50,27 @@ A supervised cohort of approximately **3–5 Biostatistics/data-science trainees
 
 # 1. Project rationale
 
-## 1.1 The problem is not simply "private data versus AI"
+## 1.1 AI prototyping creates a new data-release decision
 
-Research data access decisions are contextual.
+A growing practical use of AI in research is **rapid prototyping**: asking an agent to write analysis code, inspect data structures, debug pipelines, generate visualizations, or build a Shiny/web application. These tasks often become more effective when the agent can inspect realistic examples.
 
-The same dataset may be reasonable for one operation and inappropriate for another. For example, an agent may be able to inspect schema and summary statistics without needing row-level values. A locally running agent may present a different exposure boundary from an external API. A synthetic derivative may be suitable for application development while the original data remain restricted. Free-text clinical notes can carry semantic risks that are difficult to capture using uniqueness metrics alone.
+That creates a new kind of release decision. Traditional governance asks whether data may be released to another person, repository, or environment. Agentic AI makes the decision **interactive and repeated**: the system may request a schema, then sample rows, then a distribution, then free text, accumulating context over multiple turns or tool calls.
 
-A useful access decision therefore depends on at least four components:
+The question is therefore not simply “may AI see this dataset?” It is:
 
-- **what the data contain;**
-- **what the agent is being asked to do;**
-- **where and how the agent operates;**
-- **what transformations and safeguards are already in place.**
+> **What is the minimum representation this AI needs for this task, and is that representation acceptable to expose across this access boundary?**
 
-This is not naturally solved by a single yes/no privacy rule.
+Possible representations include schema only, aggregate summaries, bounded examples, transformed/de-identified data, synthetic data, or original row-level data.
 
-## 1.2 Why deterministic rules are necessary but insufficient
+## 1.2 Synthetic data can reduce exposure, but does not establish safety
 
-Deterministic safeguards are valuable because some privacy facts should not be delegated to an AI model. If a field is known to contain a direct identifier, if a synthetic record exactly reproduces a source record, or if a specific disclosure-control constraint is violated, the system should not ask a language model to reinterpret that fact.
+Synthetic data are especially attractive for AI prototyping because they can preserve enough structure to build and test code without routinely exposing original participant records. This is a central motivation for DataGangeR.
 
-However, rule-based systems are weakest where meaning depends on context. The string "ID" may refer to a participant identifier, a product identifier, or an internal non-person record key. A geographic field may be harmless in one aggregate dataset but highly identifying when combined with age and a rare occupation. A variable description may reveal health or financial sensitivity even when the column name does not.
+However, synthetic data are not automatically anonymous or safe for unrestricted cloud use. NIST SP 800-226 notes that synthetic-data methods without differential privacy generally offer informal rather than robust privacy guarantees and may remain susceptible to privacy attacks. Stadler, Oprisanu and Troncoso (USENIX Security 2022) empirically demonstrated that synthetic data can retain privacy-relevant signals and that the privacy–utility trade-off may be difficult to predict.
+
+In practice, risk can also arise from rare combinations, free text, high-fidelity relationships, or source-like records. The appropriate decision therefore depends not only on whether the data are synthetic, but on **what was preserved, what the AI is being asked to do, where the model runs, and what safeguards are in place**.
+
+Deterministic safeguards remain essential because some facts should not be delegated to a classifier. If a field contains a known direct identifier, a synthetic record exactly reproduces a source record, or a predefined disclosure-control constraint is violated, a favorable semantic-model score should not override that evidence.
 
 ## 1.3 Why semantic AI alone is also insufficient
 
@@ -84,6 +87,21 @@ The recent release of compact typed-decision models such as **Laya** makes this 
 The proposed architecture treats such a model as a **local AI privacy firewall**: a semantic gate that interprets bounded metadata, data dictionaries, column summaries, and requested agent actions before deciding whether information should be exposed, transformed, or escalated for human review.
 
 The firewall is not a guarantee of anonymity or regulatory compliance. It is a calibrated decision layer designed to reduce unnecessary exposure.
+
+## 1.5 Motivating workflow
+
+A biostatistics trainee is building a prototype analysis application with a cloud coding agent. The agent can work from variable names alone, but development is faster if it can see realistic distributions, edge cases, and example records. The researcher generates a synthetic dataset and is tempted to upload it.
+
+The proposed system asks a different question from a PII detector:
+
+1. Are there deterministic blockers such as direct identifiers, free text, exact reproduction, or high-risk combinations?
+2. What does the structured statistical evidence imply about access risk?
+3. Does the semantic description of the dataset and intended task add information?
+4. How uncertain are those predictions, and do independent gates agree?
+5. Can the task be completed with a less revealing representation?
+6. If uncertainty or disagreement remains, should a human reviewer decide?
+
+The output is not a declaration that the dataset is “safe.” It is an auditable recommendation to **allow a minimum necessary view, transform first, request human review, or do not expose**.
 
 ---
 
@@ -786,6 +804,12 @@ Anthropic's Canadian research initiative emphasizes beneficial and responsible a
 - Which source repository.  
   https://github.com/lennon-li/which
 
+- NIST. **Guidelines for Evaluating Differential Privacy Guarantees (SP 800-226).** 2025.  
+  https://csrc.nist.gov/pubs/sp/800/226/final
+
+- Stadler, T., Oprisanu, B., & Troncoso, C. (2022). **Synthetic Data – Anonymisation Groundhog Day.** 31st USENIX Security Symposium, 1451–1468.  
+  https://www.usenix.org/conference/usenixsecurity22/presentation/stadler
+
 - Microsoft Presidio.  
   https://github.com/microsoft/presidio
 
@@ -838,7 +862,7 @@ flowchart TB
 
 # Appendix B. One-sentence project framing
 
-> **Can compact semantic decision models and interpretable statistical models provide independent, calibrated evidence for deciding when research data require transformation or human review before exposure to an AI agent?**
+> **Can calibrated statistical and semantic evidence determine whether an original, transformed, synthetic, or summarized representation is appropriate to expose to a cloud AI agent for a specific research task?**
 
 # Appendix C. One-sentence translational vision
 
