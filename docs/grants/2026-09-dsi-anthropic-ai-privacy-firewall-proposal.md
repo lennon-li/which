@@ -36,6 +36,10 @@ A second question is:
 
 The project builds on two pieces of existing work. **DataGangeR** is an open-source R package for privacy-aware synthetic data and human-gated agent workflows. **Which** is a new engine-neutral framework for typed decisions, calibration, abstention, and comparison across models such as Jev and Laya. Together they provide both the domain testbed and the reusable methodological infrastructure needed for this study.
 
+The project will deliver an **open-source, policy-controlled orchestration layer** that governs how deterministic privacy checks, statistical models, compact local models, frontier models, and human reviewers work together. The orchestrator will enforce minimum-necessary context, structured outputs, explicit escalation, and auditable human gating rather than allowing an unconstrained agent team to decide its own access.
+
+Students and trainees will participate in benchmark construction, blinded annotation/review, robustness experiments, replication, and release validation. Subject to organizational approval, we will also seek a **real-world public-health pilot**, potentially with Public Health Ontario (PHO), to evaluate the framework in realistic research workflows using approved/public/synthetic representations.
+
 ---
 
 # 1. Project rationale
@@ -443,9 +447,13 @@ Engineer interpretable privacy features, fit conventional statistical models, ev
 
 Evaluate Claude under a fixed rubric, evaluate stock/calibrated Laya, fine-tune Laya only if justified, and conduct robustness experiments.
 
-## WP5 — Evidence fusion and DataGangeR prototype
+## WP5 — Orchestration, evidence fusion, and open-source package
 
-Test incremental semantic value, evaluate transparent fusion, compare risk/coverage against simpler alternatives, and integrate a research-only optional gate into DataGangeR if evidence supports it.
+Test incremental semantic value, evaluate transparent fusion, and build a policy-controlled orchestration layer that governs when deterministic rules, statistical models, Laya/Jev, Claude, and human reviewers are invoked. Integrate the validated components into DataGangeR/Which as an open-source, human-gated privacy-firewall framework with complete audit logging and regression tests.
+
+## WP6 — Trainee replication and real-world pilot
+
+Train students/trainees in privacy-aware AI evaluation through blinded annotation, independent replication, robustness testing, and release validation. Subject to organizational approval, conduct a public-health pilot, potentially with PHO, using realistic research workflows and approved/public/synthetic representations. Re-run the validation suite after pilot-driven software or policy changes.
 
 ---
 
@@ -503,7 +511,7 @@ gantt
 # 18. Purpose of Claude API credits
 ## Application-field draft — maximum 500 words
 
-Claude API credits will support three complementary research functions.
+Claude API credits will support five complementary research functions.
 
 **First, Claude will serve as a frontier semantic-model comparator.** Each benchmark case will contain a versioned natural-language description of a dataset, intended use, proposed AI-agent operation, and access conditions. Claude will return structured decisions under a fixed rubric. Its predictions and uncertainty behavior will be compared with an interpretable statistical model and with compact open decision models such as Laya operating on the same cases. Claude will not define ground truth.
 
@@ -511,9 +519,13 @@ Claude API credits will support three complementary research functions.
 
 **Third, Claude will support systematic robustness experiments.** We will vary access purpose, identifiability, sensitivity, wording, agent location, requested operation, and transformations while holding other factors fixed. These repeated experiments will quantify whether semantic decisions respond to relevant privacy evidence or to superficial phrasing.
 
-The project specifically contrasts frontier cloud models with compact local decision models. Claude will therefore provide a high-capability semantic reference point while we test whether smaller models can recover sufficient contextual information to operate locally as a privacy firewall. This distinction is central to the proposed impact: a production privacy gate should not necessarily require sending detailed metadata or records to the same external model whose access it is supposed to govern.
+**Fourth, Claude will support development and validation of the open-source orchestration layer.** End-to-end agent-team workflows will be exercised under normal, ambiguous, adversarial, disagreement, and model-failure scenarios. Claude will provide an independent frontier comparator/reviewer while the orchestrator enforces minimum-necessary context, typed outputs, explicit escalation, and human gating.
 
-All experiments will record model, rubric, and dataset versions. Training, calibration, and final held-out evaluation will remain separated. Claude predictions will never be used automatically as gold labels for Laya or the statistical model.
+**Fifth, Claude will support trainee-led replication and a potential public-health pilot.** Students and trainees will use versioned API workflows for benchmark development, blinded replication, error analysis, robustness experiments, and software-release validation. Subject to organizational approval, a pilot will evaluate the framework on realistic public-health workflows without transmitting restricted source records to Claude.
+
+The project specifically contrasts frontier cloud models with compact local decision models. Claude will therefore provide a high-capability semantic reference point while we test whether smaller models can recover sufficient contextual information to operate locally as a privacy firewall. Training or fine-tuning Laya/Jev itself will use local or separately funded compute; Claude credits will support the surrounding scientific workload—benchmark generation, comparison, adversarial testing, calibration research, independent review, and end-to-end validation.
+
+All experiments will record model, rubric, package, orchestration-policy, and dataset versions. Training, calibration, and final held-out evaluation will remain separated. Claude predictions will never be used automatically as gold labels for Laya or the statistical model.
 
 ---
 
@@ -522,20 +534,26 @@ All experiments will record model, rubric, and dataset versions. Training, calib
 
 We request **CAD $75,000 in Claude API credits for 12 months**.
 
-The project requires repeated structured inference over thousands of benchmark and robustness scenarios rather than one-off interactive use. The requested amount is intended to permit sufficiently broad replication across model versions, prompt/rubric variants, and controlled scenario perturbations while preserving an untouched final evaluation set.
+The award will support a replicated research program, trainee participation, open-source package validation, and a potential public-health pilot rather than one-off interactive use. The base benchmark will contain approximately 2,000–5,000 expert-reviewed scenarios, but each scenario can generate multiple controlled variants, model/configuration comparisons, replications, and regression runs after package or policy changes.
 
 | Activity | Share | Approx. value |
 |---|---:|---:|
-| Benchmark construction and controlled augmentation | 20% | $15,000 |
-| Frontier semantic-model evaluation | 25% | $18,750 |
-| Counterfactual and robustness experiments | 25% | $18,750 |
-| Calibration, replication, and sensitivity analyses | 15% | $11,250 |
-| Research/software workflow support | 10% | $7,500 |
-| Replication contingency | 5% | $3,750 |
+| Benchmark and frontier-model experiments | 25% | $18,750 |
+| Open-source package and orchestration validation | 20% | $15,000 |
+| Robustness, calibration, and independent replication | 20% | $15,000 |
+| Student/trainee research and training | 15% | $11,250 |
+| Potential public-health pilot and post-pilot validation | 10% | $7,500 |
+| Model/version and pricing contingency | 10% | $7,500 |
 
-The largest component is systematic experimental inference: thousands of scenarios may each be evaluated under multiple access conditions, semantic formulations, model configurations, and replication runs. This is necessary to estimate calibration, selective risk, wording sensitivity, and domain-specific failure modes rather than reporting a single accuracy estimate.
+The open-source deliverable creates continuing validation requirements. Because the software may mediate consequential decisions about AI access to research data, meaningful changes to statistical models, local semantic models, orchestration policy, or package code will trigger human-gated regression testing rather than relying on a single initial benchmark result.
 
-Local open models and conventional statistical models do not consume Claude credits; this is deliberate. Claude usage is concentrated where a frontier semantic comparator materially improves the scientific design.
+Student and trainee usage will be structured as supervised research: benchmark construction, blinded annotation/review, robustness experiments, independent replication, error analysis, and validation of successive releases. A potential public-health pilot, subject to organizational approval, will generate additional realistic workflow testing and post-pilot regression cycles.
+
+Local training or fine-tuning of Laya/Jev will not consume Claude credits directly. Claude credits will support benchmark construction, frontier comparison, adversarial testing, calibration research, independent review, and end-to-end validation around those models.
+
+AI model capabilities, context limits, and inference prices are changing rapidly. We will maintain a frozen benchmark and versioned evaluation protocol so that newly released models can be prospectively tested during the award period. API usage will be logged by model, experiment, user/workstream, token count, and purpose, with monthly spend review.
+
+A final bottom-up token/cost model will accompany submission, using current API prices and explicit assumptions about tokens per evaluation, benchmark variants, repetitions, trainee workflows, and pilot/regression runs.
 
 ---
 
@@ -552,7 +570,7 @@ Claude-generated scenarios or proposed labels will not automatically become grou
 
 DataGangeR's existing default no-network workflow will be preserved. Future semantic integration will remain optional, with local inference preferred for sensitive applications. Raw records will not be transmitted to remote decision models. Any future model-assisted production workflow will operate on bounded and versioned summaries whose disclosure properties must be evaluated separately.
 
-The proposed local-firewall architecture is designed specifically to reduce unnecessary exposure: deterministic checks, an interpretable statistical model, and a compact local semantic model operate inside the trusted boundary before a larger external agent receives a minimum-necessary representation.
+The proposed local-firewall architecture is designed specifically to reduce unnecessary exposure: deterministic checks, an interpretable statistical model, and a compact local semantic model operate inside the trusted boundary before a larger external agent receives a minimum-necessary representation. A policy-controlled orchestrator will enforce component permissions, minimum-necessary context, structured outputs, disagreement escalation, and human gating; individual agents will not autonomously expand their own data access.
 
 All public software, benchmark-generation procedures, model specifications, calibration artifacts, and evaluation code will be version controlled to support reproducibility and independent audit. We will avoid claims that any model score guarantees anonymity, regulatory compliance, or universal safety.
 
@@ -595,17 +613,21 @@ We will create an expert-reviewed benchmark from public documentation, data dict
 
 ## Software
 
+- an open-source, human-gated AI privacy-firewall framework spanning DataGangeR and Which;
+- a policy-controlled orchestration layer for deterministic tools, statistical models, Laya/Jev, Claude, and human review;
 - engine-neutral decision/calibration infrastructure in Which;
 - Jev and Laya adapters;
 - statistical and semantic evaluation tooling;
-- an optional research prototype in DataGangeR;
-- reproducible model/spec/calibration manifests.
+- reusable adversarial and regression-validation suites;
+- reproducible model/spec/calibration/orchestration manifests.
 
 ## Translational
 
 - a practical reference architecture for local AI privacy firewalls;
 - guidance on when compact local models are sufficient;
 - evidence for when human review remains necessary;
+- supervised trainee experience in privacy-aware AI evaluation and reproducible model testing;
+- a potential public-health pilot, subject to organizational approval;
 - a path for institutions to reduce unnecessary disclosure while retaining AI utility.
 
 ---
