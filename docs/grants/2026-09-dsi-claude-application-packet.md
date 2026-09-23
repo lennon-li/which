@@ -116,7 +116,7 @@ We will formalize this as a calibrated statistical decision problem and compare 
 
 A central methodological idea is to convert an otherwise difficult-to-evaluate natural-language AI judgment into a **typed classification problem with explicit outcomes and probabilities**. This creates a natural role for biostatistics: proper scoring rules, calibration, uncertainty quantification, selective prediction, confidence intervals, subgroup analysis, and reproducible held-out validation.
 
-We will generate approximately **2,000–5,000 candidate scenarios**, with a smaller rigorously human-adjudicated core benchmark and scenario-family-level train/calibration/test separation.
+We will generate approximately **2,000–5,000 candidate scenarios**, with a smaller rigorously human-adjudicated core benchmark and scenario-family-level train/calibration/test separation. Expert annotation will also record **potential harm if exposure occurs** (e.g., identifiability, sensitivity, scale, vulnerability, exploitability, and irreversibility), allowing harm-weighted false-authorization and high-severity miss rates rather than treating every error as equally consequential.
 
 The project has three reusable outputs: an **open-source human-gated AI privacy firewall** spanning DataGangeR and Which; a **general classifier-evaluation framework** for statistical evaluation of AI decisions; and a supervised **3–5 trainee cohort**. Students will learn not only to use AI for analysis and application building, but to evaluate its outputs and uncertainties using statistical methods.
 
@@ -195,7 +195,7 @@ All public software, benchmark-generation procedures, model specifications, cali
 5. every decision records model/version, inputs, outputs, confidence, policy version, and human override;
 6. regression monitoring can suspend or roll back a model/checkpoint/policy if predefined error or calibration limits are exceeded.
 
-The primary safety endpoint will include **inappropriate authorization**—allowing direct/bounded access when the reference action requires transformation, human review, or no direct exposure—so the fallback system is evaluated directly rather than assumed to work.
+The primary safety endpoint will include **inappropriate authorization**—allowing direct/bounded access when the reference action requires transformation, human review, or no direct exposure. We will also report **harm-weighted inappropriate authorization** and high-severity miss rates so that errors with potentially serious PI/PHI consequences count more than low-impact mistakes.
 
 ---
 
