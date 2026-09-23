@@ -42,13 +42,13 @@ No separate long-form proposal upload is listed in the call; the application is 
 
 ### Abstract — maximum 200 words
 
-AI agents can increasingly perform statistical analysis, programming, and research workflows, creating a practical privacy question: **when should an AI agent be allowed to see research data, and when should those data first be transformed, restricted, or reviewed by a human?**
+Researchers increasingly use cloud-based AI assistants and agents to prototype analyses, write code, and build research applications. This creates a practical privacy question before the first prompt is sent: **is the representation we are about to share—original, de-identified, synthetic, or summarized—appropriate for this AI service and this task?**
 
-We will develop and evaluate calibrated decision methods for AI data access. We will compare deterministic privacy safeguards, an interpretable access-decision model based on measurable dataset and task characteristics, and semantic models that interpret natural-language data descriptions and access requests.
+Synthetic data can reduce unnecessary exposure, but it is not automatically safe. Privacy depends on what information is preserved, how the data were generated, what the agent is asked to do, and where the computation occurs.
 
-A key question is whether compact local models such as Laya can provide useful semantic evidence inside the trusted environment, without transmitting raw records to an external service. Claude will serve as a frontier semantic comparator and support labelled-data development, robustness testing, and independent evaluation.
+We will develop and statistically evaluate calibrated decision methods for AI data access, comparing deterministic privacy safeguards, an interpretable access-decision model, and semantic classifiers. We will study calibration, uncertainty, abstention, dual-gate authorization, joint error, and human-review burden rather than relying on raw model confidence.
 
-We will build a provenance-tracked benchmark from public documentation, data dictionaries, and synthetic scenarios, with scenario-family-level train/calibration/test separation, human adjudication, and held-out evaluation of calibration, privacy-relevant false negatives, abstention, and incremental predictive value. The project builds on DataGangeR and the engine-neutral Which decision framework.
+Claude will support labelled-data development, robustness testing, independent evaluation, and supervised trainee workflows. The project will deliver an open-source privacy-gating and classifier-evaluation framework in DataGangeR/Which, together with a provenance-tracked benchmark and a path to real-world public-health implementation.
 
 ### Keywords
 
@@ -108,17 +108,17 @@ We propose to involve **3–5 Biostatistics/data-science trainees** in supervise
 
 ### B. Project Description — maximum 500 words
 
-AI agents are increasingly capable of performing statistical analysis, programming, data cleaning, and other research tasks. Their usefulness creates a practical privacy problem: **what information does an AI agent need to see, and when should that information first be transformed, restricted, or reviewed by a human?**
+Researchers increasingly use cloud AI systems to prototype statistical analyses, write R/Python code, debug pipelines, and build applications. These workflows often require more than a schema: an AI agent may request example rows, distributions, free text, or realistic synthetic data. The practical question therefore arises **before data are uploaded**: is this particular representation appropriate for this cloud AI system and this task?
 
-We will formalize this as a calibrated statistical decision problem and compare deterministic privacy safeguards, an interpretable access-decision model, and semantic models that interpret natural-language data descriptions and requested AI operations.
+Synthetic data is attractive because it can reduce direct exposure, but “synthetic” is not a privacy certificate. A generated dataset may preserve rare combinations, sensitive relationships, or even source-like records, while an agentic workflow may repeatedly request additional context. The relevant decision is contextual: original versus synthetic versus summarized data, task purpose, access environment, and safeguards all matter.
 
-The project will explicitly evaluate uncertainty rather than treating model confidence as truth. Raw probabilities will be recalibrated on held-out data; entropy, probability margin, disagreement, abstention, and risk-coverage will be studied. We will also test a **dual-gate authorization strategy** in which independently developed structured and semantic classifiers must concur before bounded access is permitted. We will estimate individual and joint inappropriate-authorization rates, error dependence, and the resulting human-review burden.
+We will formalize this as a calibrated statistical decision problem and compare deterministic privacy safeguards, an interpretable access-decision model, and semantic classifiers. Raw probabilities will be recalibrated on held-out data; entropy, probability margin, disagreement, abstention, and risk-coverage will be studied. We will also test a **dual-gate authorization strategy** in which independently developed structured and semantic classifiers must concur before bounded access is permitted, estimating individual and joint inappropriate-authorization rates, error dependence, and human-review burden.
 
-We will generate approximately **2,000–5,000 candidate scenarios**, with a smaller rigorously human-adjudicated core benchmark. Scenario families will remain within one train/calibration/test partition to prevent leakage. Evaluation will use proper scoring rules, calibration curves, Brier/log loss, privacy-relevant false negatives, selective risk, abstention/coverage, joint-error analysis, bootstrap confidence intervals, and—where assumptions support them—distribution-free/conformal risk-control methods.
+We will generate approximately **2,000–5,000 candidate scenarios**, with a smaller rigorously human-adjudicated core benchmark. Scenario families will remain within one train/calibration/test partition. Evaluation will use proper scoring rules, calibration curves, Brier/log loss, privacy-relevant false negatives, selective risk, abstention/coverage, joint-error analysis, bootstrap confidence intervals, and—where assumptions support them—distribution-free/conformal risk-control methods.
 
-The project has three reusable outputs. First, an **open-source, human-gated AI privacy-firewall framework** spanning DataGangeR and Which. Second, a **general classifier-evaluation framework** in Which for calibration, uncertainty, selective prediction, dual-gate analysis, model/version drift, and regression release gates across Laya, Jev, Claude, statistical models, and future classifiers. Third, a supervised **3–5 trainee research cohort** focused on using AI as a scientific instrument: application building, statistical evaluation, reproducibility, and human-gated validation.
+The project has three reusable outputs: an **open-source human-gated AI privacy firewall** spanning DataGangeR and Which; a **general classifier-evaluation framework** for calibration, uncertainty, selective prediction, dual-gate analysis, model/version drift, and regression release gates; and a supervised **3–5 trainee research cohort** learning statistically grounded AI application development and evaluation.
 
-A manuscript is not the endpoint. The project will release software, benchmark/evaluation assets, and implementation guidance. If organizational approvals and timing permit, we will also conduct a small public-health implementation pilot, potentially with PHO, to test usability and external validity in realistic workflows. The pilot is a translational objective but is not required to complete the primary scientific aims.
+A manuscript is not the endpoint. We will release software, benchmark/evaluation assets, and implementation guidance. If approvals and timing permit, we will also conduct a small public-health implementation pilot, potentially with PHO, to test usability and external validity in realistic workflows.
 
 ### C. Purpose of Claude Credits — maximum 500 words
 
